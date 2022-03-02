@@ -33,6 +33,7 @@ public class MenuCommand implements CommandExecutor, Listener {
         ItemStack playerStatsItem = new ItemStack(Material.PLAYER_HEAD);
         meta = playerStatsItem.getItemMeta();
         meta.setDisplayName("&cYour Stats");
+        // this line is WAY TOO LONG
         meta.setLore(Arrays.asList(String.format("&fWarrior Level: &60%s", PowermageCore.classesEmojis.get(Classes.WARRIOR)), String.format("&fTank Level: &60%s", PowermageCore.classesEmojis.get(Classes.TANK)), String.format("&fArcher Level: &60%s", PowermageCore.classesEmojis.get(Classes.ARCHER)), String.format("&fWizard Level: &60%s", PowermageCore.classesEmojis.get(Classes.WIZARD)), "&fBalance: &60 Coins", "&fSouls: &b0 Souls", "&fKills: &c0", "&fDeaths: &c0"));
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         playerStatsItem.setItemMeta(meta);
@@ -100,11 +101,12 @@ public class MenuCommand implements CommandExecutor, Listener {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (sender instanceof Player) {
             Player player = (Player) sender;
+
             if (player.hasPermission("powermage.menu")) {
                 Inventory menu = generateMenu(player);
                 player.openInventory(menu);
             }
         }
-        return false;
+        return true;
     }
 }
