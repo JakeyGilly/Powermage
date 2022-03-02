@@ -1,0 +1,27 @@
+name: PowermageCore
+version: '${project.version}'
+main: org.distantnetwork.powermagecore.PowermageCore
+api-version: 1.18
+authors: [ JakeyGilly, Explorer017, CaptainATW, InvernessBlock ]
+description: The Core Plugin For Powermage
+commands:
+  discord:
+    usage: /discord
+    description: Opens the Discord Server
+  store:
+    usage: /store
+    description: Opens the Store
+    aliases:
+      - ranks
+  menu:
+    usage: /menu
+    description: Opens the Menu
+  spawn:
+    usage: /spawn
+    description: Opens the Spawn Menu
+  start:
+    usage: /start
+    description: Starts the Game
+  soulshop:
+    usage: /soulshop
+    description: Opens the Soulshop
