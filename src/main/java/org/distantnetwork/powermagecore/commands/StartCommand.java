@@ -1,3 +1,8 @@
+//TODO:
+// ADD MORE COMMENTS
+// MAKE SHORTER, BUT MORE LINES TO INCREASE CODE READABILITY
+
+
 package org.distantnetwork.powermagecore.commands;
 
 import org.bukkit.Bukkit;
@@ -46,7 +51,7 @@ public class StartCommand implements CommandExecutor, Listener {
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         item.setItemMeta(meta);
         inventory.setItem(14, item);
-        item = new ItemStack(Material.WATER);
+        item = new ItemStack(Material.BLAZE_ROD);
         meta = item.getItemMeta();
         meta.setDisplayName(String.format("&7[Lvl 0] &a%s Wizard", PowermageCore.classesEmojis.get(Classes.WIZARD)));
         meta.setLore(Arrays.asList("&c❤ Health: &f75%", "&6✦ Base Speed: &f80%", "&d☄ Base Mana: &f300", " ", "&f&lClass Ability: &6&l&oHeart of Magic", "&7Gives you infinite mana", "&7for an entire &a5 seconds.", "&8Cooldown: &a1 Minute", "&eLeft Click on your menu to activate!", " ", "&e&LCLICK TO SELECT"));

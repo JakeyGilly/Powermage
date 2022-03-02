@@ -1,3 +1,6 @@
+//TODO:
+// ADD COMMENTS
+
 package org.distantnetwork.powermagecore.listeners;
 
 import net.md_5.bungee.api.ChatColor;
