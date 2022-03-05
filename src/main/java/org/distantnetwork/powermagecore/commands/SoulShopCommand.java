@@ -1,29 +1,16 @@
 package org.distantnetwork.powermagecore.commands;
 
-import org.bukkit.Bukkit;
-import org.bukkit.Material;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
-import org.distantnetwork.powermagecore.PowermageCore;
-import org.distantnetwork.powermagecore.Weapon;
-import org.distantnetwork.powermagecore.WeaponsManager;
-
-public class SoulShopCommand implements CommandExecutor {
-    public Inventory generateShop() {
-        Inventory inventory = Bukkit.createInventory(null, 45, "&b&lPowermage Soul Shop");
-        for (int i = 0; i < inventory.getSize(); i++) inventory.setItem(i, new ItemStack(Material.BLACK_STAINED_GLASS_PANE));
-
-        FileConfiguration file = WeaponsManager.getFile();
-        for (int i = 0; i < file.getInt("weapons.length"); i++) {
-            Weapon weapon = WeaponsManager.getWeapon(i);
-            ItemStack item = weapon.toItem(i, file);
-            inventory.setItem(i, item);
-        }
+//public class SoulShopCommand implements CommandExecutor {
+//    public Inventory generateShop() {
+//        Inventory inventory = Bukkit.createInventory(null, 45, "&b&lPowermage Soul Shop");
+//        for (int i = 0; i < inventory.getSize(); i++) inventory.setItem(i, new ItemStack(Material.BLACK_STAINED_GLASS_PANE));
+//
+//        FileConfiguration file = WeaponsManager.getFile();
+//        for (int i = 0; i < file.getInt("weapons.length"); i++) {
+//            Weapon weapon = WeaponsManager.getWeapon(i);
+//            ItemStack item = weapon.toItem(i, file);
+//            inventory.setItem(i, item);
+//        }
 //        ItemStack item;
 //        ItemMeta meta;
 //        item = new ItemStack(Material.SPECTRAL_ARROW);
@@ -170,21 +157,21 @@ public class SoulShopCommand implements CommandExecutor {
 //        meta.setDisplayName("&cClose");
 //        item.setItemMeta(meta);
 //        inventory.setItem(40, item);
-        return inventory;
-    }
-    @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (sender instanceof Player) {
-            Player player = (Player) sender;
-            if (player.hasPermission("powermage.soulshop")) {
-//                if (Integer.getInteger(PowermageCore.playerLevels.get(player.getUniqueId()).get(PowermageCore.playerClasses.get(player.getUniqueId())).values().toArray()[0].toString()) > 4) {
-                    Inventory inventory = generateShop();
-                    player.openInventory(inventory);
-//                } else {
-//                    player.sendMessage("You need to be level 5 in any class to use this shop!");
-//                }
-            }
-        }
-        return true;
-    }
-}
+//        return inventory;
+//    }
+//    @Override
+//    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+//        if (sender instanceof Player) {
+//            Player player = (Player) sender;
+//            if (player.hasPermission("powermage.soulshop")) {
+////                if (Integer.getInteger(PowermageCore.playerLevels.get(player.getUniqueId()).get(PowermageCore.playerClasses.get(player.getUniqueId())).values().toArray()[0].toString()) > 4) {
+//                    Inventory inventory = generateShop();
+//                    player.openInventory(inventory);
+////                } else {
+////                    player.sendMessage("You need to be level 5 in any class to use this shop!");
+////                }
+//            }
+//        }
+//        return true;
+//    }
+//}
