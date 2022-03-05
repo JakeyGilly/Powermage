@@ -1,1 +1,1 @@
-# powermagecore
+# PowermageCore
