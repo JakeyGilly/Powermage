@@ -15,9 +15,7 @@ import org.distantnetwork.powermagecore.Classes;
 import org.distantnetwork.powermagecore.PowermageCore;
 import org.distantnetwork.powermagecore.utils.ItemBuilder;
 
-import java.util.Arrays;
-
-public class StartCommand implements CommandExecutor {
+public class ClassCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -52,9 +50,9 @@ public class StartCommand implements CommandExecutor {
                 .setLore(String.format("%s❤ Health: %s75%%", ChatColor.RED, ChatColor.RESET), String.format("%s✦ Base Speed: %s80%%", ChatColor.GOLD, ChatColor.RESET), String.format("%s☄ Base Mana: %s300", ChatColor.LIGHT_PURPLE, ChatColor.RESET), " ", String.format("%sClass Ability: %sHeart of Magic", ChatColor.BOLD, ChatColor.GOLD), String.format("%sGives you infinite mana", ChatColor.GRAY), String.format("%sfor an entire %s5 seconds.", ChatColor.GRAY, ChatColor.GREEN), String.format("%sfor %s5 seconds.", ChatColor.GRAY, ChatColor.GREEN), String.format("%sCooldown: %s1 minute", ChatColor.DARK_GRAY, ChatColor.GREEN), String.format("%sLeft Click on your menu to activate!", ChatColor.YELLOW), " ", String.format("%s%sCLICK TO SELECT", ChatColor.YELLOW, ChatColor.BOLD))
                 .toItem();
         inventory.setItem(16, item);
-        item = new ItemBuilder(Material.ARROW).setName("&7Back to Main Menu").setItemFlags(ItemFlag.HIDE_ATTRIBUTES).toItem();
+        item = new ItemBuilder(Material.ARROW).setName(String.format("%sBack to Main Menu", ChatColor.GRAY)).setItemFlags(ItemFlag.HIDE_ATTRIBUTES).toItem();
         inventory.setItem(18, item);
-        item = new ItemBuilder(Material.BARRIER).setName("&cClose Menu").setItemFlags(ItemFlag.HIDE_ATTRIBUTES).toItem();
+        item = new ItemBuilder(Material.BARRIER).setName(String.format("%sClose Menu", ChatColor.RED)).setItemFlags(ItemFlag.HIDE_ATTRIBUTES).toItem();
         inventory.setItem(22, item);
         return inventory;
     }

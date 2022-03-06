@@ -19,9 +19,12 @@ commands:
   spawn:
     usage: /spawn
     description: Opens the Spawn Menu
-  start:
-    usage: /start
-    description: Starts the Game
+  class:
+    usage: /class
+    description: Selects your class
   soulshop:
     usage: /soulshop
     description: Opens the Soulshop
+  giveitem:
+    usage: /giveitem itemid
+    description: Gives an CustomItem to a Player

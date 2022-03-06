@@ -5,7 +5,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.distantnetwork.powermagecore.commands.*;
 import org.distantnetwork.powermagecore.listeners.FoodChangeEvent;
 import org.distantnetwork.powermagecore.listeners.OnInventoryClick;
-//import org.distantnetwork.powermagecore.listeners.OnInventoryClick;
+import org.distantnetwork.powermagecore.listeners.OnItemClick;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -33,13 +33,15 @@ public final class PowermageCore extends JavaPlugin {
         for (int i = 0; i < 10; i++) {
             WeaponsManager.setup(i);
         }
-        getCommand("start").setExecutor(new StartCommand());
         getCommand("menu").setExecutor(new MenuCommand());
         getCommand("discord").setExecutor(new DiscordCommand());
         getCommand("store").setExecutor(new StoreCommand());
         getCommand("spawn").setExecutor(new SpawnCommand());
+        getCommand("class").setExecutor(new ClassCommand());
+        getCommand("giveitem").setExecutor(new GiveWeaponCommand());
 //        getCommand("soulshop").setExecutor(new SoulShopCommand());
         getServer().getPluginManager().registerEvents(new OnInventoryClick(), this);
         getServer().getPluginManager().registerEvents(new FoodChangeEvent(), this);
+        getServer().getPluginManager().registerEvents(new OnItemClick(), this);
     }
 }
