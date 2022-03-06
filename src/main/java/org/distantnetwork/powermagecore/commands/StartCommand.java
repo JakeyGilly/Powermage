@@ -1,93 +1,61 @@
 package org.distantnetwork.powermagecore.commands;
 
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
-import org.distantnetwork.powermagecore.Items.ConfigItem;
+import org.distantnetwork.powermagecore.Classes;
 import org.distantnetwork.powermagecore.PowermageCore;
-import org.distantnetwork.powermagecore.WeaponsManager;
+import org.distantnetwork.powermagecore.utils.ItemBuilder;
 
-import java.util.logging.Level;
+import java.util.Arrays;
 
 public class StartCommand implements CommandExecutor {
+
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (sender instanceof Player) {
-            Player player = (Player) sender;
-            FileConfiguration config = WeaponsManager.getConfig(0);
-            PowermageCore.getInstance().getLogger().log(Level.INFO, String.format("enabled?: %s", String.valueOf(config.getBoolean("enabled"))));
-            ItemStack item = ConfigItem.getItem(config, player);
-            if (item == null) return true;
-            player.getInventory().addItem(item);
-        }
+        if (!(sender instanceof Player)) return true;
+        Player player = (Player) sender;
+        if (player.hasPermission("powermage.start")) player.openInventory(generateClassSwitcher(player));
         return true;
     }
+
+    public static Inventory generateClassSwitcher(Player player) {
+        Inventory inventory = Bukkit.createInventory(null, 27, String.format("%sChoose your class", ChatColor.RED));
+        ItemStack item = new ItemBuilder(Material.GRAY_STAINED_GLASS_PANE).setName(" ").setItemFlags(ItemFlag.HIDE_ATTRIBUTES).toItem();
+        for (int i = 0; i < 26; i++) inventory.setItem(i, item);
+        item = new ItemBuilder(Material.IRON_SWORD).setItemFlags(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_ENCHANTS).addEnchant(Enchantment.DURABILITY, 1)
+                .setName(String.format("%s[Lvl 0]%s%s Warrior", ChatColor.GRAY, PowermageCore.classesEmojis.get(Classes.WARRIOR), ChatColor.RED))
+                .setLore(String.format("%s❤ Health: %s100%%", ChatColor.RED, ChatColor.RESET), String.format("%s✦ Base Speed: %s100%%", ChatColor.GOLD, ChatColor.RESET), String.format("%s☄ Base Mana: %s100", ChatColor.LIGHT_PURPLE, ChatColor.RESET), " ", String.format("%sClass Ability: %sCharge", ChatColor.BOLD, ChatColor.GOLD), String.format("%sGives player %s+100 %s✦ Speed %sfor %s10 %sseconds.", ChatColor.GRAY, ChatColor.GREEN, ChatColor.GOLD, ChatColor.GRAY, ChatColor.GREEN, ChatColor.GRAY), String.format("%sCooldown: %s30 Seconds", ChatColor.DARK_GRAY, ChatColor.GREEN), String.format("%sLeft Click on your menu to activate!", ChatColor.YELLOW), " ", String.format("%s%sCLICK TO SELECT", ChatColor.YELLOW, ChatColor.BOLD))
+                .toItem();
+        inventory.setItem(10, item);
+        item = new ItemBuilder(Material.IRON_CHESTPLATE).setItemFlags(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_ENCHANTS).addEnchant(Enchantment.DURABILITY, 1)
+                .setName(String.format("%s[Lvl 0] %s%s Tank", ChatColor.GRAY, ChatColor.GREEN, PowermageCore.classesEmojis.get(Classes.TANK)))
+                .setLore(String.format("%s❤ Health: %s200%%", ChatColor.RED, ChatColor.RESET), String.format("%s✦ Base Speed: %s50%%", ChatColor.GOLD, ChatColor.RESET), String.format("%s☄ Base Mana: %s100", ChatColor.LIGHT_PURPLE, ChatColor.RESET), " ", String.format("%sClass Ability: %sTurtle Up", ChatColor.BOLD, ChatColor.GOLD), String.format("%sGives player %sResistance 2 %sfor %s1 %sminute", ChatColor.GRAY, ChatColor.GREEN, ChatColor.GRAY, ChatColor.GREEN, ChatColor.GRAY), String.format("%sand %sRegen 5 %sfor %s10 seconds.", ChatColor.GRAY, ChatColor.GREEN, ChatColor.GRAY, ChatColor.GREEN), String.format("%sCooldown: %s3 minutes", ChatColor.DARK_GRAY, ChatColor.GREEN), String.format("%sLeft Click on your menu to activate!", ChatColor.YELLOW), " ", String.format("%s%sCLICK TO SELECT", ChatColor.YELLOW, ChatColor.BOLD))
+                .toItem();
+        inventory.setItem(12, item);
+        // arrow rain as secondary ability for archer?
+        item = new ItemBuilder(Material.CROSSBOW).setItemFlags(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_ENCHANTS).addEnchant(Enchantment.DURABILITY, 1)
+                .setName(String.format("%s[Lvl 0] %s%s Archer", ChatColor.GRAY, ChatColor.GREEN, PowermageCore.classesEmojis.get(Classes.ARCHER)))
+                .setLore(String.format("%s❤ Health: %s50%%", ChatColor.RED, ChatColor.RESET), String.format("%s✦ Base Speed: %s200%%", ChatColor.GOLD, ChatColor.RESET), String.format("%s☄ Base Mana: %s100", ChatColor.LIGHT_PURPLE, ChatColor.RESET), " ", String.format("%sClass Ability: %sQuickshot", ChatColor.BOLD, ChatColor.GOLD), String.format("%sRapid-fires arrows to where", ChatColor.GRAY), String.format("%sthe player is looking at for %s3 seconds.", ChatColor.GRAY, ChatColor.GREEN), String.format("%sCooldown: %s30 Seconds", ChatColor.DARK_GRAY, ChatColor.GREEN), String.format("%sLeft Click on your menu to activate!", ChatColor.YELLOW), " ", String.format("%s%sCLICK TO SELECT", ChatColor.YELLOW, ChatColor.BOLD))
+                .toItem();
+        inventory.setItem(14, item);
+        item = new ItemBuilder(Material.BLAZE_ROD).setItemFlags(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_ENCHANTS).addEnchant(Enchantment.DURABILITY, 1)
+                .setName(String.format("%s[Lvl 0] %s%s Wizard", ChatColor.GRAY, ChatColor.GREEN, PowermageCore.classesEmojis.get(Classes.WIZARD)))
+                .setLore(String.format("%s❤ Health: %s75%%", ChatColor.RED, ChatColor.RESET), String.format("%s✦ Base Speed: %s80%%", ChatColor.GOLD, ChatColor.RESET), String.format("%s☄ Base Mana: %s300", ChatColor.LIGHT_PURPLE, ChatColor.RESET), " ", String.format("%sClass Ability: %sHeart of Magic", ChatColor.BOLD, ChatColor.GOLD), String.format("%sGives you infinite mana", ChatColor.GRAY), String.format("%sfor an entire %s5 seconds.", ChatColor.GRAY, ChatColor.GREEN), String.format("%sfor %s5 seconds.", ChatColor.GRAY, ChatColor.GREEN), String.format("%sCooldown: %s1 minute", ChatColor.DARK_GRAY, ChatColor.GREEN), String.format("%sLeft Click on your menu to activate!", ChatColor.YELLOW), " ", String.format("%s%sCLICK TO SELECT", ChatColor.YELLOW, ChatColor.BOLD))
+                .toItem();
+        inventory.setItem(16, item);
+        item = new ItemBuilder(Material.ARROW).setName("&7Back to Main Menu").setItemFlags(ItemFlag.HIDE_ATTRIBUTES).toItem();
+        inventory.setItem(18, item);
+        item = new ItemBuilder(Material.BARRIER).setName("&cClose Menu").setItemFlags(ItemFlag.HIDE_ATTRIBUTES).toItem();
+        inventory.setItem(22, item);
+        return inventory;
+    }
 }
-//public class StartCommand implements CommandExecutor {
-//    public static Inventory generateInventory() {
-//        Inventory inventory = Bukkit.createInventory(null, 27, String.format("%sChoose your class", ChatColor.RED));
-//        ItemStack item = new ItemStack(Material.GRAY_STAINED_GLASS_PANE);
-//        ItemMeta meta = item.getItemMeta();
-//        meta.setDisplayName(" ");
-//        item.setItemMeta(meta);
-//        for (int i = 0; i < 26; i++) inventory.setItem(i, item);
-//        item = new ItemStack(Material.IRON_SWORD);
-//        meta = item.getItemMeta();
-//        meta.setDisplayName(String.format("%s[Lvl 0]%s%s Warrior", ChatColor.GRAY, PowermageCore.classesEmojis.get(Classes.WARRIOR), ChatColor.RED));
-//        meta.setLore(Arrays.asList(String.format("%s❤ Health: %s100%%", ChatColor.RED, ChatColor.RESET), String.format("%s✦ Base Speed: %s100%", ChatColor.GOLD, ChatColor.RESET), String.format("%s☄ Base Mana: %s100", ChatColor.LIGHT_PURPLE, ChatColor.RESET), " ", String.format("%sClass Ability: %sCharge", ChatColor.BOLD, ChatColor.GOLD), String.format("%sGives player %s+100 %s✦ Speed %sfor %s10 %sseconds.", ChatColor.GRAY, ChatColor.GREEN, ChatColor.GOLD, ChatColor.GRAY, ChatColor.GREEN, ChatColor.GRAY), String.format("%sCooldown: %s30 Seconds", ChatColor.DARK_GRAY, ChatColor.GREEN), "&eLeft Click on your menu to activate!", " ", "&e&LCLICK TO SELECT"));
-//        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-//        item.setItemMeta(meta);
-//        inventory.setItem(10, item);
-//        item = new ItemStack(Material.IRON_CHESTPLATE);
-//        meta = item.getItemMeta();
-//        meta.setDisplayName(String.format("&7[Lvl 0] &a%s Tank", PowermageCore.classesEmojis.get(Classes.TANK)));
-//        meta.setLore(Arrays.asList("&c❤ Health: &f200%", "&6✦ Base Speed: &f50%", "&d☄ Base Mana: &f100", " ", "&f&lClass Ability: &6&l&oTurtle Up", "&7Gives player &9Resistance 2", "&7and &9Regen 5 &7for &a10 seconds.", "&8Cooldown: &a30 Seconds", "&eLeft Click on your menu to activate!", " ", "&e&LCLICK TO SELECT"));
-//        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-//        item.setItemMeta(meta);
-//        inventory.setItem(12, item);
-//        item = new ItemStack(Material.CROSSBOW);
-//        meta = item.getItemMeta();
-//        meta.setDisplayName(String.format("&7[Lvl 0] &a%s Archer", PowermageCore.classesEmojis.get(Classes.ARCHER)));
-//        // arrow rain as secondary ability?
-//        meta.setLore(Arrays.asList("&c❤ Health: &f50%", "&6✦ Base Speed: &f200%", "&d☄ Base Mana: &f100", " ", "&f&lClass Ability: &6&l&oQuickshot", "&7Rapid-fires arrows to where", "&7the player is looking at for &a3 seconds.", "&8Cooldown: &a30 Seconds", "&eLeft Click on your menu to activate!", " ", "&e&LCLICK TO SELECT"));
-//        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-//        item.setItemMeta(meta);
-//        inventory.setItem(14, item);
-//        item = new ItemStack(Material.BLAZE_ROD);
-//        meta = item.getItemMeta();
-//        meta.setDisplayName(String.format("&7[Lvl 0] &a%s Wizard", PowermageCore.classesEmojis.get(Classes.WIZARD)));
-//        meta.setLore(Arrays.asList("&c❤ Health: &f75%", "&6✦ Base Speed: &f80%", "&d☄ Base Mana: &f300", " ", "&f&lClass Ability: &6&l&oHeart of Magic", "&7Gives you infinite mana", "&7for an entire &a5 seconds.", "&8Cooldown: &a1 Minute", "&eLeft Click on your menu to activate!", " ", "&e&LCLICK TO SELECT"));
-//        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-//        item.setItemMeta(meta);
-//        inventory.setItem(16, item);
-//        // close
-//        ItemStack closeItem = new ItemStack(Material.BARRIER);
-//        meta = closeItem.getItemMeta();
-//        meta.setDisplayName("&cClose Menu");
-//        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-//        closeItem.setItemMeta(meta);
-//        inventory.setItem(22, closeItem);
-//        // back to main menu
-//        item = new ItemStack(Material.ARROW);
-//        meta = item.getItemMeta();
-//        meta.setDisplayName("&f&lBack to Menu");
-//        item.setItemMeta(meta);
-//        inventory.setItem(18, item);
-//        return inventory;
-//    }
-//
-//    @Override
-//    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-//        if (sender instanceof Player) {
-//            Player player = (Player) sender;
-//            if (player.hasPermission("powermage.start")) {
-//                Inventory switchClassInventory = generateInventory();
-//                player.openInventory(switchClassInventory);
-//            }
-//        }
-//        return true;
-//    }
-//}
