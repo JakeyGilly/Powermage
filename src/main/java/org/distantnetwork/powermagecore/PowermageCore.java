@@ -7,6 +7,7 @@ import org.distantnetwork.powermagecore.listeners.FoodChangeEvent;
 import org.distantnetwork.powermagecore.listeners.OnInventoryClick;
 import org.distantnetwork.powermagecore.listeners.OnItemClick;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -30,16 +31,18 @@ public final class PowermageCore extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        for (int i = 0; i < 10; i++) {
-            WeaponsManager.setup(i);
-        }
+        if (!new File(String.format("%s%sweapons", PowermageCore.getInstance().getDataFolder(), File.separator)).exists())
+            new File(String.format("%s%sweapons", PowermageCore.getInstance().getDataFolder(), File.separator)).mkdir();
+        if (WeaponsManager.getConfigAmount(new File(getDataFolder(), String.format("weapons%s", File.separator))) == 0) WeaponsManager.createDefaultWeapons();
+
+
         getCommand("menu").setExecutor(new MenuCommand());
         getCommand("discord").setExecutor(new DiscordCommand());
         getCommand("store").setExecutor(new StoreCommand());
         getCommand("spawn").setExecutor(new SpawnCommand());
         getCommand("class").setExecutor(new ClassCommand());
         getCommand("giveitem").setExecutor(new GiveWeaponCommand());
-//        getCommand("soulshop").setExecutor(new SoulShopCommand());
+        getCommand("soulshop").setExecutor(new SoulShopCommand());
         getServer().getPluginManager().registerEvents(new OnInventoryClick(), this);
         getServer().getPluginManager().registerEvents(new FoodChangeEvent(), this);
         getServer().getPluginManager().registerEvents(new OnItemClick(), this);

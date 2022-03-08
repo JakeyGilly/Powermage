@@ -15,12 +15,10 @@ import java.util.*;
 import java.util.logging.Level;
 
 public class ConfigItem {
-    public static ItemStack getItem(FileConfiguration file, Player player) {
+    public static ItemStack getItem(FileConfiguration file) {
         if (!file.getBoolean("enabled")) return null;
         assert file.getString("material") != null;
-        PowermageCore.getInstance().getLogger().log(Level.INFO, file.getString("material"));
         ItemStack item = new ItemStack(Material.getMaterial(file.getString("material")));
-        PowermageCore.getInstance().getLogger().log(Level.INFO, "Material: " + item.getType().toString());
         ItemMeta meta = item.getItemMeta();
         if (file.getString("name") != null) meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', file.getString("name")));
         if (!file.getStringList("lore").isEmpty()) {
@@ -28,11 +26,12 @@ public class ConfigItem {
             for(int i = lore.size(); i > 0; i--) lore.set(i-1, ChatColor.translateAlternateColorCodes('&', lore.get(i-1)));
             meta.setLore(lore);
         }
-        if (!file.getMapList("enchantments").isEmpty() && file.getConfigurationSection("enchantments") != null) {
+        if (file.getConfigurationSection("enchantments") != null) {
             file.getConfigurationSection("enchantments").getValues(false).forEach((key, value) -> {
-                Enchantment enchant = Enchantment.getByKey(NamespacedKey.fromString(key));
-                if (enchant != null) meta.addEnchant(Enchantment.getByKey(NamespacedKey.fromString(key)), (Integer) value, true);
-
+                Enchantment enchant = Enchantment.getByKey(NamespacedKey.minecraft(key));
+                if (enchant != null) {
+                    meta.addEnchant(enchant, (Integer) value, true);
+                }
             });
         }
         for (String flag : file.getStringList("flags")) meta.addItemFlags(ItemFlag.valueOf(flag));

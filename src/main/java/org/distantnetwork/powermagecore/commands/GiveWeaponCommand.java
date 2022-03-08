@@ -23,7 +23,7 @@ public class GiveWeaponCommand implements CommandExecutor {
             }
             Player player = (Player) sender;
             FileConfiguration config = WeaponsManager.getConfig(Integer.valueOf(args[0]));
-            ItemStack item = ConfigItem.getItem(config, player);
+            ItemStack item = ConfigItem.getItem(config);
             if (item == null) return true;
             player.getInventory().addItem(item);
         }

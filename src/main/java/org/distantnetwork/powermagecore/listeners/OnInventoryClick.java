@@ -14,6 +14,7 @@ import org.distantnetwork.powermagecore.Classes;
 import org.distantnetwork.powermagecore.PowermageCore;
 import org.distantnetwork.powermagecore.commands.MenuCommand;
 import org.distantnetwork.powermagecore.commands.ClassCommand;
+import org.distantnetwork.powermagecore.commands.SoulShopCommand;
 import org.distantnetwork.powermagecore.utils.ItemBuilder;
 
 public class OnInventoryClick implements Listener {
@@ -124,7 +125,8 @@ public class OnInventoryClick implements Listener {
                     break;
                 case 24:
                     player.closeInventory();
-                    // player.openInventory(soulShopMenu);
+                    Inventory soulShopMenu = SoulShopCommand.generateShop();
+                    player.openInventory(soulShopMenu);
                     break;
                 case 39:
                     player.closeInventory();

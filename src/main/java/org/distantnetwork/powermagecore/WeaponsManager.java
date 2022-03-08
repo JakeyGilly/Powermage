@@ -12,37 +12,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class WeaponsManager {
-
-
-    public static void setup(Integer index) {
-        if (!new File(String.format("%s%sweapons", PowermageCore.getInstance().getDataFolder(), File.separator)).exists()) {
-            new File(String.format("%s%sweapons", PowermageCore.getInstance().getDataFolder(), File.separator)).mkdir();
-        }
-        File file = new File(String.format("%s%sweapons", PowermageCore.getInstance().getDataFolder(), File.separator), String.format("weapon-%d.yml", index));
-        if (!file.exists()) {
-            try {
-                file.createNewFile();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            FileConfiguration config = YamlConfiguration.loadConfiguration(file);
-            config.addDefault("name", "Name");
-            config.addDefault("material", Material.AIR.getKey().getKey());
-            config.addDefault("lore", new String[]{"lore", "lore"});
-            Map<String, Integer> enchantments = new HashMap<>();
-            enchantments.put(Enchantment.MENDING.getKey().getKey(), 1);
-            enchantments.put(Enchantment.DURABILITY.getKey().getKey(), 1);
-            enchantments.put(Enchantment.DAMAGE_ALL.getKey().getKey(), 1);
-            config.addDefault("enchantments", enchantments);
-            config.addDefault("damage", 0);
-            config.addDefault("unbreakable", false);
-            config.addDefault("ability_cooldown", 0);
-            config.addDefault("ability_mana", 0);
-            config.addDefault("flags", new String[]{ItemFlag.HIDE_UNBREAKABLE.name(), ItemFlag.HIDE_UNBREAKABLE.name()});
-            config.options().copyDefaults(true);
-            saveConfig(config, index);
-        }
-    }
     public static FileConfiguration getConfig(Integer index) {
         File file = new File(String.format("%s%sweapons", PowermageCore.getInstance().getDataFolder(), File.separator), String.format("weapon-%d.yml", index));
         return YamlConfiguration.loadConfiguration(file);
@@ -51,9 +20,45 @@ public class WeaponsManager {
     public static void saveConfig(FileConfiguration config, Integer index) {
         File file = new File(String.format("%s%sweapons", PowermageCore.getInstance().getDataFolder(), File.separator), String.format("weapon-%d.yml", index));
         try {
+            if (!file.exists()) file.createNewFile();
             config.save(file);
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static int getConfigAmount(File file) {
+        int i = 0;
+        String[] list = file.list();
+        if (list != null) for (String s : list)
+            if (s.equals(String.format("weapon-%d.yml", i))) i++;
+        return i;
+    }
+
+    public static void createDefaultWeapons() {
+        File file = new File(String.format("%s%sweapons", PowermageCore.getInstance().getDataFolder(), File.separator), "weapon-0.yml");
+        if (!file.exists()) {
+            try {
+                file.createNewFile();
+                FileConfiguration config = YamlConfiguration.loadConfiguration(file);
+                config.set("enabled", true);
+                config.addDefault("name", "DemoItem");
+                config.addDefault("material", Material.STONE.getKey().getKey().toUpperCase());
+                config.addDefault("lore", new String[]{"&alore", "&clore"});
+                Map<String, Integer> enchantments = new HashMap<String, Integer>();
+                enchantments.put(Enchantment.MENDING.getKey().getKey(), 1);
+                config.addDefault("enchantments", enchantments);
+                config.addDefault("unbreakable", true);
+                config.addDefault("flags", new String[]{ItemFlag.HIDE_UNBREAKABLE.name()});
+                config.addDefault("damage", "NOT IMPLEMENTED");
+                config.addDefault("ability_cooldown", "NOT IMPLEMENTED");
+                config.addDefault("ability_mana", "NOT IMPLEMENTED");
+                config.options().copyDefaults(true);
+                saveConfig(config, 0);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
     }
 }
