@@ -2,7 +2,6 @@ package org.distantnetwork.powermagecore.commands;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
-import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -23,7 +22,6 @@ public class SpawnCommand implements CommandExecutor {
             return true;
         }
         Location location = player.getLocation();
-        World world = location.getWorld();
         player.sendMessage(String.format("Teleporting you to spawn in %s3 seconds%s...", ChatColor.GREEN, ChatColor.RESET));
         player.sendMessage(String.format("%sPlease keep still!", ChatColor.GREEN));
         try {
