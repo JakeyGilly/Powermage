@@ -13,7 +13,6 @@ public class InventoryBuilder {
     private final UUID uuid;
     private final Inventory inventory;
     private final Map<Integer, onInventoryClick> actionsClick;
-    private final Map<Integer, onInventoryOpen> actionsOpen;
     public static Map<UUID, InventoryBuilder> inventoriesByUUID = new HashMap<>();
     public static Map<UUID, UUID> openInventories = new HashMap<>();
 
@@ -21,7 +20,6 @@ public class InventoryBuilder {
         uuid = UUID.randomUUID();
         inventory = Bukkit.createInventory(null, size, title);
         actionsClick = new HashMap<>();
-        actionsOpen = new HashMap<>();
         inventoriesByUUID.put(getUuid(), this);
     }
 
@@ -59,20 +57,12 @@ public class InventoryBuilder {
     public Map<Integer, onInventoryClick> getClickActions() {
         return actionsClick;
     }
-    public Map<Integer, onInventoryOpen> getOpenActions() { return actionsOpen; }
 
-    public void setItem(int slot, ItemStack stack, onInventoryClick click, onInventoryOpen open){
+    public void setItem(int slot, ItemStack stack, onInventoryClick action){
         inventory.setItem(slot, stack);
-        if (click != null){
-            actionsClick.put(slot, click);
+        if (action != null){
+            actionsClick.put(slot, action);
         }
-        if (open != null){
-            actionsOpen.put(slot, open);
-        }
-    }
-
-    public void setItem(int slot, ItemStack stack, onInventoryClick click){
-        setItem(slot, stack, click, null);
     }
 
     public void setItem(int slot, ItemStack stack){
@@ -81,9 +71,5 @@ public class InventoryBuilder {
 
     public interface onInventoryClick {
         void onClick(Player player);
-    }
-
-    public interface onInventoryOpen {
-        void onOpen(Player player);
     }
 }

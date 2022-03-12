@@ -18,23 +18,11 @@ public class InventoryBuilderListener implements Listener {
         UUID playerUUID = player.getUniqueId();
         UUID inventoryUUID = InventoryBuilder.openInventories.get(playerUUID);
         if (inventoryUUID == null) return;
+        e.setCancelled(true);
         InventoryBuilder gui = InventoryBuilder.getInventoriesByUUID().get(inventoryUUID);
         InventoryBuilder.onInventoryClick click = gui.getClickActions().get(e.getSlot());
         if (click == null) return;
         click.onClick(player);
-    }
-
-    @EventHandler
-    public void onInventoryOpen(InventoryOpenEvent e) {
-        if (!(e.getPlayer() instanceof Player)) return;
-        Player player = (Player) e.getPlayer();
-        UUID playerUUID = player.getUniqueId();
-        UUID inventoryUUID = InventoryBuilder.openInventories.get(playerUUID);
-        if (inventoryUUID == null) return;
-        InventoryBuilder gui = InventoryBuilder.getInventoriesByUUID().get(inventoryUUID);
-        InventoryBuilder.onInventoryOpen open = gui.getOpenActions().get(e.getInventory());
-        if (open == null) return;
-        open.onOpen(player);
     }
 
     @EventHandler

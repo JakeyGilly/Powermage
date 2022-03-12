@@ -11,7 +11,7 @@ public class ClassCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (!(sender instanceof Player)) return true;
         Player player = (Player) sender;
-        if (player.hasPermission("powermage.start")) new ClassGUI().open(player);
+        if (player.hasPermission("powermage.start")) new ClassGUI(player).open(player);
         return true;
     }
 }

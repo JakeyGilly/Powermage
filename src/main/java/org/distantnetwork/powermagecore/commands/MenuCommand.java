@@ -11,7 +11,7 @@ public class MenuCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (!(sender instanceof Player)) return true;
         Player player = (Player) sender;
-        if (player.hasPermission("powermage.menu")) new MenuGUI().open(player);
+        if (player.hasPermission("powermage.menu")) new MenuGUI(player).open(player);
         return true;
     }
 }

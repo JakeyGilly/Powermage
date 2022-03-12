@@ -8,15 +8,13 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.distantnetwork.powermagecore.PowermageCore;
-import org.distantnetwork.powermagecore.utils.Config.ConfigManager;
+import org.distantnetwork.powermagecore.utils.ItemBuilder;
+import org.distantnetwork.powermagecore.utils.Rarity;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class WeaponConfigManager {
     public static ItemStack getWeapon(int id) {
@@ -27,27 +25,26 @@ public class WeaponConfigManager {
         }
         FileConfiguration config = ConfigManager.getConfig(file);
         if (!config.getBoolean("enabled")) return null;
-        assert config.getString("material") != null;
-        ItemStack item = new ItemStack(Material.getMaterial(config.getString("material")));
-        ItemMeta meta = item.getItemMeta();
-        if (config.getString("name") != null) meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', config.getString("name")));
-        if (!config.getStringList("lore").isEmpty()) {
-            List<String> lore = config.getStringList("lore");
-            for(int i = lore.size(); i > 0; i--) lore.set(i-1, ChatColor.translateAlternateColorCodes('&', lore.get(i-1)));
-            meta.setLore(lore);
-        }
+        PowermageCore.getInstance().getLogger().info(config.getString("material").equals("") ? "null" : config.getString("material"));
+        if (!config.contains("material") && config.getString("material").equals("")) return null;
+        ItemBuilder item = new ItemBuilder(Material.getMaterial(config.getString("material")), 1);
+        if (config.getString("name") != null) item.setName(ChatColor.translateAlternateColorCodes('&', config.getString("name")));
+        if (!config.getStringList("lore").isEmpty()) for (String s : config.getStringList("lore")) item.addLoreLine(ChatColor.translateAlternateColorCodes('&', s));
         if (config.getConfigurationSection("enchantments") != null) {
             config.getConfigurationSection("enchantments").getValues(false).forEach((key, value) -> {
                 Enchantment enchant = Enchantment.getByKey(NamespacedKey.minecraft(key));
-                if (enchant != null) {
-                    meta.addEnchant(enchant, (Integer) value, true);
-                }
+                item.addEnchant(enchant, (Integer) value);
             });
         }
-        for (String flag : config.getStringList("flags")) meta.addItemFlags(ItemFlag.valueOf(flag));
-        if (config.getBoolean("unbreakable")) meta.setUnbreakable(true);
-        item.setItemMeta(meta);
-        return item;
+        for (String flag : config.getStringList("flags")) {
+            item.addItemFlags(ItemFlag.valueOf(flag));
+        }
+        if (config.getBoolean("unbreakable")) item.setUnbreakable();
+        if (config.getString("rarity") != null) {
+            Rarity rarity = Rarity.valueOf(config.getString("rarity"));
+            item.addLoreLine(Rarity.getColor(rarity) + Rarity.getName(rarity, true, false));
+        }
+        return item.toItem();
     }
 
     public static int getWeaponAmount() {
@@ -56,15 +53,10 @@ public class WeaponConfigManager {
             PowermageCore.getInstance().getLogger().warning(String.format("Weapon folder %s does not exist!", file.getName()));
             return 0;
         }
+        File[] list = file.listFiles();
+        if (list == null) return 0;
         int count = 0;
-        String[] list = file.list();
-        if (list != null) {
-            int i = 0;
-            while (list[i].contains("weapon-" + Character.isDigit(list[i].charAt(7)) + ".yml")) {
-                count++;
-                i++;
-            }
-        }
+        for (File f : list) if (f.getName().startsWith("weapon-")) count++;
         return count;
     }
 
@@ -72,18 +64,18 @@ public class WeaponConfigManager {
         File file = new File(String.format("%s%sweapons", PowermageCore.getInstance().getDataFolder(), File.separator));
         if (!file.exists()) {
             PowermageCore.getInstance().getLogger().warning(String.format("Weapon folder %s does not exist!", file.getName()));
-            return null;
+            return new Integer[0];
         }
-        Integer[] ids = new Integer[getWeaponAmount()];
-        String[] list = file.list();
+        List<Integer> ids = new ArrayList<Integer>();
+        File[] list = file.listFiles();
         if (list != null) {
-            int i = 0;
-            while (list[i].contains("weapon-" + Character.isDigit(list[i].charAt(7)) + ".yml")) {
-                ids[i] = Integer.parseInt(list[i].substring(7, list[i].indexOf(".yml")));
-                i++;
+            for (File f : list) {
+                if (f.getName().startsWith("weapon-")) {
+                    ids.add(Integer.parseInt(f.getName().substring(7, f.getName().indexOf(".yml"))));
+                }
             }
         }
-        return ids;
+        return ids.toArray(new Integer[ids.size()]);
     }
 
     public static void createDefaultWeapons() {
@@ -103,6 +95,7 @@ public class WeaponConfigManager {
                 config.addDefault("enchantments", enchantments);
                 config.addDefault("unbreakable", true);
                 config.addDefault("flags", new String[]{ItemFlag.HIDE_UNBREAKABLE.name()});
+                config.addDefault("rarity", Rarity.COMMON.name());
                 config.addDefault("damage", "NOT IMPLEMENTED");
                 config.addDefault("ability_cooldown", "NOT IMPLEMENTED");
                 config.addDefault("ability_mana", "NOT IMPLEMENTED");

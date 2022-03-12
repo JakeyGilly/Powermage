@@ -13,7 +13,7 @@ public class SoulShopCommand implements CommandExecutor {
             Player player = (Player) sender;
             if (player.hasPermission("powermage.soulshop")) {
 //                if (Integer.getInteger(PowermageCore.playerLevels.get(player.getUniqueId()).get(PowermageCore.playerClasses.get(player.getUniqueId())).values().toArray()[0].toString()) > 4) {
-                new SoulShopGUI().open(player);
+                new SoulShopGUI(player).open(player);
 //                } else {
 //                    player.sendMessage("You need to be level 5 in any class to use this shop!");
 //                }

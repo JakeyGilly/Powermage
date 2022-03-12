@@ -231,16 +231,22 @@ public class ItemBuilder {
      * Set Item Flags.
      * @param flags The flags to set.
      */
-    public ItemBuilder setItemFlags(ItemFlag... flags){
+    public ItemBuilder addItemFlags(ItemFlag... flags){
         ItemMeta meta = item.getItemMeta();
         meta.addItemFlags(flags);
         item.setItemMeta(meta);
         return this;
     }
-    public ItemBuilder setItemFlags(List<ItemFlag> flags){
+    public ItemBuilder addItemFlags(List<ItemFlag> flags){
         ItemMeta meta = item.getItemMeta();
         meta.addItemFlags(flags.toArray(new ItemFlag[flags.size()]));
         item.setItemMeta(meta);
+        return this;
+    }
+
+    public ItemBuilder setRarity(Rarity rarity){
+        ItemMeta meta = item.getItemMeta();
+        meta.setDisplayName(rarity.getColor(rarity)+rarity.name());
         return this;
     }
     /**
