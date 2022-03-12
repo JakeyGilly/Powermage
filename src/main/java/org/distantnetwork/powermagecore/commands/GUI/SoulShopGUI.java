@@ -10,13 +10,13 @@ import org.distantnetwork.powermagecore.utils.Builders.ItemBuilder;
 
 public class SoulShopGUI extends InventoryBuilder {
     public SoulShopGUI(Player p) {
-        super((WeaponConfigManager.getWeaponAmount() % 9 == 0 ? WeaponConfigManager.getWeaponAmount() : WeaponConfigManager.getWeaponAmount() + (9 - (WeaponConfigManager.getWeaponAmount() % 9)))+9, String.format("%sPowermage Soul Shop", ChatColor.AQUA));
+        super((WeaponConfigManager.loadWeaponAmount() % 9 == 0 ? WeaponConfigManager.loadWeaponAmount() : WeaponConfigManager.loadWeaponAmount() + (9 - (WeaponConfigManager.loadWeaponAmount() % 9)))+9, String.format("%sPowermage Soul Shop", ChatColor.AQUA));
         for (int i = 0; i < getInventory().getSize(); i++) setItem(i, new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setName(" ").addItemFlags(ItemFlag.HIDE_ATTRIBUTES).toItem());
-        if (WeaponConfigManager.getWeaponIDs().length <= 0) return;
-        for (Integer id : WeaponConfigManager.getWeaponIDs()) {
-            setItem(id, WeaponConfigManager.getWeapon(id), player -> {
-                player.sendMessage(ChatColor.GREEN + "You bought " + WeaponConfigManager.getWeapon(id).getItemMeta().getDisplayName());
-                player.getInventory().addItem(WeaponConfigManager.getWeapon(id));
+        if (WeaponConfigManager.loadWeaponIDs().length <= 0) return;
+        for (Integer id : WeaponConfigManager.loadWeaponIDs()) {
+            setItem(id, WeaponConfigManager.loadWeapon(id), player -> {
+                player.sendMessage(ChatColor.GREEN + "You bought " + WeaponConfigManager.loadWeapon(id).getItemMeta().getDisplayName());
+                player.getInventory().addItem(WeaponConfigManager.loadWeapon(id));
             });
         }
         setItem(getInventory().getSize() - 9, new ItemBuilder(Material.ARROW).setName(String.format("%sBack to Main Menu", ChatColor.GRAY)).addItemFlags(ItemFlag.HIDE_ATTRIBUTES).toItem(), player -> {

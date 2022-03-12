@@ -17,7 +17,7 @@ public class GiveWeaponCommand implements CommandExecutor {
                 sender.sendMessage("First argument must be an integer.");
             }
             Player player = (Player) sender;
-            ItemStack item = WeaponConfigManager.getWeapon(Integer.parseInt(args[0]));
+            ItemStack item = WeaponConfigManager.loadWeapon(Integer.parseInt(args[0]));
             if (item == null) return true;
             player.getInventory().addItem(item);
         }
