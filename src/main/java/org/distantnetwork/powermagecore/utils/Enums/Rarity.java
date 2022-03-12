@@ -1,4 +1,4 @@
-package org.distantnetwork.powermagecore.utils;
+package org.distantnetwork.powermagecore.utils.Enums;
 
 import org.bukkit.ChatColor;
 

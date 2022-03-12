@@ -6,10 +6,10 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
-import org.distantnetwork.powermagecore.Classes;
+import org.distantnetwork.powermagecore.utils.Enums.Classes;
 import org.distantnetwork.powermagecore.PowermageCore;
-import org.distantnetwork.powermagecore.utils.InventoryBuilder;
-import org.distantnetwork.powermagecore.utils.ItemBuilder;
+import org.distantnetwork.powermagecore.utils.Builders.InventoryBuilder;
+import org.distantnetwork.powermagecore.utils.Builders.ItemBuilder;
 
 public class MenuGUI extends InventoryBuilder {
     public MenuGUI(Player p) {

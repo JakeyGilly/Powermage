@@ -1,4 +1,4 @@
-package org.distantnetwork.powermagecore.utils;
+package org.distantnetwork.powermagecore.utils.Builders;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -12,6 +12,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
+import org.distantnetwork.powermagecore.utils.Enums.Rarity;
 
 // CREDIT TO NonameSL for this Class
 /**

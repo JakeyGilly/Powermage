@@ -1,4 +1,4 @@
-package org.distantnetwork.powermagecore.utils;
+package org.distantnetwork.powermagecore.utils.Builders;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;

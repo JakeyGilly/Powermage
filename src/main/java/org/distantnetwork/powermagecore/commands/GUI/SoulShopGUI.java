@@ -5,8 +5,8 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
 import org.distantnetwork.powermagecore.utils.Config.WeaponConfigManager;
-import org.distantnetwork.powermagecore.utils.InventoryBuilder;
-import org.distantnetwork.powermagecore.utils.ItemBuilder;
+import org.distantnetwork.powermagecore.utils.Builders.InventoryBuilder;
+import org.distantnetwork.powermagecore.utils.Builders.ItemBuilder;
 
 public class SoulShopGUI extends InventoryBuilder {
     public SoulShopGUI(Player p) {

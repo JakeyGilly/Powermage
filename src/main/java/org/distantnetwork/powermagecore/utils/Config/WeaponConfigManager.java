@@ -9,8 +9,8 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.distantnetwork.powermagecore.PowermageCore;
-import org.distantnetwork.powermagecore.utils.ItemBuilder;
-import org.distantnetwork.powermagecore.utils.Rarity;
+import org.distantnetwork.powermagecore.utils.Builders.ItemBuilder;
+import org.distantnetwork.powermagecore.utils.Enums.Rarity;
 
 import java.io.File;
 import java.io.IOException;

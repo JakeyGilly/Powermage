@@ -28,3 +28,6 @@ commands:
   giveitem:
     usage: /giveitem itemid
     description: Gives an CustomItem to a Player
+  upgrade:
+    usage: /upgrade
+    description: Opens the Upgrade Menu

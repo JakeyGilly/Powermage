@@ -6,7 +6,8 @@ import org.distantnetwork.powermagecore.commands.*;
 import org.distantnetwork.powermagecore.listeners.FoodChangeEvent;
 import org.distantnetwork.powermagecore.listeners.OnItemClick;
 import org.distantnetwork.powermagecore.utils.Config.WeaponConfigManager;
-import org.distantnetwork.powermagecore.utils.InventoryBuilderListener;
+import org.distantnetwork.powermagecore.utils.Builders.InventoryBuilderListener;
+import org.distantnetwork.powermagecore.utils.Enums.Classes;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,6 +22,12 @@ public final class PowermageCore extends JavaPlugin {
     // {uuid, {WARRIOR, {warriorlvl, warriorexp}}, {TANK, {tanklvl, tankexp}, {ARCHER, {archerlvl, archerexp}, {WIZARD, {wizardlvl, wizardexp}}}, {...}
     public static Map<UUID, Integer> playerSouls = new HashMap<>();
     public static Map<UUID, Integer> playerCoins = new HashMap<>();
+
+    public static Map<UUID, Integer> playerStrengthUpgrade = new HashMap<>();
+    public static Map<UUID, Integer> playerSpeedUpgrade = new HashMap<>();
+    public static Map<UUID, Integer> playerManaUpgrade = new HashMap<>();
+    public static Map<UUID, Integer> playerHealthUpgrade = new HashMap<>();
+
 
     public PowermageCore() {
         instance = this;
@@ -42,6 +49,7 @@ public final class PowermageCore extends JavaPlugin {
         getCommand("class").setExecutor(new ClassCommand());
         getCommand("giveitem").setExecutor(new GiveWeaponCommand());
         getCommand("soulshop").setExecutor(new SoulShopCommand());
+        getCommand("upgrade").setExecutor(new UpgradeCommand());
         getServer().getPluginManager().registerEvents(new InventoryBuilderListener(), this);
         getServer().getPluginManager().registerEvents(new FoodChangeEvent(), this);
         getServer().getPluginManager().registerEvents(new OnItemClick(), this);

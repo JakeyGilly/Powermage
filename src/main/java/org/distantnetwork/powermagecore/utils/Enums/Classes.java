@@ -1,4 +1,4 @@
-package org.distantnetwork.powermagecore;
+package org.distantnetwork.powermagecore.utils.Enums;
 
 public enum Classes {
     WARRIOR,
