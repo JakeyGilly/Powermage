@@ -245,9 +245,9 @@ public class ItemBuilder {
         return this;
     }
 
-    public ItemBuilder setRarity(Rarity rarity){
+    public ItemBuilder setRarity(Rarity rarity, Boolean weapon, Boolean armor){
         ItemMeta meta = item.getItemMeta();
-        meta.setDisplayName(rarity.getColor(rarity)+rarity.name());
+        meta.setDisplayName(Rarity.getColor(rarity)+Rarity.getName(rarity, weapon, armor));
         return this;
     }
     /**

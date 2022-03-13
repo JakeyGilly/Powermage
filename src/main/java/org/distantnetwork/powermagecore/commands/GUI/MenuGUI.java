@@ -6,6 +6,7 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
+import org.distantnetwork.powermagecore.utils.Config.MainConfigManager;
 import org.distantnetwork.powermagecore.utils.Enums.Classes;
 import org.distantnetwork.powermagecore.PowermageCore;
 import org.distantnetwork.powermagecore.utils.Builders.InventoryBuilder;
@@ -17,14 +18,21 @@ public class MenuGUI extends InventoryBuilder {
         for (int i = 0; i < getInventory().getSize(); i++) setItem(i, new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setName(" ").addItemFlags(ItemFlag.HIDE_ATTRIBUTES).toItem());
         ItemStack item;
         item = new ItemBuilder(Material.PLAYER_HEAD).setName(String.format("%sYour Stats", ChatColor.GREEN)).addItemFlags(ItemFlag.HIDE_ATTRIBUTES).setSkullOwner(p.getName())
-                .setLore(String.format("%sWarrior Level: %s0%s", ChatColor.DARK_AQUA, ChatColor.GOLD, PowermageCore.classesEmojis.get(Classes.WARRIOR)), String.format("%sTank Level: %s0%s", ChatColor.DARK_AQUA, ChatColor.GOLD, PowermageCore.classesEmojis.get(Classes.TANK)), String.format("%sArcher Level: %s0%s", ChatColor.DARK_AQUA, ChatColor.GOLD, PowermageCore.classesEmojis.get(Classes.ARCHER)), String.format("%sWizard Level: %s0%s", ChatColor.DARK_AQUA, ChatColor.GOLD, PowermageCore.classesEmojis.get(Classes.WIZARD)), String.format("%sBalance: %s0 Coins", ChatColor.GRAY, ChatColor.GOLD), String.format("%sSouls: %s0 Souls", ChatColor.GRAY, ChatColor.AQUA), String.format("%sKills: %s0", ChatColor.GRAY, ChatColor.RED), String.format("%sDeaths: %s0", ChatColor.GRAY, ChatColor.RED))
+                .setLore(String.format("%sWarrior Level: %s0%s", ChatColor.DARK_AQUA, ChatColor.GOLD, MainConfigManager.config.getConfigurationSection("classEmojis").get(Classes.getEmojiName(Classes.WARRIOR))),
+                        String.format("%sTank Level: %s0%s", ChatColor.DARK_AQUA, ChatColor.GOLD, MainConfigManager.config.getConfigurationSection("classEmojis").get(Classes.getEmojiName(Classes.TANK))),
+                        String.format("%sArcher Level: %s0%s", ChatColor.DARK_AQUA, ChatColor.GOLD, MainConfigManager.config.getConfigurationSection("classEmojis").get(Classes.getEmojiName(Classes.ARCHER))),
+                        String.format("%sWizard Level: %s0%s", ChatColor.DARK_AQUA, ChatColor.GOLD, MainConfigManager.config.getConfigurationSection("classEmojis").get(Classes.getEmojiName(Classes.WIZARD))),
+                        String.format("%sBalance: %s0 Coins", ChatColor.GRAY, ChatColor.GOLD),
+                        String.format("%sSouls: %s0 Souls", ChatColor.GRAY, ChatColor.AQUA),
+                        String.format("%sKills: %s0", ChatColor.GRAY, ChatColor.RED),
+                        String.format("%sDeaths: %s0", ChatColor.GRAY, ChatColor.RED))
                 .toItem();
         ItemStack finalItem = item;
         setItem(13, item);
         item = new ItemBuilder(Material.SUGAR).setName(String.format("%sUpgrade Stats", ChatColor.RED)).addItemFlags(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_ENCHANTS).addEnchant(Enchantment.DURABILITY, 1)
                 .setLore(String.format("%sBecome stronger by upgrading", ChatColor.GRAY), String.format("%syour stats using souls.", ChatColor.GRAY), " ", String.format("%sClick to view upgrades", ChatColor.GOLD))
                 .toItem();
-        setItem(21, item); // , player -> new ShopGUI().open(player));
+        setItem(21, item, player -> new UpgradeGUI(player).open(player));
         item = new ItemBuilder(Material.GOLD_INGOT).setName(String.format("%sItem Shop", ChatColor.GOLD)).addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
                 .setLore(String.format("%sBuy powerful weapons, armor", ChatColor.GRAY), String.format("%sand gadgets for a price", ChatColor.GRAY), " ", String.format("%sClick to view the shop", ChatColor.GOLD))
                 .toItem();

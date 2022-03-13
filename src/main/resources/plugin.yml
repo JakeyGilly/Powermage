@@ -31,3 +31,11 @@ commands:
   upgrade:
     usage: /upgrade
     description: Opens the Upgrade Menu
+  powermage:
+    usage: /powermage
+    description: Opens the Powermage Menu
+    aliases:
+      - pmc
+      - powermage
+      - powermagecore
+      - pm

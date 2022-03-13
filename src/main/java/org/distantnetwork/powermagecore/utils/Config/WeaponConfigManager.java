@@ -15,74 +15,48 @@ import java.io.File;
 import java.util.*;
 
 public class WeaponConfigManager {
-
-    public static File getFile() {
-        return new File(PowermageCore.getInstance().getDataFolder() + File.separator + "weapons.yml");
-    }
-
-    public static FileConfiguration getConfig() {
-        return ConfigManager.loadConfigFile(getFile());
-    }
+    public static File folder = new File(PowermageCore.getInstance().getDataFolder(), "weapons");
+    public static File getFile(Integer id) {return new File(PowermageCore.getInstance().getDataFolder() + File.separator + "weapons-"+id+".yml");}
+    public static FileConfiguration getConfig(Integer id) {return ConfigManager.loadConfigFile(getFile(id));}
+    public static <T> T getValue(Integer id, String key) {return ConfigManager.getValue(getFile(id), key);}
+    public static void setValue(Integer id, String key, Object value) {ConfigManager.setValue(getFile(id), key, value);}
+    public static boolean keyExists(Integer id, String key) {return ConfigManager.keyExists(getFile(id), key);}
+    public static void removeKey(Integer id, String key) {ConfigManager.removeKey(getFile(id), key);}
+    public static void setValueIfNotExists(Integer id, String key, Object value) {ConfigManager.setValueIfNotExists(getFile(id), key, value);}
+    public static Integer loadFileLength(Integer id) {return getConfig(id).getKeys(false).size();}
 
     public static ItemStack loadWeapon(int id) {
-        File file = new File(String.format("%s%sweapons", PowermageCore.getInstance().getDataFolder(), File.separator), "weapon-" + id + ".yml");
-        FileConfiguration config = ConfigManager.loadConfigFile(file);
-        if (!config.getBoolean("enabled")) return null;
-        if (!config.contains("material") && config.getString("material").equals("")) return null;
-        ItemBuilder item = new ItemBuilder(Material.getMaterial(config.getString("material")), 1);
-        if (config.getString("name") != null) item.setName(ChatColor.translateAlternateColorCodes('&', config.getString("name")));
-        if (!config.getStringList("lore").isEmpty()) for (String s : config.getStringList("lore")) item.addLoreLine(ChatColor.translateAlternateColorCodes('&', s));
-        if (config.getConfigurationSection("enchantments") != null) {
-            config.getConfigurationSection("enchantments").getValues(false).forEach((key, value) -> {
-                Enchantment enchant = Enchantment.getByKey(NamespacedKey.minecraft(key));
-                item.addEnchant(enchant, (Integer) value);
-            });
-        }
-        for (String flag : config.getStringList("flags")) {
-            item.addItemFlags(ItemFlag.valueOf(flag));
-        }
-        if (config.getBoolean("unbreakable")) item.setUnbreakable();
-        if (config.getString("rarity") != null) {
-            Rarity rarity = Rarity.valueOf(config.getString("rarity"));
-            item.addLoreLine(Rarity.getColor(rarity) + Rarity.getName(rarity, true, false));
-        }
+        FileConfiguration config = getConfig(id);
+        if (!(Boolean) getValue(id, "enabled")) return null;
+        if (!keyExists(id, "material")) return null;
+        ItemBuilder item = new ItemBuilder(Material.getMaterial(getValue(id, "material")));
+        if (keyExists(id, "name")) item.setName(ChatColor.translateAlternateColorCodes('&', getValue(id, "name").toString()));
+        if (keyExists(id, "lore") && !config.getStringList("lore").isEmpty()) for (String s : config.getStringList("lore")) item.addLoreLine(ChatColor.translateAlternateColorCodes('&', s));
+        if (keyExists(id, "enchantments")) config.getConfigurationSection("enchantments").getValues(false).forEach((key, value) -> {
+            Enchantment enchant = Enchantment.getByKey(NamespacedKey.minecraft(key));
+            item.addEnchant(enchant, (Integer) value);
+        });
+        if (keyExists(id, "flags")) config.getStringList("flags").forEach(s -> item.addItemFlags(ItemFlag.valueOf(s)));
+        if (getValue(id,"unbreakable")) item.setUnbreakable();
+        if (keyExists(id, "rarity")) item.setRarity(Rarity.valueOf(getValue(id, "rarity").toString()), true, false);
         return item.toItem();
     }
 
     public static int loadWeaponAmount() {
-        File file = new File(String.format("%s%sweapons", PowermageCore.getInstance().getDataFolder(), File.separator));
-        if (!file.exists()) {
-            PowermageCore.getInstance().getLogger().warning(String.format("Weapon folder %s does not exist!", file.getName()));
-            return 0;
-        }
-        File[] list = file.listFiles();
-        if (list == null) return 0;
         int count = 0;
-        for (File f : list) if (f.getName().startsWith("weapon-")) count++;
+        for (File f : ConfigManager.getFilesInFolder(folder)) if (f.getName().startsWith("weapon-")) count++;
         return count;
     }
 
     public static Integer[] loadWeaponIDs() {
-        File file = new File(String.format("%s%sweapons", PowermageCore.getInstance().getDataFolder(), File.separator));
-        if (!file.exists()) {
-            PowermageCore.getInstance().getLogger().warning(String.format("Weapon folder %s does not exist!", file.getName()));
-            return new Integer[0];
-        }
         List<Integer> ids = new ArrayList<Integer>();
-        File[] list = file.listFiles();
-        if (list != null) {
-            for (File f : list) {
-                if (f.getName().startsWith("weapon-")) {
-                    ids.add(Integer.parseInt(f.getName().substring(7, f.getName().indexOf(".yml"))));
-                }
-            }
-        }
+        for (File f : ConfigManager.getFilesInFolder(folder)) if (f.getName().startsWith("weapon-")) ids.add(Integer.parseInt(f.getName().substring(7, f.getName().indexOf(".yml"))));
         return ids.toArray(new Integer[ids.size()]);
     }
 
     public static void saveDefaultWeapons() {
-        File file = new File(String.format("%s%sweapons", PowermageCore.getInstance().getDataFolder(), File.separator), "weapon-0.yml");
-        FileConfiguration config = ConfigManager.loadConfigFile(file);
+        File file = getFile(0);
+        FileConfiguration config = getConfig(0);
 
         config.set("enabled", true);
         config.addDefault("name", "DemoItem");

@@ -2,7 +2,6 @@ package org.distantnetwork.powermagecore.utils.Config;
 
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.distantnetwork.powermagecore.PowermageCore;
 
 import java.io.File;
 import java.io.IOException;
@@ -94,6 +93,11 @@ public class ConfigManager {
         if (!config.contains(key)) return;
         config.set(key, value);
         ConfigManager.saveConfigFile(file, config);
+    }
+    public static File[] getFilesInFolder(File folder) {
+        if (folder.isFile()) return null;
+        if (!folder.exists()) return null;
+        return folder.listFiles();
     }
 }
 
