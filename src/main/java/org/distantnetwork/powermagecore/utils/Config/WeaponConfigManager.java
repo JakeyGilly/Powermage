@@ -27,8 +27,8 @@ public class WeaponConfigManager {
 
     public static ItemStack loadWeapon(int id) {
         FileConfiguration config = getConfig(id);
-        if (!(Boolean) getValue(id, "enabled")) return null;
-        if (!keyExists(id, "material")) return null;
+        PowermageCore.getInstance().getLogger().info("Loading weapon: " + id);
+        if (!keyExists(id, "enabled") || !(Boolean) getValue(id, "enabled") || !keyExists(id, "material")) return null;
         ItemBuilder item = new ItemBuilder(Material.getMaterial(getValue(id, "material")));
         if (keyExists(id, "name")) item.setName(ChatColor.translateAlternateColorCodes('&', getValue(id, "name").toString()));
         if (keyExists(id, "lore") && !config.getStringList("lore").isEmpty()) for (String s : config.getStringList("lore")) item.addLoreLine(ChatColor.translateAlternateColorCodes('&', s));
@@ -68,6 +68,7 @@ public class WeaponConfigManager {
         config.addDefault("unbreakable", true);
         config.addDefault("flags", new String[]{ItemFlag.HIDE_UNBREAKABLE.name()});
         config.addDefault("rarity", Rarity.COMMON.name());
+        config.addDefault("price", 0);
         config.addDefault("damage", "NOT IMPLEMENTED");
         config.addDefault("ability_cooldown", "NOT IMPLEMENTED");
         config.addDefault("ability_mana", "NOT IMPLEMENTED");

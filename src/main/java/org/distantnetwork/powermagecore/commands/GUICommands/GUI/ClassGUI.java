@@ -1,4 +1,4 @@
-package org.distantnetwork.powermagecore.commands.GUI;
+package org.distantnetwork.powermagecore.commands.GUICommands.GUI;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;

@@ -1,4 +1,4 @@
-package org.distantnetwork.powermagecore.commands.AutoCompleters;
+package org.distantnetwork.powermagecore.commands.PluginCommand;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;

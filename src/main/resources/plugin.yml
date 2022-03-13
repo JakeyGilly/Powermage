@@ -39,3 +39,15 @@ commands:
       - powermage
       - powermagecore
       - pm
+  givecoins:
+    usage: /givecoins <player> amount
+    description: Gives Coins to a Player
+    aliases:
+      - givemoney
+      - givecoin
+  givesouls:
+    usage: /givesouls <player> amount
+    description: Gives Souls to a Player
+    aliases:
+      - givesoul
+

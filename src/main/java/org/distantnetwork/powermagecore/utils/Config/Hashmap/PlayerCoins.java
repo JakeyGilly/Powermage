@@ -13,16 +13,12 @@ public class PlayerCoins {
     public static FileConfiguration config = ConfigManager.loadConfigFile(file);
 
     public static void save() {
-        for (Map.Entry<UUID, Integer> entry : PowermageCore.playerCoins.entrySet()) config.set(entry.getKey().toString(), entry.getValue());
+        PowermageCore.playerCoins.forEach((uuid, souls) -> config.set(uuid.toString(), souls));
         ConfigManager.saveConfigFile(file, config);
     }
 
     public static Map<UUID, Integer> load() {
-        for (String uuid : config.getKeys(false)) {
-            if (PowermageCore.playerCoins.isEmpty() || !PowermageCore.playerCoins.containsKey(UUID.fromString(uuid)))
-                PowermageCore.playerCoins.put(UUID.fromString(uuid), config.getInt(uuid));
-            else PowermageCore.playerCoins.replace(UUID.fromString(uuid), config.getInt(uuid));
-        }
+        config.getValues(false).forEach((uuid, souls) -> PowermageCore.playerCoins.put(UUID.fromString(uuid.toString()), Integer.parseInt(souls.toString())));
         return PowermageCore.playerCoins;
     }
 }

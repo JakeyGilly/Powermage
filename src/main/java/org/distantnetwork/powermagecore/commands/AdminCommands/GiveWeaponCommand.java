@@ -1,4 +1,4 @@
-package org.distantnetwork.powermagecore.commands;
+package org.distantnetwork.powermagecore.commands.AdminCommands;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;

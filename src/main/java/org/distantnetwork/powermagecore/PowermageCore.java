@@ -2,7 +2,15 @@ package org.distantnetwork.powermagecore;
 
 import org.bukkit.plugin.java.JavaPlugin;
 import org.distantnetwork.powermagecore.commands.*;
-import org.distantnetwork.powermagecore.commands.AutoCompleters.PluginCommandCompleter;
+import org.distantnetwork.powermagecore.commands.AdminCommands.GiveMoney;
+import org.distantnetwork.powermagecore.commands.AdminCommands.GiveSouls;
+import org.distantnetwork.powermagecore.commands.AdminCommands.GiveWeaponCommand;
+import org.distantnetwork.powermagecore.commands.PluginCommand.PluginCommandCompleter;
+import org.distantnetwork.powermagecore.commands.GUICommands.ClassCommand;
+import org.distantnetwork.powermagecore.commands.GUICommands.MenuCommand;
+import org.distantnetwork.powermagecore.commands.GUICommands.SoulShopCommand;
+import org.distantnetwork.powermagecore.commands.GUICommands.UpgradeCommand;
+import org.distantnetwork.powermagecore.commands.PluginCommand.PluginCommand;
 import org.distantnetwork.powermagecore.listeners.FoodChangeEvent;
 import org.distantnetwork.powermagecore.listeners.OnItemClick;
 import org.distantnetwork.powermagecore.utils.Config.Hashmap.*;
@@ -31,6 +39,7 @@ public final class PowermageCore extends JavaPlugin {
     }
     public static PowermageCore getInstance() {return instance;}
     // TODO UPGRADING TOOLS AND WEAPONS
+    // TODO CUSTOM ENCHANTMENTS
     @Override
     public void onEnable() {
         PlayerClasses.load();
@@ -61,11 +70,14 @@ public final class PowermageCore extends JavaPlugin {
         getCommand("store").setExecutor(new StoreCommand());
         getCommand("spawn").setExecutor(new SpawnCommand());
         getCommand("class").setExecutor(new ClassCommand());
-        getCommand("giveitem").setExecutor(new GiveWeaponCommand());
         getCommand("soulshop").setExecutor(new SoulShopCommand());
         getCommand("upgrade").setExecutor(new UpgradeCommand());
         getCommand("pmc").setExecutor(new PluginCommand());
         getCommand("pmc").setTabCompleter(new PluginCommandCompleter());
+        getCommand("givesouls").setExecutor(new GiveSouls());
+        getCommand("givecoins").setExecutor(new GiveMoney());
+        getCommand("giveitem").setExecutor(new GiveWeaponCommand());
+
     }
 
     private void setListeners() {
