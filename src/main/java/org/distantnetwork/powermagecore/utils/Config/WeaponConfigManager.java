@@ -16,7 +16,7 @@ import java.util.*;
 
 public class WeaponConfigManager {
     public static File folder = new File(PowermageCore.getInstance().getDataFolder(), "weapons");
-    public static File getFile(Integer id) {return new File(PowermageCore.getInstance().getDataFolder() + File.separator + "weapons-"+id+".yml");}
+    public static File getFile(Integer id) {return new File(PowermageCore.getInstance().getDataFolder() + File.separator + "weapons", "weapon-"+id+".yml");}
     public static FileConfiguration getConfig(Integer id) {return ConfigManager.loadConfigFile(getFile(id));}
     public static <T> T getValue(Integer id, String key) {return ConfigManager.getValue(getFile(id), key);}
     public static void setValue(Integer id, String key, Object value) {ConfigManager.setValue(getFile(id), key, value);}

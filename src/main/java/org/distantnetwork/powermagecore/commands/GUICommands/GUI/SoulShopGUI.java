@@ -19,12 +19,12 @@ public class SoulShopGUI extends InventoryBuilder {
         for (Integer id : weaponIds) {
             ItemStack weapon = WeaponConfigManager.loadWeapon(id);
             setItem(id, weapon, player -> {
-                if (PowermageCore.playerCoins.get(player.getUniqueId()) != null && PowermageCore.playerCoins.get(player.getUniqueId()) >= (int)WeaponConfigManager.getValue(id, "price")) {
-                    PowermageCore.playerCoins.put(player.getUniqueId(), PowermageCore.playerCoins.get(player.getUniqueId()) - (int)WeaponConfigManager.getValue(id, "price"));
-                    player.sendMessage(ChatColor.GREEN + "You bought " + weapon.getItemMeta().getDisplayName());
+                if (PowermageCore.playerSouls.get(player.getUniqueId()) != null && PowermageCore.playerSouls.get(player.getUniqueId()) >= (int)WeaponConfigManager.getValue(id, "price")) {
+                    PowermageCore.playerSouls.put(player.getUniqueId(), PowermageCore.playerSouls.get(player.getUniqueId()) - (int)WeaponConfigManager.getValue(id, "price"));
+                    player.sendMessage(ChatColor.GREEN + "You bought " + weapon.getItemMeta().getDisplayName() + "for " + (int)WeaponConfigManager.getValue(id, "price") + " souls.");
                     player.getInventory().addItem(weapon);
                 } else {
-                    player.sendMessage(ChatColor.RED + "You don't have enough coins!");
+                    player.sendMessage(ChatColor.RED + "You don't have enough souls!");
                 }
             });
         }
