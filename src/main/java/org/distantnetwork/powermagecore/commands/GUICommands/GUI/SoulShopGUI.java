@@ -1,9 +1,11 @@
-package org.distantnetwork.powermagecore.commands.GUI;
+package org.distantnetwork.powermagecore.commands.GUICommands.GUI;
 
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
+import org.bukkit.inventory.ItemStack;
+import org.distantnetwork.powermagecore.PowermageCore;
 import org.distantnetwork.powermagecore.utils.Config.WeaponConfigManager;
 import org.distantnetwork.powermagecore.utils.Builders.InventoryBuilder;
 import org.distantnetwork.powermagecore.utils.Builders.ItemBuilder;
@@ -12,11 +14,18 @@ public class SoulShopGUI extends InventoryBuilder {
     public SoulShopGUI(Player p) {
         super((WeaponConfigManager.loadWeaponAmount() % 9 == 0 ? WeaponConfigManager.loadWeaponAmount() : WeaponConfigManager.loadWeaponAmount() + (9 - (WeaponConfigManager.loadWeaponAmount() % 9)))+9, String.format("%sPowermage Soul Shop", ChatColor.AQUA));
         for (int i = 0; i < getInventory().getSize(); i++) setItem(i, new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setName(" ").addItemFlags(ItemFlag.HIDE_ATTRIBUTES).toItem());
-        if (WeaponConfigManager.loadWeaponIDs().length <= 0) return;
-        for (Integer id : WeaponConfigManager.loadWeaponIDs()) {
-            setItem(id, WeaponConfigManager.loadWeapon(id), player -> {
-                player.sendMessage(ChatColor.GREEN + "You bought " + WeaponConfigManager.loadWeapon(id).getItemMeta().getDisplayName());
-                player.getInventory().addItem(WeaponConfigManager.loadWeapon(id));
+        Integer[] weaponIds = WeaponConfigManager.loadWeaponIDs();
+        if (weaponIds.length <= 0) return;
+        for (Integer id : weaponIds) {
+            ItemStack weapon = WeaponConfigManager.loadWeapon(id);
+            setItem(id, weapon, player -> {
+                if (PowermageCore.playerCoins.get(player.getUniqueId()) != null && PowermageCore.playerCoins.get(player.getUniqueId()) >= (int)WeaponConfigManager.getValue(id, "price")) {
+                    PowermageCore.playerCoins.put(player.getUniqueId(), PowermageCore.playerCoins.get(player.getUniqueId()) - (int)WeaponConfigManager.getValue(id, "price"));
+                    player.sendMessage(ChatColor.GREEN + "You bought " + weapon.getItemMeta().getDisplayName());
+                    player.getInventory().addItem(weapon);
+                } else {
+                    player.sendMessage(ChatColor.RED + "You don't have enough coins!");
+                }
             });
         }
         setItem(getInventory().getSize() - 9, new ItemBuilder(Material.ARROW).setName(String.format("%sBack to Main Menu", ChatColor.GRAY)).addItemFlags(ItemFlag.HIDE_ATTRIBUTES).toItem(), player -> {

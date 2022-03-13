@@ -1,4 +1,4 @@
-package org.distantnetwork.powermagecore.commands.GUI;
+package org.distantnetwork.powermagecore.commands.GUICommands.GUI;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -22,8 +22,8 @@ public class MenuGUI extends InventoryBuilder {
                         String.format("%sTank Level: %s0%s", ChatColor.DARK_AQUA, ChatColor.GOLD, MainConfigManager.config.getConfigurationSection("classEmojis").get(Classes.getEmojiName(Classes.TANK))),
                         String.format("%sArcher Level: %s0%s", ChatColor.DARK_AQUA, ChatColor.GOLD, MainConfigManager.config.getConfigurationSection("classEmojis").get(Classes.getEmojiName(Classes.ARCHER))),
                         String.format("%sWizard Level: %s0%s", ChatColor.DARK_AQUA, ChatColor.GOLD, MainConfigManager.config.getConfigurationSection("classEmojis").get(Classes.getEmojiName(Classes.WIZARD))),
-                        String.format("%sBalance: %s0 Coins", ChatColor.GRAY, ChatColor.GOLD),
-                        String.format("%sSouls: %s0 Souls", ChatColor.GRAY, ChatColor.AQUA),
+                        String.format("%sBalance: %s%s Coins", ChatColor.GRAY, ChatColor.GOLD, PowermageCore.playerCoins.get(p.getUniqueId()) == null ? "0" : PowermageCore.playerCoins.get(p.getUniqueId())),
+                        String.format("%sSouls: %s%s Souls", ChatColor.GRAY, ChatColor.AQUA, PowermageCore.playerSouls.get(p.getUniqueId()) == null ? "0" : PowermageCore.playerSouls.get(p.getUniqueId())),
                         String.format("%sKills: %s0", ChatColor.GRAY, ChatColor.RED),
                         String.format("%sDeaths: %s0", ChatColor.GRAY, ChatColor.RED))
                 .toItem();

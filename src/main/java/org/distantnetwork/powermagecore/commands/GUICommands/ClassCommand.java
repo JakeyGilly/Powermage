@@ -1,10 +1,10 @@
-package org.distantnetwork.powermagecore.commands;
+package org.distantnetwork.powermagecore.commands.GUICommands;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.distantnetwork.powermagecore.commands.GUI.ClassGUI;
+import org.distantnetwork.powermagecore.commands.GUICommands.GUI.ClassGUI;
 
 public class ClassCommand implements CommandExecutor {
     @Override
