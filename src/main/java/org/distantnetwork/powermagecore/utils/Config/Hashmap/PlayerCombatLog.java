@@ -13,16 +13,37 @@ public class PlayerCombatLog {
     public static FileConfiguration config = ConfigManager.loadConfigFile(file);
 
     public static void save() {
-        for (Map.Entry<UUID, Boolean> entry : PowermageCore.playerCombatLog.entrySet()) config.set(entry.getKey().toString(), entry.getValue());
+        PowermageCore.playerCombatLog.forEach((uuid, combatLog) -> config.set(uuid.toString(), combatLog));
         ConfigManager.saveConfigFile(file, config);
     }
 
-    public static Map<UUID, Boolean> load() {
-        for (String uuid : config.getKeys(false)) {
-            if (PowermageCore.playerCombatLog.isEmpty() || !PowermageCore.playerCombatLog.containsKey(UUID.fromString(uuid)))
-                PowermageCore.playerCombatLog.put(UUID.fromString(uuid), config.getBoolean(uuid));
-            else PowermageCore.playerCombatLog.replace(UUID.fromString(uuid), config.getBoolean(uuid));
-        }
+    public static void load() {
+        config.getValues(false).forEach((uuid, combatLog) -> PowermageCore.playerCombatLog.put(UUID.fromString(uuid), (Boolean) combatLog));
+    }
+
+    public static void set(UUID uuid, boolean combatLog) {
+        PowermageCore.playerCombatLog.put(uuid, combatLog);
+        save();
+    }
+
+    public static void unset(UUID uuid) {
+        PowermageCore.playerCombatLog.remove(uuid);
+        save();
+    }
+
+    public static boolean isSet(UUID uuid) {
+        return PowermageCore.playerCombatLog.get(uuid);
+    }
+
+    public static boolean isUnset(UUID uuid) {
+        return !PowermageCore.playerCombatLog.get(uuid);
+    }
+
+    public static boolean get(UUID uuid) {
+        return PowermageCore.playerCombatLog.get(uuid);
+    }
+
+    public static Map<UUID, Boolean> getAll() {
         return PowermageCore.playerCombatLog;
     }
 }

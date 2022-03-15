@@ -6,6 +6,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.distantnetwork.powermagecore.PowermageCore;
+import org.distantnetwork.powermagecore.utils.Config.Hashmap.PlayerUpgrades;
 import org.distantnetwork.powermagecore.utils.Enums.Upgrades;
 
 
@@ -24,18 +25,14 @@ public class SetUpgradesCommand implements CommandExecutor {
             }
             if (args.length == 3) {
                 Player target = PowermageCore.getInstance().getServer().getPlayer(args[2]);
-                Upgrades upgrade = Upgrades.valueOf(args[0].toUpperCase());
-                Integer amount = Integer.parseInt(args[1].toUpperCase());
                 if (target == null) {
                     player.sendMessage(ChatColor.RED + "Player not found.");
                     return true;
                 }
-                PowermageCore.playerUpgrades.get(target.getUniqueId()).put(upgrade, amount);
+                PlayerUpgrades.setUpgrade(target.getUniqueId(), Upgrades.valueOf(args[0].toUpperCase()), Integer.parseInt(args[1].toUpperCase()));
                 return true;
             } else if (args.length == 2) {
-                Upgrades upgrade = Upgrades.valueOf(args[0].toUpperCase());
-                Integer amount = Integer.parseInt(args[1].toUpperCase());
-                PowermageCore.playerUpgrades.get(player.getUniqueId()).put(upgrade, amount);
+                PlayerUpgrades.setUpgrade(player.getUniqueId(), Upgrades.valueOf(args[0].toUpperCase()), Integer.parseInt(args[1].toUpperCase()));
                 return true;
             }
         }

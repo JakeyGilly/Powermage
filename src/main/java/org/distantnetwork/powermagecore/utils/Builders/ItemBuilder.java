@@ -61,13 +61,6 @@ public class ItemBuilder {
         }
     }
     /**
-     * Clone the ItemBuilder into a new one.
-     * @return The cloned instance.
-     */
-    public ItemBuilder clone(){
-        return new ItemBuilder(item);
-    }
-    /**
      * Change the durability of the item.
      * @param durability The durability to set it to.
      */
@@ -240,7 +233,7 @@ public class ItemBuilder {
     }
     public ItemBuilder addItemFlags(List<ItemFlag> flags){
         ItemMeta meta = item.getItemMeta();
-        meta.addItemFlags(flags.toArray(new ItemFlag[flags.size()]));
+        meta.addItemFlags(flags.toArray(new ItemFlag[0]));
         item.setItemMeta(meta);
         return this;
     }

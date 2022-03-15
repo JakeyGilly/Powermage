@@ -48,10 +48,18 @@ public class WeaponConfigManager {
         return count;
     }
 
-    public static Integer[] loadWeaponIDs() {
-        List<Integer> ids = new ArrayList<Integer>();
-        for (File f : ConfigManager.getFilesInFolder(folder)) if (f.getName().startsWith("weapon-")) ids.add(Integer.parseInt(f.getName().substring(7, f.getName().indexOf(".yml"))));
-        return ids.toArray(new Integer[ids.size()]);
+    public static Integer getWeaponId(String name) {
+        for (File f : ConfigManager.getFilesInFolder(folder)) if (f.getName().startsWith("weapon-")) {
+            FileConfiguration config = ConfigManager.loadConfigFile(f);
+            if (config.getString("name").equals(name)) return Integer.parseInt(f.getName().substring(f.getName().indexOf("-")+1, f.getName().indexOf(".")));
+        }
+        return null;
+    }
+
+    public static List<String> loadWeaponNames() {
+        List<String> ids = new ArrayList<>();
+        for (File f : ConfigManager.getFilesInFolder(folder)) if (f.getName().startsWith("weapon-")) ids.add(ConfigManager.getValue(f, "name").toString());
+        return ids;
     }
 
     public static void saveDefaultWeapons() {
@@ -62,7 +70,7 @@ public class WeaponConfigManager {
         config.addDefault("name", "DemoItem");
         config.addDefault("material", Material.STONE.getKey().getKey().toUpperCase());
         config.addDefault("lore", new String[]{"&alore", "&clore"});
-        Map<String, Integer> enchantments = new HashMap<String, Integer>();
+        Map<String, Integer> enchantments = new HashMap<>();
         enchantments.put(Enchantment.MENDING.getKey().getKey(), 1);
         config.addDefault("enchantments", enchantments);
         config.addDefault("unbreakable", true);

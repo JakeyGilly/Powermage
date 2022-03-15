@@ -6,7 +6,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.distantnetwork.powermagecore.PowermageCore;
+import org.distantnetwork.powermagecore.utils.Config.Hashmap.PlayerCoins;
 
 public class GiveMoneyCommand implements CommandExecutor {
     @Override
@@ -22,11 +22,7 @@ public class GiveMoneyCommand implements CommandExecutor {
                         sender.sendMessage(String.format("%sInvalid number", ChatColor.RED));
                         return true;
                     }
-                    if (PowermageCore.playerCoins.containsKey(player.getUniqueId())) {
-                        PowermageCore.playerCoins.put(player.getUniqueId(), PowermageCore.playerCoins.get(player.getUniqueId()) + amount);
-                    } else {
-                        PowermageCore.playerCoins.put(player.getUniqueId(), amount);
-                    }
+                    PlayerCoins.addCoins(player.getUniqueId(), amount);
                 } else {
                     sender.sendMessage(String.format("%sYou don't have permission to use this command", ChatColor.RED));
                 }
@@ -42,11 +38,7 @@ public class GiveMoneyCommand implements CommandExecutor {
                         sender.sendMessage(String.format("%sInvalid number", ChatColor.RED));
                         return true;
                     }
-                    if (PowermageCore.playerCoins.containsKey(player.getUniqueId())) {
-                        PowermageCore.playerCoins.put(player.getUniqueId(), PowermageCore.playerCoins.get(player.getUniqueId()) + amount);
-                    } else {
-                        PowermageCore.playerCoins.put(player.getUniqueId(), amount);
-                    }
+                    PlayerCoins.addCoins(player.getUniqueId(), amount);
                 } else {
                     sender.sendMessage(String.format("%sYou don't have permission to use this command", ChatColor.RED));
                 }

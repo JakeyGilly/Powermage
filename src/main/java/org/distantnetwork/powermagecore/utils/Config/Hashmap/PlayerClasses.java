@@ -14,18 +14,39 @@ public class PlayerClasses {
     public static FileConfiguration config = ConfigManager.loadConfigFile(file);
 
     public static void save() {
-        for (Map.Entry<UUID, Classes> entry : PowermageCore.playerClasses.entrySet()) {
-            config.set(entry.getKey().toString(), entry.getValue().toString());
-        }
+        PowermageCore.playerClasses.forEach((uuid, classes) -> config.set(uuid.toString(), classes.name()));
         ConfigManager.saveConfigFile(file, config);
     }
 
-    public static Map<UUID, Classes> load() {
-        for (String uuid : config.getKeys(false)) {
-            if (PowermageCore.playerClasses.isEmpty() || !PowermageCore.playerClasses.containsKey(UUID.fromString(uuid)))
-                PowermageCore.playerClasses.put(UUID.fromString(uuid), Classes.valueOf(config.getString(uuid)));
-            else PowermageCore.playerClasses.replace(UUID.fromString(uuid), Classes.valueOf(config.getString(uuid)));
-        }
+    public static void load() {
+        config.getValues(false).forEach((uuid, classes) -> PowermageCore.playerClasses.put(UUID.fromString(uuid), Classes.valueOf(classes.toString())));
+    }
+
+    public static Classes getClasses(UUID uuid) {
+        return PowermageCore.playerClasses.get(uuid);
+    }
+
+    public static void setClasses(UUID uuid, Classes classes) {
+        PowermageCore.playerClasses.put(uuid, classes);
+        save();
+    }
+
+    public static void removeByUUID(UUID uuid) {
+        PowermageCore.playerClasses.remove(uuid);
+        save();
+    }
+
+    public static void removeByClasses(Classes classes) {
+        PowermageCore.playerClasses.entrySet().removeIf(entry -> entry.getValue() == classes);
+        save();
+    }
+
+    public static void removeAll() {
+        PowermageCore.playerClasses.clear();
+        save();
+    }
+
+    public static Map<UUID, Classes> getAll() {
         return PowermageCore.playerClasses;
     }
 }

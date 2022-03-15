@@ -61,9 +61,9 @@ public class ConfigManager {
         if (config == null) throw new NullPointerException("Config is null");
         if (!config.contains(key)) return null;
         if (config.get(key).getClass() == String.class) return (T) config.getString(key);
-        else if (config.get(key).getClass() == Integer.class) return (T) new Integer(config.getInt(key));
+        else if (config.get(key).getClass() == Integer.class) return (T) Integer.valueOf(config.getInt(key));
         else if (config.get(key).getClass() == Double.class) return (T) new Double(config.getDouble(key));
-        else if (config.get(key).getClass() == Boolean.class) return (T) new Boolean(config.getBoolean(key));
+        else if (config.get(key).getClass() == Boolean.class) return (T) Boolean.valueOf(config.getBoolean(key));
         throw new IllegalArgumentException("Type not supported");
     }
 

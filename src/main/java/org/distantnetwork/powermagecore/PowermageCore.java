@@ -32,7 +32,7 @@ public final class PowermageCore extends JavaPlugin {
     private static PowermageCore instance;
     public static Map<UUID, Boolean> playerCombatLog = new HashMap<>();
     public static Map<UUID, Classes> playerClasses = new HashMap<>();
-    public static Map<UUID, HashMap<Classes, ArrayList<Integer>>> playerLevels = new HashMap<UUID, HashMap<Classes, java.util.ArrayList<Integer>>>();
+    public static Map<UUID, HashMap<Classes, ArrayList<Integer>>> playerLevels = new HashMap<>();
     public static Map<UUID, Integer> playerSouls = new HashMap<>();
     public static Map<UUID, Integer> playerCoins = new HashMap<>();
     public static Map<UUID, Map<Upgrades, Integer>> playerUpgrades = new HashMap<>();
