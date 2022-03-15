@@ -53,4 +53,13 @@ commands:
   setupgrades:
     usage: /setupgrades
     description: Opens the Setup Upgrade Menu
+  levelup:
+    description: Opens the Levelup Menu
+    aliases:
+      - lvlup
+    usage: /levelup [player] [amount]
+  setcombatlog:
+    usage: /setcombatlog
+    description: Sets the CombatLog
+    usage: /setcombatlog <true/false/on/off>
 
