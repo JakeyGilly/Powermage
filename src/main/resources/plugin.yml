@@ -50,4 +50,7 @@ commands:
     description: Gives Souls to a Player
     aliases:
       - givesoul
+  setupgrades:
+    usage: /setupgrades
+    description: Opens the Setup Upgrade Menu
 
