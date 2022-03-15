@@ -10,13 +10,13 @@ import org.distantnetwork.powermagecore.commands.GUICommands.GUI.UpgradeGUI;
 public class UpgradeCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-        if (!(sender instanceof Player)) {
-            sender.sendMessage(ChatColor.RED + "You must be a player to use this command.");
-            return true;
-        }
-        Player player = (Player) sender;
-        if (player.hasPermission("powermage.upgrade")) new UpgradeGUI(player).open(player);
-        else player.sendMessage(String.format("%sYou don't have permission to use this command.", ChatColor.RED));
+        if (sender instanceof Player) {
+            Player player = (Player) sender;
+            if (!player.hasPermission("powermage.upgrade")) {
+                player.sendMessage(String.format("%sYou don't have permission to use this command!", ChatColor.RED));
+            }
+            new UpgradeGUI(player).open(player);
+        } else sender.sendMessage(String.format("%sThis command is only for players!", ChatColor.RED));
         return true;
     }
 }

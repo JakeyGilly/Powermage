@@ -8,6 +8,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.distantnetwork.powermagecore.utils.Config.Hashmap.PlayerClasses;
+import org.distantnetwork.powermagecore.utils.Config.Hashmap.PlayerLevels;
 import org.distantnetwork.powermagecore.utils.Config.MainConfigManager;
 import org.distantnetwork.powermagecore.utils.Enums.Classes;
 import org.distantnetwork.powermagecore.utils.Builders.InventoryBuilder;
@@ -29,10 +30,11 @@ public class ClassGUI extends InventoryBuilder {
             player.setHealthScale(20);
             player.setHealth(20.0);
             player.setWalkSpeed(0.2f);
-            // limit this to only be given to players who have not yet chosen a class
-            player.getInventory().addItem(new ItemBuilder(Material.WOODEN_SWORD).setName(String.format("%sWarrior Sword", ChatColor.GRAY)).addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
-                    .setLore(String.format("%sDamage: %s+4", ChatColor.GRAY, ChatColor.RED), String.format("%sAttack Speed: %s1.6", ChatColor.GRAY, ChatColor.RED), " ", String.format("%sThe starter weapon", ChatColor.GRAY), String.format("%sfor the warrior class", ChatColor.GRAY), " ", String.format("%s%sCOMMON WEAPON", ChatColor.GRAY, ChatColor.BOLD))
-                    .toItem());
+            if (PlayerLevels.getPlayerLevel(player.getUniqueId(), Classes.WARRIOR) == 0) {
+                player.getInventory().addItem(new ItemBuilder(Material.WOODEN_SWORD).setName(String.format("%sWarrior Sword", ChatColor.GRAY)).addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
+                        .setLore(String.format("%sDamage: %s+4", ChatColor.GRAY, ChatColor.RED), String.format("%sAttack Speed: %s1.6", ChatColor.GRAY, ChatColor.RED), " ", String.format("%sThe starter weapon", ChatColor.GRAY), String.format("%sfor the warrior class", ChatColor.GRAY), " ", String.format("%s%sCOMMON WEAPON", ChatColor.GRAY, ChatColor.BOLD))
+                        .toItem());
+            }
             PlayerClasses.setClasses(player.getUniqueId(), Classes.WARRIOR);
             PlayerClasses.save();
         });
@@ -51,10 +53,11 @@ public class ClassGUI extends InventoryBuilder {
                 player.setHealth(40.0);
             } catch (IllegalArgumentException ignored) {}
             player.setWalkSpeed(0.1f);
-            // limit this to only be given to players who have not yet chosen a class
-            player.getInventory().addItem(new ItemBuilder(Material.WOODEN_AXE).setName(String.format("%sTank Axe", ChatColor.GRAY)).addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
-                    .setLore(String.format("%sDamage: %s+9", ChatColor.GRAY, ChatColor.RED), String.format("%sAttack Speed: %s0.8", ChatColor.GRAY, ChatColor.RED), " ", String.format("%sThe starter weapon", ChatColor.GRAY), String.format("%sfor the tank class", ChatColor.GRAY), " ", String.format("%s%sCOMMON WEAPON", ChatColor.GRAY, ChatColor.BOLD))
-                    .toItem());
+            if (PlayerLevels.getPlayerLevel(player.getUniqueId(), Classes.TANK) == 0) {
+                player.getInventory().addItem(new ItemBuilder(Material.WOODEN_AXE).setName(String.format("%sTank Axe", ChatColor.GRAY)).addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
+                        .setLore(String.format("%sDamage: %s+9", ChatColor.GRAY, ChatColor.RED), String.format("%sAttack Speed: %s0.8", ChatColor.GRAY, ChatColor.RED), " ", String.format("%sThe starter weapon", ChatColor.GRAY), String.format("%sfor the tank class", ChatColor.GRAY), " ", String.format("%s%sCOMMON WEAPON", ChatColor.GRAY, ChatColor.BOLD))
+                        .toItem());
+            }
             PlayerClasses.setClasses(player.getUniqueId(), Classes.TANK);
             PlayerClasses.save();
         });
@@ -69,10 +72,11 @@ public class ClassGUI extends InventoryBuilder {
             player.setHealthScale(10);
             player.setHealth(10.0);
             player.setWalkSpeed(0.4f);
-            // limit this to only be given to players who have not yet chosen a class
-            player.getInventory().addItem(new ItemBuilder(Material.BOW).setName(String.format("%sArcher Bow", ChatColor.GRAY)).addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
-                    .setLore(String.format("%sDamage: %s+6", ChatColor.GRAY, ChatColor.RED), " ", String.format("%sThe starter weapon", ChatColor.GRAY), String.format("%sfor the archer class", ChatColor.GRAY), " ", String.format("%s%sCOMMON WEAPON", ChatColor.GRAY, ChatColor.BOLD))
-                    .toItem());
+            if (PlayerLevels.getPlayerLevel(player.getUniqueId(), Classes.ARCHER) == 0) {
+                player.getInventory().addItem(new ItemBuilder(Material.BOW).setName(String.format("%sArcher Bow", ChatColor.GRAY)).addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
+                        .setLore(String.format("%sDamage: %s+6", ChatColor.GRAY, ChatColor.RED), " ", String.format("%sThe starter weapon", ChatColor.GRAY), String.format("%sfor the archer class", ChatColor.GRAY), " ", String.format("%s%sCOMMON WEAPON", ChatColor.GRAY, ChatColor.BOLD))
+                        .toItem());
+            }
             player.getInventory().addItem(new ItemBuilder(Material.ARROW).addItemFlags(ItemFlag.HIDE_ATTRIBUTES).setLore(String.format("%s%sCOMMON", ChatColor.GRAY, ChatColor.BOLD)).toItem());
             PlayerClasses.setClasses(player.getUniqueId(), Classes.ARCHER);
             PlayerClasses.save();
@@ -88,10 +92,11 @@ public class ClassGUI extends InventoryBuilder {
             player.setHealthScale(15);
             player.setHealth(15.0);
             player.setWalkSpeed(0.16f);
-            // limit this to only be given to players who have not yet chosen a class
-            player.getInventory().addItem(new ItemBuilder(Material.WOODEN_SWORD).setName(String.format("%sWizard Sword", ChatColor.GRAY)).addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
-                    .setLore(String.format("%sDamage: %s+4", ChatColor.GRAY, ChatColor.RED), String.format("%sAttack Speed: %s1.6", ChatColor.GRAY, ChatColor.RED), " ", String.format("%sThe starter weapon", ChatColor.GRAY), String.format("%sfor the wizard class", ChatColor.GRAY), " ", String.format("%s%sCOMMON WEAPON", ChatColor.GRAY, ChatColor.BOLD))
-                    .toItem());
+            if (PlayerLevels.getPlayerLevel(player.getUniqueId(), Classes.WIZARD) == 0) {
+                player.getInventory().addItem(new ItemBuilder(Material.WOODEN_SWORD).setName(String.format("%sWizard Sword", ChatColor.GRAY)).addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
+                        .setLore(String.format("%sDamage: %s+4", ChatColor.GRAY, ChatColor.RED), String.format("%sAttack Speed: %s1.6", ChatColor.GRAY, ChatColor.RED), " ", String.format("%sThe starter weapon", ChatColor.GRAY), String.format("%sfor the wizard class", ChatColor.GRAY), " ", String.format("%s%sCOMMON WEAPON", ChatColor.GRAY, ChatColor.BOLD))
+                        .toItem());
+            }
             PlayerClasses.setClasses(player.getUniqueId(), Classes.WIZARD);
             PlayerClasses.save();
         });

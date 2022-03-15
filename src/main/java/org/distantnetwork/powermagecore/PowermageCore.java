@@ -6,6 +6,10 @@ import org.distantnetwork.powermagecore.commands.AdminCommands.GiveMoneyCommand;
 import org.distantnetwork.powermagecore.commands.AdminCommands.GiveSoulsCommand;
 import org.distantnetwork.powermagecore.commands.AdminCommands.GiveWeaponsCommand.GiveWeaponCommand;
 import org.distantnetwork.powermagecore.commands.AdminCommands.GiveWeaponsCommand.GiveWeaponsCompleter;
+import org.distantnetwork.powermagecore.commands.AdminCommands.LevelUpCommand.LevelUpCommand;
+import org.distantnetwork.powermagecore.commands.AdminCommands.LevelUpCommand.LevelUpCompleter;
+import org.distantnetwork.powermagecore.commands.AdminCommands.SetCombatLogCommand.SetCombatLogCommand;
+import org.distantnetwork.powermagecore.commands.AdminCommands.SetCombatLogCommand.SetCombatLogCompleter;
 import org.distantnetwork.powermagecore.commands.AdminCommands.SetUpgradesCommand.SetUpgradesCommand;
 import org.distantnetwork.powermagecore.commands.AdminCommands.SetUpgradesCommand.SetUpgradesComplete;
 import org.distantnetwork.powermagecore.commands.PluginCommand.PluginCommandCompleter;
@@ -16,6 +20,7 @@ import org.distantnetwork.powermagecore.commands.GUICommands.UpgradeCommand;
 import org.distantnetwork.powermagecore.commands.PluginCommand.PluginCommand;
 import org.distantnetwork.powermagecore.listeners.FoodChangeEvent;
 import org.distantnetwork.powermagecore.listeners.OnItemClick;
+import org.distantnetwork.powermagecore.listeners.OnPlayerDeath;
 import org.distantnetwork.powermagecore.utils.Config.Hashmap.*;
 import org.distantnetwork.powermagecore.utils.Config.MainConfigManager;
 import org.distantnetwork.powermagecore.utils.Config.WeaponConfigManager;
@@ -30,12 +35,18 @@ import java.util.UUID;
 
 public final class PowermageCore extends JavaPlugin {
     private static PowermageCore instance;
-    public static Map<UUID, Boolean> playerCombatLog = new HashMap<>();
     public static Map<UUID, Classes> playerClasses = new HashMap<>();
     public static Map<UUID, HashMap<Classes, ArrayList<Integer>>> playerLevels = new HashMap<>();
     public static Map<UUID, Integer> playerSouls = new HashMap<>();
     public static Map<UUID, Integer> playerCoins = new HashMap<>();
     public static Map<UUID, Map<Upgrades, Integer>> playerUpgrades = new HashMap<>();
+    public static Map<UUID, Integer> playerDeaths = new HashMap<>();
+    public static Map<UUID, Integer> playerKills = new HashMap<>();
+
+    // non file based maps
+    public static Map<UUID, Boolean> playerCombatLog = new HashMap<>();
+    public static Map<UUID, Integer> playerKillStreak = new HashMap<>();
+
 
 
     public PowermageCore() {
@@ -48,7 +59,6 @@ public final class PowermageCore extends JavaPlugin {
     public void onEnable() {
         PlayerClasses.load();
         PlayerCoins.load();
-        PlayerCombatLog.load();
         PlayerLevels.load();
         PlayerSouls.load();
         PlayerUpgrades.load();
@@ -84,11 +94,14 @@ public final class PowermageCore extends JavaPlugin {
         getCommand("giveitem").setTabCompleter(new GiveWeaponsCompleter());
         getCommand("setupgrades").setExecutor(new SetUpgradesCommand());
         getCommand("setupgrades").setTabCompleter(new SetUpgradesComplete());
+        getCommand("levelup").setExecutor(new LevelUpCommand());
+        getCommand("levelup").setTabCompleter(new LevelUpCompleter());
     }
 
     private void setListeners() {
         getServer().getPluginManager().registerEvents(new InventoryBuilderListener(), this);
         getServer().getPluginManager().registerEvents(new FoodChangeEvent(), this);
         getServer().getPluginManager().registerEvents(new OnItemClick(), this);
+        getServer().getPluginManager().registerEvents(new OnPlayerDeath(), this);
     }
 }
