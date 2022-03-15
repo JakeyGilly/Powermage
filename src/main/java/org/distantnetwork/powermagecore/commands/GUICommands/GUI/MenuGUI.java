@@ -7,10 +7,9 @@ import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
-import org.distantnetwork.powermagecore.utils.Config.Hashmap.PlayerCoins;
-import org.distantnetwork.powermagecore.utils.Config.Hashmap.PlayerLevels;
-import org.distantnetwork.powermagecore.utils.Config.Hashmap.PlayerSouls;
+import org.distantnetwork.powermagecore.utils.Config.Hashmap.*;
 import org.distantnetwork.powermagecore.utils.Config.MainConfigManager;
+import org.distantnetwork.powermagecore.utils.Config.NonFileHashMaps.PlayerKillStreak;
 import org.distantnetwork.powermagecore.utils.Enums.Classes;
 import org.distantnetwork.powermagecore.utils.Builders.InventoryBuilder;
 import org.distantnetwork.powermagecore.utils.Builders.ItemBuilder;
@@ -29,8 +28,9 @@ public class MenuGUI extends InventoryBuilder {
         }
         lore.add(String.format("%sBalance: %s%s Coins", ChatColor.GRAY, ChatColor.GOLD, PlayerCoins.getCoins(p.getUniqueId())));
         lore.add(String.format("%sSouls: %s%s Souls", ChatColor.GRAY, ChatColor.AQUA, PlayerSouls.getSouls(p.getUniqueId())));
-        lore.add(String.format("%sKills: %s0", ChatColor.GRAY, ChatColor.RED));
-        lore.add(String.format("%sDeaths: %s0", ChatColor.GRAY, ChatColor.RED));
+        lore.add(String.format("%sKills: %s%s", ChatColor.GRAY, ChatColor.RED, PlayerKills.getKills(p.getUniqueId())));
+        lore.add(String.format("%sKill Streak: %s%s", ChatColor.GRAY, ChatColor.RED, PlayerKillStreak.getKillStreak(p.getUniqueId())));
+        lore.add(String.format("%sDeaths: %s%s", ChatColor.GRAY, ChatColor.RED, PlayerDeaths.getDeaths(p.getUniqueId())));
         item = new ItemBuilder(Material.PLAYER_HEAD).setName(String.format("%sYour Stats", ChatColor.GREEN)).addItemFlags(ItemFlag.HIDE_ATTRIBUTES).setSkullOwner(p.getName()).setLore(lore).toItem();
         ItemStack finalItem = item;
         setItem(13, item);
