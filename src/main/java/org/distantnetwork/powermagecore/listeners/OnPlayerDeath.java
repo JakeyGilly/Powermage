@@ -19,7 +19,7 @@ public class OnPlayerDeath implements Listener {
         e.setKeepLevel(true);
         if (e.getEntity().getKiller() == null) return;
         PlayerDeaths.addDeaths(e.getEntity().getUniqueId(), 1);
-        PlayerKills.addKills(e.getEntity().getKiller().getUniqueId(), -1);
+        PlayerKills.addKills(e.getEntity().getKiller().getUniqueId(), 1);
         if (PlayerCombatLog.get(e.getEntity().getUniqueId())) PlayerCombatLog.unset(e.getEntity().getUniqueId());
         PlayerKillStreak.incrementKillStreak(e.getEntity().getKiller().getUniqueId());
         PlayerKillStreak.removeKillStreak(e.getEntity().getUniqueId());

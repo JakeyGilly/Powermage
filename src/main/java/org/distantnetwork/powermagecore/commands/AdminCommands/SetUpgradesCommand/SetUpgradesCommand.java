@@ -19,7 +19,7 @@ public class SetUpgradesCommand implements CommandExecutor {
                 player.sendMessage(ChatColor.RED + "You don't have permission to use this command.");
                 return true;
             }
-            Upgrades upgrade = Upgrades.valueOf(args[0].toUpperCase());
+            Upgrades upgrade = Upgrades.valueOf(args[0]);
             int value;
             try {
                 value = Integer.parseInt(args[1]);
@@ -28,7 +28,7 @@ public class SetUpgradesCommand implements CommandExecutor {
                 return true;
             }
             if (args.length > 2) {
-                player = PowermageCore.getInstance().getServer().getPlayer(args[1]);
+                player = PowermageCore.getInstance().getServer().getPlayer(args[2]);
                 if (player == null) {
                     ((Player) sender).sendMessage(ChatColor.RED + "Player not found.");
                     return true;
@@ -36,6 +36,6 @@ public class SetUpgradesCommand implements CommandExecutor {
             }
             PlayerUpgrades.setUpgrade(player.getUniqueId(), upgrade, value);
         } else sender.sendMessage(String.format("%sThis command is only for players!", ChatColor.RED));
-        return false;
+        return true;
     }
 }

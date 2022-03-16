@@ -16,9 +16,7 @@ import org.distantnetwork.powermagecore.commands.GUICommands.MenuCommand;
 import org.distantnetwork.powermagecore.commands.GUICommands.SoulShopCommand;
 import org.distantnetwork.powermagecore.commands.GUICommands.UpgradeCommand;
 import org.distantnetwork.powermagecore.commands.PluginCommand.PluginCommand;
-import org.distantnetwork.powermagecore.listeners.FoodChangeEvent;
-import org.distantnetwork.powermagecore.listeners.OnItemClick;
-import org.distantnetwork.powermagecore.listeners.OnPlayerDeath;
+import org.distantnetwork.powermagecore.listeners.*;
 import org.distantnetwork.powermagecore.utils.Config.Hashmap.*;
 import org.distantnetwork.powermagecore.utils.Config.MainConfigManager;
 import org.distantnetwork.powermagecore.utils.Config.WeaponConfigManager;
@@ -60,6 +58,8 @@ public final class PowermageCore extends JavaPlugin {
         PlayerLevels.load();
         PlayerSouls.load();
         PlayerUpgrades.load();
+        PlayerDeaths.load();
+        PlayerKills.load();
         if (MainConfigManager.loadFileLength() == 0) MainConfigManager.saveDefaultConfig();
         if (WeaponConfigManager.loadWeaponAmount() == 0) WeaponConfigManager.saveDefaultWeapons();
         setCommands();
@@ -73,6 +73,8 @@ public final class PowermageCore extends JavaPlugin {
         PlayerLevels.save();
         PlayerSouls.save();
         PlayerUpgrades.save();
+        PlayerDeaths.save();
+        PlayerKills.save();
     }
 
     private void setCommands() {
@@ -100,5 +102,7 @@ public final class PowermageCore extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new FoodChangeEvent(), this);
         getServer().getPluginManager().registerEvents(new OnItemClick(), this);
         getServer().getPluginManager().registerEvents(new OnPlayerDeath(), this);
+        getServer().getPluginManager().registerEvents(new OnDamage(), this);
+        getServer().getPluginManager().registerEvents(new OnPlayerJoin(), this);
     }
 }

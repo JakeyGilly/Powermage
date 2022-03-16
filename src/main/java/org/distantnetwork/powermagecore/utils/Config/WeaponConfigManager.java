@@ -77,7 +77,7 @@ public class WeaponConfigManager {
         config.addDefault("flags", new String[]{ItemFlag.HIDE_UNBREAKABLE.name()});
         config.addDefault("rarity", Rarity.COMMON.name());
         config.addDefault("price", 0);
-        config.addDefault("damage", "NOT IMPLEMENTED");
+        config.addDefault("damage", 10);
         config.addDefault("ability_cooldown", "NOT IMPLEMENTED");
         config.addDefault("ability_mana", "NOT IMPLEMENTED");
 

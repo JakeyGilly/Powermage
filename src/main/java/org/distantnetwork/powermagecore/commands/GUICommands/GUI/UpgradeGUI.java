@@ -9,9 +9,11 @@ import org.bukkit.inventory.ItemFlag;
 import org.distantnetwork.powermagecore.PowermageCore;
 import org.distantnetwork.powermagecore.utils.Builders.InventoryBuilder;
 import org.distantnetwork.powermagecore.utils.Builders.ItemBuilder;
+import org.distantnetwork.powermagecore.utils.Config.Hashmap.PlayerClasses;
 import org.distantnetwork.powermagecore.utils.Config.Hashmap.PlayerSouls;
 import org.distantnetwork.powermagecore.utils.Config.Hashmap.PlayerUpgrades;
 import org.distantnetwork.powermagecore.utils.Config.MainConfigManager;
+import org.distantnetwork.powermagecore.utils.Enums.Classes;
 import org.distantnetwork.powermagecore.utils.Enums.Upgrades;
 
 public class UpgradeGUI extends InventoryBuilder {
@@ -33,12 +35,12 @@ public class UpgradeGUI extends InventoryBuilder {
                     PowermageCore.getInstance().getLogger().warning("The Strength upgrade costs length are not equal to the max level!");
                     return;
                 }
-                if (PlayerSouls.getSouls(p.getUniqueId()) < MainConfigManager.config.getIntegerList("upgrades.strength.cost").get(PlayerUpgrades.getUpgradeLevel(p.getUniqueId(), Upgrades.STRENGTH))) {
-                    p.sendMessage(String.format("%sYou don't have enough souls!", ChatColor.RED));
-                    return;
-                }
                 if (PlayerUpgrades.getUpgradeLevel(p.getUniqueId(), Upgrades.STRENGTH) == MainConfigManager.config.getInt("upgrades.strength.maxLevel")) {
                     player.sendMessage(String.format("%sYou have reached the max level!", ChatColor.RED));
+                    return;
+                }
+                if (PlayerSouls.getSouls(p.getUniqueId()) < MainConfigManager.config.getIntegerList("upgrades.strength.cost").get(PlayerUpgrades.getUpgradeLevel(p.getUniqueId(), Upgrades.STRENGTH))) {
+                    p.sendMessage(String.format("%sYou don't have enough souls!", ChatColor.RED));
                     return;
                 }
                 PlayerSouls.removeSouls(p.getUniqueId(), MainConfigManager.config.getIntegerList("upgrades.strength.cost").get(PlayerUpgrades.getUpgradeLevel(p.getUniqueId(), Upgrades.STRENGTH)));
@@ -61,12 +63,12 @@ public class UpgradeGUI extends InventoryBuilder {
                     PowermageCore.getInstance().getLogger().warning("The Health upgrade costs length are not equal to the max level!");
                     return;
                 }
-                if (PlayerSouls.getSouls(p.getUniqueId()) < MainConfigManager.config.getIntegerList("upgrades.health.cost").get(PlayerUpgrades.getUpgradeLevel(p.getUniqueId(), Upgrades.HEALTH))) {
-                    p.sendMessage(String.format("%sYou don't have enough souls!", ChatColor.RED));
-                    return;
-                }
                 if (PlayerUpgrades.getUpgradeLevel(p.getUniqueId(), Upgrades.HEALTH) == MainConfigManager.config.getInt("upgrades.health.maxLevel")) {
                     player.sendMessage(String.format("%sYou have reached the max level!", ChatColor.RED));
+                    return;
+                }
+                if (PlayerSouls.getSouls(p.getUniqueId()) < MainConfigManager.config.getIntegerList("upgrades.health.cost").get(PlayerUpgrades.getUpgradeLevel(p.getUniqueId(), Upgrades.HEALTH))) {
+                    p.sendMessage(String.format("%sYou don't have enough souls!", ChatColor.RED));
                     return;
                 }
                 PlayerSouls.removeSouls(p.getUniqueId(), MainConfigManager.config.getIntegerList("upgrades.health.cost").get(PlayerUpgrades.getUpgradeLevel(p.getUniqueId(), Upgrades.HEALTH)));
@@ -76,6 +78,12 @@ public class UpgradeGUI extends InventoryBuilder {
                                 PlayerUpgrades.getUpgradeLevel(p.getUniqueId(), Upgrades.HEALTH) == (int) MainConfigManager.getValue("upgrades.health.maxLevel") ? String.format("%sMAX LEVEL", ChatColor.DARK_RED) :
                                         String.format("%sSouls for next upgrade: %s", ChatColor.GOLD, MainConfigManager.config.getIntegerList("upgrades.health.cost").get(PlayerUpgrades.getUpgradeLevel(p.getUniqueId(), Upgrades.HEALTH)))).toItem());
                 player.sendMessage(String.format("%sYou have bought the %sHealth %supgrade for %s!", ChatColor.DARK_GREEN, ChatColor.RED, ChatColor.DARK_GREEN, MainConfigManager.config.getIntegerList("upgrades.health.cost").get(PlayerUpgrades.getUpgradeLevel(p.getUniqueId(), Upgrades.HEALTH)-1)));
+                try {
+                    player.setHealthScale(Classes.getHealth(PlayerClasses.getClasses(player.getUniqueId())) + (PlayerUpgrades.getUpgradeLevel(player.getUniqueId(), Upgrades.HEALTH) * MainConfigManager.config.getDouble("upgrades.health.healthPerLevel")));
+                } catch (IllegalArgumentException ignored) {}
+                try {
+                    player.setHealth(Classes.getHealth(PlayerClasses.getClasses(player.getUniqueId())) + (PlayerUpgrades.getUpgradeLevel(player.getUniqueId(), Upgrades.HEALTH) * MainConfigManager.config.getDouble("upgrades.health.healthPerLevel")));
+                } catch (IllegalArgumentException ignored) {}
             });
         }
         if (PlayerUpgrades.getUpgradeLevel(p.getUniqueId(), Upgrades.MANA) == (int) MainConfigManager.getValue("upgrades.mana.maxLevel")) {
@@ -89,12 +97,12 @@ public class UpgradeGUI extends InventoryBuilder {
                     PowermageCore.getInstance().getLogger().warning("The Mana upgrade costs length are not equal to the max level!");
                     return;
                 }
-                if (PlayerSouls.getSouls(p.getUniqueId()) < MainConfigManager.config.getIntegerList("upgrades.mana.cost").get(PlayerUpgrades.getUpgradeLevel(p.getUniqueId(), Upgrades.MANA))) {
-                    p.sendMessage(String.format("%sYou don't have enough souls!", ChatColor.RED));
-                    return;
-                }
                 if (PlayerUpgrades.getUpgradeLevel(p.getUniqueId(), Upgrades.MANA) == MainConfigManager.config.getInt("upgrades.mana.maxLevel")) {
                     player.sendMessage(String.format("%sYou have reached the max level!", ChatColor.RED));
+                    return;
+                }
+                if (PlayerSouls.getSouls(p.getUniqueId()) < MainConfigManager.config.getIntegerList("upgrades.mana.cost").get(PlayerUpgrades.getUpgradeLevel(p.getUniqueId(), Upgrades.MANA))) {
+                    p.sendMessage(String.format("%sYou don't have enough souls!", ChatColor.RED));
                     return;
                 }
                 PlayerSouls.removeSouls(p.getUniqueId(), MainConfigManager.config.getIntegerList("upgrades.mana.cost").get(PlayerUpgrades.getUpgradeLevel(p.getUniqueId(), Upgrades.MANA)));
@@ -117,12 +125,12 @@ public class UpgradeGUI extends InventoryBuilder {
                     PowermageCore.getInstance().getLogger().warning("The Speed upgrade costs length are not equal to the max level!");
                     return;
                 }
-                if (PlayerSouls.getSouls(p.getUniqueId()) < MainConfigManager.config.getIntegerList("upgrades.speed.cost").get(PlayerUpgrades.getUpgradeLevel(p.getUniqueId(), Upgrades.SPEED))) {
-                    p.sendMessage(String.format("%sYou don't have enough souls!", ChatColor.RED));
-                    return;
-                }
                 if (PlayerUpgrades.getUpgradeLevel(p.getUniqueId(), Upgrades.SPEED) == MainConfigManager.config.getInt("upgrades.speed.maxLevel")) {
                     player.sendMessage(String.format("%sYou have reached the max level!", ChatColor.RED));
+                    return;
+                }
+                if (PlayerSouls.getSouls(p.getUniqueId()) < MainConfigManager.config.getIntegerList("upgrades.speed.cost").get(PlayerUpgrades.getUpgradeLevel(p.getUniqueId(), Upgrades.SPEED))) {
+                    p.sendMessage(String.format("%sYou don't have enough souls!", ChatColor.RED));
                     return;
                 }
                 PlayerSouls.removeSouls(p.getUniqueId(), MainConfigManager.config.getIntegerList("upgrades.speed.cost").get(PlayerUpgrades.getUpgradeLevel(p.getUniqueId(), Upgrades.SPEED)));
@@ -132,6 +140,7 @@ public class UpgradeGUI extends InventoryBuilder {
                                 PlayerUpgrades.getUpgradeLevel(p.getUniqueId(), Upgrades.SPEED) == (int) MainConfigManager.getValue("upgrades.speed.maxLevel") ? String.format("%sMAX LEVEL", ChatColor.DARK_RED) :
                                         String.format("%sSouls for next upgrade: %s", ChatColor.GOLD, MainConfigManager.config.getIntegerList("upgrades.speed.cost").get(PlayerUpgrades.getUpgradeLevel(p.getUniqueId(), Upgrades.SPEED)))).toItem());
                 player.sendMessage(String.format("%sYou have bought the %sSpeed %supgrade for %s!", ChatColor.DARK_GREEN, ChatColor.RED, ChatColor.DARK_GREEN, MainConfigManager.config.getIntegerList("upgrades.speed.cost").get(PlayerUpgrades.getUpgradeLevel(p.getUniqueId(), Upgrades.SPEED)-1)));
+                player.setWalkSpeed((float) (Classes.getWalkSpeed(PlayerClasses.getClasses(player.getUniqueId())) + (PlayerUpgrades.getUpgradeLevel(player.getUniqueId(), Upgrades.SPEED) * MainConfigManager.config.getDouble("upgrades.speed.speedPerLevel"))));
             });
         }
         setItem(getInventory().getSize() - 9, new ItemBuilder(Material.ARROW).setName(String.format("%sBack to Main Menu", ChatColor.GRAY)).addItemFlags(ItemFlag.HIDE_ATTRIBUTES).toItem(), player -> new MenuGUI(player).open(player));
