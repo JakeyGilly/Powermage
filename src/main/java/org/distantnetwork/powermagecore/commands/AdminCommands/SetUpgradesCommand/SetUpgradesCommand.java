@@ -16,7 +16,7 @@ public class SetUpgradesCommand implements CommandExecutor {
             Player player = (Player) sender;
             if (args.length < 2 || args.length > 3) return false;
             if (!player.hasPermission("powermage.admin.upgradestats")) {
-                player.sendMessage(ChatColor.RED + "You don't have permission to use this command.");
+                player.sendMessage(String.format("%sYou don't have permission to use this command.", ChatColor.RED));
                 return true;
             }
             Upgrades upgrade = Upgrades.valueOf(args[0]);
@@ -24,13 +24,13 @@ public class SetUpgradesCommand implements CommandExecutor {
             try {
                 value = Integer.parseInt(args[1]);
             } catch (NumberFormatException e) {
-                player.sendMessage(ChatColor.RED + "Invalid value.");
+                player.sendMessage(String.format("%sInvalid value.", ChatColor.RED));
                 return true;
             }
             if (args.length > 2) {
                 player = PowermageCore.getInstance().getServer().getPlayer(args[2]);
                 if (player == null) {
-                    ((Player) sender).sendMessage(ChatColor.RED + "Player not found.");
+                    ((Player) sender).sendMessage(String.format("%sPlayer not found.", ChatColor.RED));
                     return true;
                 }
             }

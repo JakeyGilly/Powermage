@@ -6,7 +6,6 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.distantnetwork.powermagecore.PowermageCore;
-import org.distantnetwork.powermagecore.utils.Config.Hashmap.*;
 
 public class PluginCommand implements CommandExecutor {
     @Override
@@ -20,11 +19,6 @@ public class PluginCommand implements CommandExecutor {
                     return true;
                 }
                 player.sendMessage("Reloading...");
-                PlayerUpgrades.load();
-                PlayerSouls.load();
-                PlayerLevels.load();
-                PlayerCoins.load();
-                PlayerClasses.load();
                 player.sendMessage("Reloaded.");
             } else if (args[0].equalsIgnoreCase("version")) {
                 if (!player.hasPermission("powermagecore.version")) {

@@ -5,25 +5,21 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.player.PlayerItemDamageEvent;
-import org.bukkit.inventory.ItemStack;
-import org.distantnetwork.powermagecore.PowermageCore;
+import org.distantnetwork.powermagecore.utils.Config.ConfigurationManager;
 import org.distantnetwork.powermagecore.utils.Config.Hashmap.PlayerUpgrades;
-import org.distantnetwork.powermagecore.utils.Config.MainConfigManager;
-import org.distantnetwork.powermagecore.utils.Config.WeaponConfigManager;
 import org.distantnetwork.powermagecore.utils.Enums.Upgrades;
+import org.distantnetwork.powermagecore.utils.WeaponItem;
+import org.jetbrains.annotations.NotNull;
 
 public class OnDamage implements Listener {
     @EventHandler
-    public static void OnDamageEvent(EntityDamageEvent e) {
+    public static void OnDamageEvent(@NotNull EntityDamageEvent e) {
         if (e.getEntity() instanceof Player) {
             Player attacker = e.getCause() == EntityDamageEvent.DamageCause.ENTITY_ATTACK ? ((EntityDamageByEntityEvent) e).getDamager() instanceof Player ? (Player) ((EntityDamageByEntityEvent) e).getDamager() : null : null;
             if (attacker == null) return;
-            if (attacker.getInventory().getItemInMainHand().getItemMeta() != null && WeaponConfigManager.getWeaponId(attacker.getInventory().getItemInMainHand().getItemMeta().getDisplayName()) != null && WeaponConfigManager.getValue(WeaponConfigManager.getWeaponId(attacker.getInventory().getItemInMainHand().getItemMeta().getDisplayName()), "damage") != null) {
-                e.setDamage(WeaponConfigManager.getConfig(WeaponConfigManager.getWeaponId(attacker.getInventory().getItemInMainHand().getItemMeta().getDisplayName())).getDouble("damage") + (PlayerUpgrades.getUpgradeLevel(attacker.getUniqueId(), Upgrades.STRENGTH) * (int)MainConfigManager.getValue("upgrades.strength.strengthPerLevel")));
-            } else {
-                e.setCancelled(true);
-            }
+            WeaponItem weapon = new WeaponItem(attacker.getInventory().getItemInMainHand());
+            if (weapon.getHitDamage() == 0) e.setCancelled(true);
+            e.setDamage(weapon.getDamage() + (PlayerUpgrades.getUpgradeLevel(attacker.getUniqueId(), Upgrades.STRENGTH) * ConfigurationManager.getDefaultConfig().getInt("upgrades.strength.strengthPerLevel")));
         }
     }
 }

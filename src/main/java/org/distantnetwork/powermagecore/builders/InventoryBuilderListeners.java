@@ -1,4 +1,4 @@
-package org.distantnetwork.powermagecore.utils.Builders;
+package org.distantnetwork.powermagecore.builders;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -6,12 +6,13 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.UUID;
 
-public class InventoryBuilderListener implements Listener {
+public class InventoryBuilderListeners implements Listener {
     @EventHandler
-    public void onInventoryClick(InventoryClickEvent e) {
+    public void onInventoryClick(@NotNull InventoryClickEvent e) {
         if (!(e.getWhoClicked() instanceof Player)) return;
         Player player = (Player) e.getWhoClicked();
         UUID playerUUID = player.getUniqueId();
@@ -25,14 +26,14 @@ public class InventoryBuilderListener implements Listener {
     }
 
     @EventHandler
-    public void onClose(InventoryCloseEvent e){
+    public void onClose(@NotNull InventoryCloseEvent e){
         Player player = (Player) e.getPlayer();
         UUID playerUUID = player.getUniqueId();
         InventoryBuilder.openInventories.remove(playerUUID);
     }
 
     @EventHandler
-    public void onQuit(PlayerQuitEvent e){
+    public void onQuit(@NotNull PlayerQuitEvent e){
         Player player = e.getPlayer();
         UUID playerUUID = player.getUniqueId();
         InventoryBuilder.openInventories.remove(playerUUID);

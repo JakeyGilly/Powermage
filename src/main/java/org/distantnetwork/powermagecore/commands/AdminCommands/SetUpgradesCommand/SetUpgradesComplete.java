@@ -4,8 +4,9 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.distantnetwork.powermagecore.PowermageCore;
-import org.distantnetwork.powermagecore.utils.Config.MainConfigManager;
 import org.distantnetwork.powermagecore.utils.Enums.Classes;
+
+import static org.distantnetwork.powermagecore.PowermageCore.getInstance;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -22,7 +23,7 @@ public class SetUpgradesComplete implements TabCompleter {
         } else if (args.length == 2) {
             list.clear();
             Arrays.stream(Classes.values()).filter(c -> c.name().equalsIgnoreCase(args[0])).flatMapToInt(c ->
-                    IntStream.range(0, MainConfigManager.config.getInt("upgrades." + args[0].toLowerCase() + ".maxLevel"))).forEach(i ->
+                    IntStream.range(0, getInstance().getConfig().getInt(String.format("upgrades.%s.maxLevel", args[0].toLowerCase())))).forEach(i ->
                     list.add(Integer.toString(i)));
         } else if (args.length == 3) {
             list.clear();

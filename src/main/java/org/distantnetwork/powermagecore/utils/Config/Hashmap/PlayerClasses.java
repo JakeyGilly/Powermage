@@ -2,20 +2,22 @@ package org.distantnetwork.powermagecore.utils.Config.Hashmap;
 
 import org.bukkit.configuration.file.FileConfiguration;
 import org.distantnetwork.powermagecore.PowermageCore;
-import org.distantnetwork.powermagecore.utils.Config.ConfigManager;
 import org.distantnetwork.powermagecore.utils.Enums.Classes;
 
 import java.io.File;
 import java.util.Map;
 import java.util.UUID;
 
+import static org.distantnetwork.powermagecore.utils.Config.ConfigurationManager.getConfig;
+import static org.distantnetwork.powermagecore.utils.Config.ConfigurationManager.saveConfig;
+
 public class PlayerClasses {
     public static File file = new File(PowermageCore.getInstance().getDataFolder(), "player_classes.yml");
-    public static FileConfiguration config = ConfigManager.loadConfigFile(file);
+    public static FileConfiguration config = getConfig(file);
 
     public static void save() {
         PowermageCore.playerClasses.forEach((uuid, classes) -> config.set(uuid.toString(), classes.name()));
-        ConfigManager.saveConfigFile(file, config);
+        saveConfig(file, config);
     }
 
     public static void load() {

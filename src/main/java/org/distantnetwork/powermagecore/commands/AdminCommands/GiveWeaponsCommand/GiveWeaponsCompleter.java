@@ -4,10 +4,12 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.distantnetwork.powermagecore.PowermageCore;
-import org.distantnetwork.powermagecore.utils.Config.WeaponConfigManager;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+
+import static org.distantnetwork.powermagecore.utils.Config.ConfigurationManager.getWeaponsFolder;
 
 public class GiveWeaponsCompleter implements TabCompleter {
     List<String> list = new ArrayList<>();
@@ -15,7 +17,10 @@ public class GiveWeaponsCompleter implements TabCompleter {
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
         if (args.length == 1) {
             list.clear();
-            list.addAll(WeaponConfigManager.loadWeaponNames());
+            String[] weaponsfolderlist = getWeaponsFolder().list();
+            if (weaponsfolderlist != null) {
+                Collections.addAll(list, weaponsfolderlist);
+            }
         }
         if (args.length == 2) {
             list.clear();

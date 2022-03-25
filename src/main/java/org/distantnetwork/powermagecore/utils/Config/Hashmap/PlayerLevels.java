@@ -2,7 +2,6 @@ package org.distantnetwork.powermagecore.utils.Config.Hashmap;
 
 import org.bukkit.configuration.file.FileConfiguration;
 import org.distantnetwork.powermagecore.PowermageCore;
-import org.distantnetwork.powermagecore.utils.Config.ConfigManager;
 import org.distantnetwork.powermagecore.utils.Enums.Classes;
 
 import java.io.File;
@@ -11,9 +10,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+import static org.distantnetwork.powermagecore.utils.Config.ConfigurationManager.getConfig;
+
 public class PlayerLevels {
     public static File file = new File(PowermageCore.getInstance().getDataFolder(), "player_levels.yml");
-    public static FileConfiguration config = ConfigManager.loadConfigFile(file);
+    public static FileConfiguration config = getConfig(file);
 
     public static void save() {
         PowermageCore.playerLevels.forEach((uuid, map) -> map.forEach((classType, arr1) -> config.set(String.format("%s.%s", uuid.toString(), classType.toString()), arr1)));

@@ -2,7 +2,6 @@ package org.distantnetwork.powermagecore.utils.Config.Hashmap;
 
 import org.bukkit.configuration.file.FileConfiguration;
 import org.distantnetwork.powermagecore.PowermageCore;
-import org.distantnetwork.powermagecore.utils.Config.ConfigManager;
 import org.distantnetwork.powermagecore.utils.Enums.Upgrades;
 
 import java.io.File;
@@ -10,13 +9,16 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+import static org.distantnetwork.powermagecore.utils.Config.ConfigurationManager.getConfig;
+import static org.distantnetwork.powermagecore.utils.Config.ConfigurationManager.saveConfig;
+
 public class PlayerUpgrades {
     public static File file = new File(PowermageCore.getInstance().getDataFolder(), "player_upgrades.yml");
-    public static FileConfiguration config = ConfigManager.loadConfigFile(file);
+    public static FileConfiguration config = getConfig(file);
 
     public static void save() {
         PowermageCore.playerUpgrades.forEach((uuid, map) -> map.forEach((upgrade, level) -> config.set(String.format("%s.%s", uuid.toString(), upgrade.name()), level)));
-        ConfigManager.saveConfigFile(file, config);
+        saveConfig(file, config);
     }
 
     public static void load() {
