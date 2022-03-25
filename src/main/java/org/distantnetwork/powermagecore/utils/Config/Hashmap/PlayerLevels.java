@@ -2,7 +2,7 @@ package org.distantnetwork.powermagecore.utils.Config.Hashmap;
 
 import org.bukkit.configuration.file.FileConfiguration;
 import org.distantnetwork.powermagecore.PowermageCore;
-import org.distantnetwork.powermagecore.utils.Enums.Classes;
+import org.distantnetwork.powermagecore.utils.Enums.ClassesEnum;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -21,15 +21,15 @@ public class PlayerLevels {
     }
 
     public static void load() {
-        config.getValues(false).forEach((uuid, map) -> config.getConfigurationSection(uuid.toString()).getValues(false).forEach((classType, map1) -> config.getConfigurationSection(String.format("%s.%s", uuid, classType.toString())).getValues(false).forEach((level, xp) -> PowermageCore.playerLevels.put(UUID.fromString(uuid.toString()), new HashMap<Classes, ArrayList<Integer>>() {{
-                    put(Classes.valueOf(classType.toString()), new ArrayList<Integer>() {{
+        config.getValues(false).forEach((uuid, map) -> config.getConfigurationSection(uuid.toString()).getValues(false).forEach((classType, map1) -> config.getConfigurationSection(String.format("%s.%s", uuid, classType.toString())).getValues(false).forEach((level, xp) -> PowermageCore.playerLevels.put(UUID.fromString(uuid.toString()), new HashMap<ClassesEnum, ArrayList<Integer>>() {{
+                    put(ClassesEnum.valueOf(classType.toString()), new ArrayList<Integer>() {{
                         add(Integer.parseInt(level.toString()));
                         add(Integer.parseInt(xp.toString()));
                     }});
                 }}))));
     }
 
-    public static void addPlayerLevel(UUID uuid, Classes classType, int level, int xp) {
+    public static void addPlayerLevel(UUID uuid, ClassesEnum classType, int level, int xp) {
         if (!PowermageCore.playerLevels.containsKey(uuid)) {
             PowermageCore.playerLevels.put(uuid, new HashMap<>());
         }
@@ -41,7 +41,7 @@ public class PlayerLevels {
         save();
     }
 
-    public static void subtractPlayerLevel(UUID uuid, Classes classType, int level, int xp) {
+    public static void subtractPlayerLevel(UUID uuid, ClassesEnum classType, int level, int xp) {
         if (!PowermageCore.playerLevels.containsKey(uuid)) {
             PowermageCore.playerLevels.put(uuid, new HashMap<>());
         }
@@ -53,7 +53,7 @@ public class PlayerLevels {
         save();
     }
 
-    public static void removeByClass(UUID uuid, Classes classType) {
+    public static void removeByClass(UUID uuid, ClassesEnum classType) {
         if (PowermageCore.playerLevels.containsKey(uuid)) {
             PowermageCore.playerLevels.get(uuid).remove(classType);
         }
@@ -70,19 +70,19 @@ public class PlayerLevels {
         save();
     }
 
-    public static Map<Classes, ArrayList<Integer>> getPlayerClassLevelMap(UUID uuid) {
+    public static Map<ClassesEnum, ArrayList<Integer>> getPlayerClassLevelMap(UUID uuid) {
         return PowermageCore.playerLevels.get(uuid);
     }
 
-    public static ArrayList<Integer> getPlayerLevelMap(UUID uuid, Classes classType) {
+    public static ArrayList<Integer> getPlayerLevelMap(UUID uuid, ClassesEnum classType) {
         return PowermageCore.playerLevels.get(uuid).get(classType);
     }
 
-    public static Map<UUID, HashMap<Classes, ArrayList<Integer>>> getAll() {
+    public static Map<UUID, HashMap<ClassesEnum, ArrayList<Integer>>> getAll() {
         return PowermageCore.playerLevels;
     }
 
-    public static int getPlayerLevel(UUID uuid, Classes classType) {
+    public static int getPlayerLevel(UUID uuid, ClassesEnum classType) {
         if (PowermageCore.playerLevels.containsKey(uuid) && PowermageCore.playerLevels.get(uuid).containsKey(classType)) {
             return PowermageCore.playerLevels.get(uuid).get(classType).get(0);
         } else {
@@ -90,7 +90,7 @@ public class PlayerLevels {
         }
     }
 
-    public static int getPlayerXP(UUID uuid, Classes classType) {
+    public static int getPlayerXP(UUID uuid, ClassesEnum classType) {
         if (PowermageCore.playerLevels.containsKey(uuid) && PowermageCore.playerLevels.get(uuid).containsKey(classType)) {
             return PowermageCore.playerLevels.get(uuid).get(classType).get(1);
         } else {
@@ -98,7 +98,7 @@ public class PlayerLevels {
         }
     }
 
-    public static void setPlayerLevel(UUID uuid, Classes classType, int level) {
+    public static void setPlayerLevel(UUID uuid, ClassesEnum classType, int level) {
         if (PowermageCore.playerLevels.containsKey(uuid) && PowermageCore.playerLevels.get(uuid).containsKey(classType)) {
             PowermageCore.playerLevels.get(uuid).get(classType).set(0, level);
         } else if (PowermageCore.playerLevels.containsKey(uuid)) {
@@ -112,7 +112,7 @@ public class PlayerLevels {
         save();
     }
 
-    public static void setPlayerXP(UUID uuid, Classes classType, int xp) {
+    public static void setPlayerXP(UUID uuid, ClassesEnum classType, int xp) {
         if (PowermageCore.playerLevels.containsKey(uuid) && PowermageCore.playerLevels.get(uuid).containsKey(classType)) {
             PowermageCore.playerLevels.get(uuid).get(classType).set(1, xp);
         } else if (PowermageCore.playerLevels.containsKey(uuid)) {

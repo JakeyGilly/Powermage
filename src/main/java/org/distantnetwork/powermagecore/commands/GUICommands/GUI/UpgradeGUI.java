@@ -12,7 +12,7 @@ import org.distantnetwork.powermagecore.builders.ItemBuilder;
 import org.distantnetwork.powermagecore.utils.Config.Hashmap.PlayerClasses;
 import org.distantnetwork.powermagecore.utils.Config.Hashmap.PlayerSouls;
 import org.distantnetwork.powermagecore.utils.Config.Hashmap.PlayerUpgrades;
-import org.distantnetwork.powermagecore.utils.Enums.Classes;
+import org.distantnetwork.powermagecore.utils.Enums.ClassesEnum;
 import org.distantnetwork.powermagecore.utils.Enums.Upgrades;
 
 import static org.distantnetwork.powermagecore.utils.Config.ConfigurationManager.getDefaultConfig;
@@ -80,10 +80,10 @@ public class UpgradeGUI extends InventoryBuilder {
                                         String.format("%sSouls for next upgrade: %s", ChatColor.GOLD, getDefaultConfig().getIntegerList("upgrades.health.cost").get(PlayerUpgrades.getUpgradeLevel(p.getUniqueId(), Upgrades.HEALTH)))).toItem());
                 player.sendMessage(String.format("%sYou have bought the %sHealth %supgrade for %s!", ChatColor.DARK_GREEN, ChatColor.RED, ChatColor.DARK_GREEN, getDefaultConfig().getIntegerList("upgrades.health.cost").get(PlayerUpgrades.getUpgradeLevel(p.getUniqueId(), Upgrades.HEALTH)-1)));
                 try {
-                    player.setHealthScale(Classes.getHealth(PlayerClasses.getClasses(player.getUniqueId())) + (PlayerUpgrades.getUpgradeLevel(player.getUniqueId(), Upgrades.HEALTH) * getDefaultConfig().getDouble("upgrades.health.healthPerLevel")));
+                    player.setHealthScale(ClassesEnum.getHealth(PlayerClasses.getClasses(player.getUniqueId())) + (PlayerUpgrades.getUpgradeLevel(player.getUniqueId(), Upgrades.HEALTH) * getDefaultConfig().getDouble("upgrades.health.healthPerLevel")));
                 } catch (IllegalArgumentException ignored) {}
                 try {
-                    player.setHealth(Classes.getHealth(PlayerClasses.getClasses(player.getUniqueId())) + (PlayerUpgrades.getUpgradeLevel(player.getUniqueId(), Upgrades.HEALTH) * getDefaultConfig().getDouble("upgrades.health.healthPerLevel")));
+                    player.setHealth(ClassesEnum.getHealth(PlayerClasses.getClasses(player.getUniqueId())) + (PlayerUpgrades.getUpgradeLevel(player.getUniqueId(), Upgrades.HEALTH) * getDefaultConfig().getDouble("upgrades.health.healthPerLevel")));
                 } catch (IllegalArgumentException ignored) {}
             });
         }
@@ -141,7 +141,7 @@ public class UpgradeGUI extends InventoryBuilder {
                                 PlayerUpgrades.getUpgradeLevel(p.getUniqueId(), Upgrades.SPEED) == getDefaultConfig().getInt("upgrades.speed.maxLevel") ? String.format("%sMAX LEVEL", ChatColor.DARK_RED) :
                                         String.format("%sSouls for next upgrade: %s", ChatColor.GOLD, getDefaultConfig().getIntegerList("upgrades.speed.cost").get(PlayerUpgrades.getUpgradeLevel(p.getUniqueId(), Upgrades.SPEED)))).toItem());
                 player.sendMessage(String.format("%sYou have bought the %sSpeed %supgrade for %s!", ChatColor.DARK_GREEN, ChatColor.RED, ChatColor.DARK_GREEN, getDefaultConfig().getIntegerList("upgrades.speed.cost").get(PlayerUpgrades.getUpgradeLevel(p.getUniqueId(), Upgrades.SPEED)-1)));
-                player.setWalkSpeed((float) (Classes.getWalkSpeed(PlayerClasses.getClasses(player.getUniqueId())) + (PlayerUpgrades.getUpgradeLevel(player.getUniqueId(), Upgrades.SPEED) * getDefaultConfig().getDouble("upgrades.speed.speedPerLevel"))));
+                player.setWalkSpeed((float) (ClassesEnum.getWalkSpeed(PlayerClasses.getClasses(player.getUniqueId())) + (PlayerUpgrades.getUpgradeLevel(player.getUniqueId(), Upgrades.SPEED) * getDefaultConfig().getDouble("upgrades.speed.speedPerLevel"))));
             });
         }
         setItem(getInventory().getSize() - 9, new ItemBuilder(Material.ARROW).setName(String.format("%sBack to Main Menu", ChatColor.GRAY)).addItemFlags(ItemFlag.HIDE_ATTRIBUTES).toItem(), player -> new MenuGUI(player).open(player));

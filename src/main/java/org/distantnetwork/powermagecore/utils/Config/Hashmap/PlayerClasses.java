@@ -2,7 +2,7 @@ package org.distantnetwork.powermagecore.utils.Config.Hashmap;
 
 import org.bukkit.configuration.file.FileConfiguration;
 import org.distantnetwork.powermagecore.PowermageCore;
-import org.distantnetwork.powermagecore.utils.Enums.Classes;
+import org.distantnetwork.powermagecore.utils.Enums.ClassesEnum;
 
 import java.io.File;
 import java.util.Map;
@@ -21,14 +21,14 @@ public class PlayerClasses {
     }
 
     public static void load() {
-        config.getValues(false).forEach((uuid, classes) -> PowermageCore.playerClasses.put(UUID.fromString(uuid), Classes.valueOf(classes.toString())));
+        config.getValues(false).forEach((uuid, classes) -> PowermageCore.playerClasses.put(UUID.fromString(uuid), ClassesEnum.valueOf(classes.toString())));
     }
 
-    public static Classes getClasses(UUID uuid) {
+    public static ClassesEnum getClasses(UUID uuid) {
         return PowermageCore.playerClasses.get(uuid);
     }
 
-    public static void setClasses(UUID uuid, Classes classes) {
+    public static void setClasses(UUID uuid, ClassesEnum classes) {
         PowermageCore.playerClasses.put(uuid, classes);
         save();
     }
@@ -38,7 +38,7 @@ public class PlayerClasses {
         save();
     }
 
-    public static void removeByClasses(Classes classes) {
+    public static void removeByClasses(ClassesEnum classes) {
         PowermageCore.playerClasses.entrySet().removeIf(entry -> entry.getValue() == classes);
         save();
     }
@@ -48,7 +48,7 @@ public class PlayerClasses {
         save();
     }
 
-    public static Map<UUID, Classes> getAll() {
+    public static Map<UUID, ClassesEnum> getAll() {
         return PowermageCore.playerClasses;
     }
 }

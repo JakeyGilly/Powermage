@@ -3,7 +3,6 @@ package org.distantnetwork.powermagecore;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.checkerframework.checker.units.qual.A;
 import org.distantnetwork.powermagecore.builders.InventoryBuilderListeners;
 import org.distantnetwork.powermagecore.commands.*;
 import org.distantnetwork.powermagecore.commands.AdminCommands.GiveMoneyCommand;
@@ -23,7 +22,7 @@ import org.distantnetwork.powermagecore.commands.PluginCommand.PluginCommand;
 import org.distantnetwork.powermagecore.listeners.*;
 import org.distantnetwork.powermagecore.utils.Config.ConfigurationManager;
 import org.distantnetwork.powermagecore.utils.Config.Hashmap.*;
-import org.distantnetwork.powermagecore.utils.Enums.Classes;
+import org.distantnetwork.powermagecore.utils.Enums.ClassesEnum;
 import org.distantnetwork.powermagecore.utils.Enums.Rarity;
 import org.distantnetwork.powermagecore.utils.Enums.Upgrades;
 import org.distantnetwork.powermagecore.utils.WeaponItem;
@@ -36,8 +35,8 @@ public final class PowermageCore extends JavaPlugin {
     private static PowermageCore instance;
     public static PowermageCore getInstance() {return instance;}
 
-    public static Map<UUID, Classes> playerClasses = new HashMap<>();
-    public static Map<UUID, HashMap<Classes, ArrayList<Integer>>> playerLevels = new HashMap<>();
+    public static Map<UUID, ClassesEnum> playerClasses = new HashMap<>();
+    public static Map<UUID, HashMap<ClassesEnum, ArrayList<Integer>>> playerLevels = new HashMap<>();
     public static Map<UUID, Integer> playerSouls = new HashMap<>();
     public static Map<UUID, Integer> playerCoins = new HashMap<>();
     public static Map<UUID, Map<Upgrades, Integer>> playerUpgrades = new HashMap<>();

@@ -7,7 +7,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.distantnetwork.powermagecore.PowermageCore;
 import org.distantnetwork.powermagecore.utils.Config.Hashmap.PlayerLevels;
-import org.distantnetwork.powermagecore.utils.Enums.Classes;
+import org.distantnetwork.powermagecore.utils.Enums.ClassesEnum;
 
 public class LevelUpCommand implements CommandExecutor {
     @Override
@@ -21,7 +21,7 @@ public class LevelUpCommand implements CommandExecutor {
                 sender.sendMessage(String.format("%sYou do not have permission to use this command.", ChatColor.RED));
                 return true;
             }
-            Classes classes = Classes.valueOf(args[0].toUpperCase());
+            ClassesEnum classes = ClassesEnum.valueOf(args[0].toUpperCase());
             int level = 1;
             if (args.length > 1) {
                 player = PowermageCore.getInstance().getServer().getPlayer(args[1]);

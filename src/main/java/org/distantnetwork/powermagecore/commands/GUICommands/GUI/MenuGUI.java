@@ -9,7 +9,7 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.distantnetwork.powermagecore.builders.InventoryBuilder;
 import org.distantnetwork.powermagecore.builders.ItemBuilder;
-import org.distantnetwork.powermagecore.utils.Enums.Classes;
+import org.distantnetwork.powermagecore.utils.Enums.ClassesEnum;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,8 +20,8 @@ public class MenuGUI extends InventoryBuilder {
         for (int i = 0; i < getInventory().getSize(); i++) setItem(i, new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setName(" ").addItemFlags(ItemFlag.HIDE_ATTRIBUTES).toItem());
         ItemStack item;
         List<String> lore = new ArrayList<>();
-        for (Classes c : Classes.values()) {
-            lore.add(String.format("%s%s Level: %s%d%s", ChatColor.DARK_AQUA, c.name().substring(0, 1).toUpperCase() + c.name().substring(1).toLowerCase(), ChatColor.GOLD, PlayerLevels.getPlayerLevel(p.getUniqueId(), c), MainConfigManager.config.getConfigurationSection("classEmojis").get(Classes.getEmojiName(c))));
+        for (ClassesEnum c : ClassesEnum.values()) {
+            lore.add(String.format("%s%s Level: %s%d%s", ChatColor.DARK_AQUA, c.name().substring(0, 1).toUpperCase() + c.name().substring(1).toLowerCase(), ChatColor.GOLD, PlayerLevels.getPlayerLevel(p.getUniqueId(), c), MainConfigManager.config.getConfigurationSection("classEmojis").get(ClassesEnum.getEmojiName(c))));
         }
 //        lore.add(String.format("%sBalance: %s%s Coins", ChatColor.GRAY, ChatColor.GOLD, PlayerCoins.getCoins(p.getUniqueId())));
 //        lore.add(String.format("%sSouls: %s%s Souls", ChatColor.GRAY, ChatColor.AQUA, PlayerSouls.getSouls(p.getUniqueId())));

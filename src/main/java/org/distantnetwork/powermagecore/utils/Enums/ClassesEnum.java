@@ -1,12 +1,12 @@
 package org.distantnetwork.powermagecore.utils.Enums;
 
-public enum Classes {
+public enum ClassesEnum {
     WARRIOR,
     TANK,
     ARCHER,
     WIZARD;
 
-    public static String getEmojiName(Classes classes) {
+    public static String getEmojiName(ClassesEnum classes) {
         switch(classes) {
             case WARRIOR:
                 return "warriorEmoji";
@@ -21,7 +21,7 @@ public enum Classes {
         }
     }
 
-    public static Float getWalkSpeed(Classes classes) {
+    public static Float getWalkSpeed(ClassesEnum classes) {
         switch(classes) {
             case TANK:
                 return 0.1f;
@@ -34,7 +34,7 @@ public enum Classes {
         }
     }
 
-    public static Integer getHealth(Classes classes) {
+    public static Integer getHealth(ClassesEnum classes) {
         switch(classes) {
             case TANK:
                 return 40;
@@ -47,8 +47,8 @@ public enum Classes {
         }
     }
 
-    public static Integer getMana(Classes classes) {
-        if (classes == Classes.WIZARD) return 300;
+    public static Integer getMana(ClassesEnum classes) {
+        if (classes == ClassesEnum.WIZARD) return 300;
         return 100;
     }
 }
