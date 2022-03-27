@@ -3,6 +3,7 @@ package org.distantnetwork.powermagecore.commands.GUICommands.GUI;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
@@ -24,6 +25,7 @@ public class ClassGUI extends InventoryBuilder {
                     .setLore(String.format("%s❤ Health: %s%%", ChatColor.RED, c.getMaxHealth() * 5),
                             String.format("%s✦ Base Speed: %s%%", ChatColor.GOLD, c.getSpeed() * 500),
                             String.format("%s☄ Base Mana: %s", ChatColor.LIGHT_PURPLE, c.getMaxMana()),
+// TODO: get from classes class
 //                            " ",
 //                            String.format("%sClass Ability: %sCharge", ChatColor.BOLD, ChatColor.GOLD),
 //                            String.format("%sGives player %s+100 %s✦ Speed %sfor %s10 %sseconds.", ChatColor.GRAY, ChatColor.GREEN, ChatColor.GOLD, ChatColor.GRAY, ChatColor.GREEN, ChatColor.GRAY),
@@ -51,15 +53,18 @@ public class ClassGUI extends InventoryBuilder {
                 } catch (Exception ignored) {
                 }
                 player.setWalkSpeed((float) (c.getSpeed() + pmPlayer.getSpeedUpgrade() * ConfigurationManager.getDefaultConfig().getDouble("upgrades.speed.speedPerLevel")));
-//            if (PlayerLevels.getPlayerLevel(player.getUniqueId(), ClassesEnum.WARRIOR) == 0) {
-//                player.getInventory().addItem(new ItemBuilder(Material.WOODEN_SWORD).setName(String.format("%sWarrior Sword", ChatColor.GRAY)).addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
-//                        .setLore(String.format("%sDamage: %s+4", ChatColor.GRAY, ChatColor.RED), String.format("%sAttack Speed: %s1.6", ChatColor.GRAY, ChatColor.RED), " ", String.format("%sThe starter weapon", ChatColor.GRAY), String.format("%sfor the warrior class", ChatColor.GRAY), " ", String.format("%s%sCOMMON WEAPON", ChatColor.GRAY, ChatColor.BOLD))
-//                        .toItem());
-//            }
+                if (c.getLvl(player) == 0) {
+                    // TODO: Replace with class weapon
+                    player.getInventory().addItem(new ItemBuilder(Material.WOODEN_SWORD).setName(String.format("%sWarrior Sword", ChatColor.GRAY)).addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
+                            .setLore(String.format("%sDamage: %s+4", ChatColor.GRAY, ChatColor.RED), String.format("%sAttack Speed: %s1.6", ChatColor.GRAY, ChatColor.RED), " ", String.format("%sThe starter weapon", ChatColor.GRAY), String.format("%sfor the warrior class", ChatColor.GRAY), " ", String.format("%s%sCOMMON WEAPON", ChatColor.GRAY, ChatColor.BOLD))
+                            .toItem());
+                }
                 pmPlayer.setClassType(c);
                 pmPlayer = pmPlayer.save();
             });
             i += 2;
         }
+        setItem(18, new ItemBuilder(Material.ARROW).setName(String.format("%sBack to Main Menu", ChatColor.GRAY)).addItemFlags(ItemFlag.HIDE_ATTRIBUTES).toItem(), player -> new MenuGUI(player).open(player));
+        setItem(22, new ItemBuilder(Material.BARRIER).setName(String.format("%sClose Menu", ChatColor.RED)).addItemFlags(ItemFlag.HIDE_ATTRIBUTES).toItem(), HumanEntity::closeInventory);
     }
 }

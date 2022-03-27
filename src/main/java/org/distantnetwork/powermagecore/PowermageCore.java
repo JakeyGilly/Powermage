@@ -14,19 +14,14 @@ import org.distantnetwork.powermagecore.commands.AdminCommands.GiveMoneyCommand;
 import org.distantnetwork.powermagecore.commands.AdminCommands.GiveSoulsCommand;
 import org.distantnetwork.powermagecore.commands.AdminCommands.GiveWeaponsCommand.GiveWeaponCommand;
 import org.distantnetwork.powermagecore.commands.AdminCommands.GiveWeaponsCommand.GiveWeaponsCompleter;
-import org.distantnetwork.powermagecore.commands.AdminCommands.LevelUpCommand.LevelUpCommand;
-import org.distantnetwork.powermagecore.commands.AdminCommands.LevelUpCommand.LevelUpCompleter;
-import org.distantnetwork.powermagecore.commands.AdminCommands.SetUpgradesCommand.SetUpgradesCommand;
-import org.distantnetwork.powermagecore.commands.AdminCommands.SetUpgradesCommand.SetUpgradesComplete;
-import org.distantnetwork.powermagecore.commands.PluginCommand.PluginCommandCompleter;
+import org.distantnetwork.powermagecore.commands.AdminCommands.LevelUp.LevelUpCommand;
+import org.distantnetwork.powermagecore.commands.AdminCommands.LevelUp.LevelUpCompleter;
 import org.distantnetwork.powermagecore.commands.GUICommands.ClassCommand;
 import org.distantnetwork.powermagecore.commands.GUICommands.MenuCommand;
 import org.distantnetwork.powermagecore.commands.GUICommands.SoulShopCommand;
 import org.distantnetwork.powermagecore.commands.GUICommands.UpgradeCommand;
-import org.distantnetwork.powermagecore.commands.PluginCommand.PluginCommand;
 import org.distantnetwork.powermagecore.listeners.*;
 import org.distantnetwork.powermagecore.utils.Config.ConfigurationManager;
-import org.distantnetwork.powermagecore.utils.Enums.Classes;
 import org.distantnetwork.powermagecore.utils.Enums.Rarity;
 import org.distantnetwork.powermagecore.utils.PowermagePlayer;
 import org.distantnetwork.powermagecore.utils.WeaponItem;
@@ -88,16 +83,12 @@ public final class PowermageCore extends JavaPlugin implements Listener {
         getCommand("class").setExecutor(new ClassCommand());
         getCommand("soulshop").setExecutor(new SoulShopCommand());
         getCommand("upgrade").setExecutor(new UpgradeCommand());
-        getCommand("pmc").setExecutor(new PluginCommand());
-        getCommand("pmc").setTabCompleter(new PluginCommandCompleter());
         getCommand("givesouls").setExecutor(new GiveSoulsCommand());
         getCommand("givecoins").setExecutor(new GiveMoneyCommand());
         getCommand("giveitem").setExecutor(new GiveWeaponCommand());
         getCommand("giveitem").setTabCompleter(new GiveWeaponsCompleter());
-        getCommand("setupgrades").setExecutor(new SetUpgradesCommand());
-        getCommand("setupgrades").setTabCompleter(new SetUpgradesComplete());
-//        getCommand("levelup").setExecutor(new LevelUpCommand());
-//        getCommand("levelup").setTabCompleter(new LevelUpCompleter());
+        getCommand("levelup").setExecutor(new LevelUpCommand());
+        getCommand("levelup").setTabCompleter(new LevelUpCompleter());
     }
 
     private void setListeners() {

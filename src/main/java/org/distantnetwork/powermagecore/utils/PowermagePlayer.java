@@ -15,6 +15,15 @@ public class PowermagePlayer {
 
     //? Classes
     private Classes classType;
+    private int warriorLevel;
+    private int archerLevel;
+    private int wizardLevel;
+    private int tankLevel;
+    private int warriorExp;
+    private int archerExp;
+    private int wizardExp;
+    private int tankExp;
+
 
     //? Stats Upgrades
     private int strengthUpgrade;
@@ -44,6 +53,22 @@ public class PowermagePlayer {
         if (!config.contains(player.getUniqueId().toString())) return;
         if (config.contains(player.getUniqueId() + ".class"))
             this.classType = Classes.valueOf(config.getString(player.getUniqueId() + ".class"));
+        if (config.contains(player.getUniqueId() + ".warriorLevel"))
+            this.warriorLevel = config.getInt(player.getUniqueId() + ".warriorLevel");
+        if (config.contains(player.getUniqueId() + ".archerLevel"))
+            this.archerLevel = config.getInt(player.getUniqueId() + ".archerLevel");
+        if (config.contains(player.getUniqueId() + ".wizardLevel"))
+            this.wizardLevel = config.getInt(player.getUniqueId() + ".wizardLevel");
+        if (config.contains(player.getUniqueId() + ".tankLevel"))
+            this.tankLevel = config.getInt(player.getUniqueId() + ".tankLevel");
+        if (config.contains(player.getUniqueId() + ".warriorExp"))
+            this.warriorExp = config.getInt(player.getUniqueId() + ".warriorExp");
+        if (config.contains(player.getUniqueId() + ".archerExp"))
+            this.archerExp = config.getInt(player.getUniqueId() + ".archerExp");
+        if (config.contains(player.getUniqueId() + ".wizardExp"))
+            this.wizardExp = config.getInt(player.getUniqueId() + ".wizardExp");
+        if (config.contains(player.getUniqueId() + ".tankExp"))
+            this.tankExp = config.getInt(player.getUniqueId() + ".tankExp");
         if (config.contains(player.getUniqueId() + ".strengthUpgrade"))
             this.strengthUpgrade = config.getInt(player.getUniqueId() + ".strengthUpgrade");
         if (config.contains(player.getUniqueId() + ".speedUpgrade"))
@@ -80,6 +105,57 @@ public class PowermagePlayer {
     public void setClassType(Classes classType) {
         this.classType = classType;
     }
+
+    public int getWarriorLevel() {
+        return warriorLevel;
+    }
+    public void setWarriorLevel(int warriorLevel) {
+        this.warriorLevel = warriorLevel;
+    }
+    public int getArcherLevel() {
+        return archerLevel;
+    }
+    public void setArcherLevel(int archerLevel) {
+        this.archerLevel = archerLevel;
+    }
+    public int getWizardLevel() {
+        return wizardLevel;
+    }
+    public void setWizardLevel(int wizardLevel) {
+        this.wizardLevel = wizardLevel;
+    }
+    public int getTankLevel() {
+        return tankLevel;
+    }
+    public void setTankLevel(int tankLevel) {
+        this.tankLevel = tankLevel;
+    }
+
+    public int getWarriorExp() {
+        return warriorExp;
+    }
+    public void setWarriorExp(int warriorExp) {
+        this.warriorExp = warriorExp;
+    }
+    public int getArcherExp() {
+        return archerExp;
+    }
+    public void setArcherExp(int archerExp) {
+        this.archerExp = archerExp;
+    }
+    public int getWizardExp() {
+        return wizardExp;
+    }
+    public void setWizardExp(int wizardExp) {
+        this.wizardExp = wizardExp;
+    }
+    public int getTankExp() {
+        return tankExp;
+    }
+    public void setTankExp(int tankExp) {
+        this.tankExp = tankExp;
+    }
+
 
     public int getStrengthUpgrade() {
         return strengthUpgrade;
@@ -172,6 +248,14 @@ public class PowermagePlayer {
         if (config == null) return null;
         config.set(String.valueOf(player.getUniqueId()), new HashMap<String, Object>() {{
             put("class", classType.name());
+            put("warriorLevel", warriorLevel);
+            put("archerLevel", archerLevel);
+            put("wizardLevel", wizardLevel);
+            put("tankLevel", tankLevel);
+            put("warriorExp", warriorExp);
+            put("archerExp", archerExp);
+            put("wizardExp", wizardExp);
+            put("tankExp", tankExp);
 
             put("healthUpgrade", healthUpgrade);
             put("strengthUpgrade", strengthUpgrade);

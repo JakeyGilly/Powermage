@@ -7,7 +7,6 @@ import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
 
 import static org.distantnetwork.powermagecore.PowermageCore.getInstance;
 

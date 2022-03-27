@@ -9,6 +9,7 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.distantnetwork.powermagecore.builders.InventoryBuilder;
 import org.distantnetwork.powermagecore.builders.ItemBuilder;
+import org.distantnetwork.powermagecore.utils.Enums.Classes;
 import org.distantnetwork.powermagecore.utils.PowermagePlayer;
 
 import java.util.ArrayList;
@@ -21,9 +22,9 @@ public class MenuGUI extends InventoryBuilder {
         ItemStack item;
         PowermagePlayer pmPlayer = new PowermagePlayer(p);
         List<String> lore = new ArrayList<String>() {{
-//            for (Classes c : Classes.values()) {
-//                add(String.format("%s%s Level: %s%d%s", ChatColor.DARK_AQUA, c.name().substring(0, 1).toUpperCase() + c.name().substring(1).toLowerCase(), ChatColor.GOLD, PlayerLevels.getPlayerLevel(p.getUniqueId(), c), ConfigurationManager.getDefaultConfig().getConfigurationSection("classEmojis").get(ClassesEnum.getEmojiName(c))));
-//            }
+            for (Classes c : Classes.values()) {
+                add(String.format("%s%s Level: %s%d", ChatColor.DARK_AQUA, c.name().substring(0, 1).toUpperCase() + c.name().substring(1).toLowerCase(), ChatColor.GOLD, c.getLvl(p)));
+            }
             add(String.format("%sBalance: %s%s Coins", ChatColor.GRAY, ChatColor.GOLD, pmPlayer.getMoney()));
             add(String.format("%sSouls: %s%s Souls", ChatColor.GRAY, ChatColor.AQUA, pmPlayer.getSouls()));
             add(String.format("%sKills: %s%s", ChatColor.GRAY, ChatColor.RED, pmPlayer.getKills()));
@@ -44,12 +45,16 @@ public class MenuGUI extends InventoryBuilder {
                 .toItem();
         setItem(23, item, player -> new ClassGUI(player).open(player));
         ItemBuilder itembuild = new ItemBuilder(Material.BEACON).setName(String.format("%sSoul Shop", ChatColor.RED)).addItemFlags(ItemFlag.HIDE_ATTRIBUTES).setLore(String.format("%sGot too many %sSouls%s?", ChatColor.GRAY, ChatColor.AQUA, ChatColor.GRAY), String.format("%sSpend your %sSouls %sto get special items", ChatColor.GRAY, ChatColor.AQUA, ChatColor.GRAY), " ", String.format("%sClick to view the shop", ChatColor.GOLD));
-//        for (ClassesEnum c : ClassesEnum.values()) if (PlayerLevels.getPlayerLevel(p.getUniqueId(), c) >= 5) {
-//            itembuild.setLore(String.format("%sClick to view the shop", ChatColor.GOLD));
-//            setItem(24, itembuild.toItem(), player -> new SoulShopGUI(player).open(player));
-//        }
-        itembuild.addLoreLine(String.format("%sUnlocked at level 5 of any class", ChatColor.DARK_RED), 3);
-        setItem(24, itembuild.toItem());
+        for (Classes c : Classes.values()) {
+            if (c.getLvl(p) >= 5) {
+                itembuild.setLore(String.format("%sClick to view the shop", ChatColor.GOLD));
+                setItem(24, itembuild.toItem(), player -> new SoulShopGUI(player).open(player));
+            }
+        }
+        if (getInventory().getItem(24) == null) {
+            itembuild.addLoreLine(String.format("%sUnlocked at level 5 of any class", ChatColor.DARK_RED), 3);
+            setItem(24, itembuild.toItem());
+        }
         item = new ItemBuilder(Material.GOLD_NUGGET).setName(String.format("%sRanks Shop", ChatColor.GOLD)).addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
                 .setLore(String.format("%sBuy ranks to get access to", ChatColor.GRAY), String.format("%sspecial features on the server", ChatColor.GRAY), " ", String.format("%sClick to view the shop", ChatColor.GOLD))
                 .toItem();
