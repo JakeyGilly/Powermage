@@ -23,8 +23,6 @@ public class InventoryBuilder implements Listener {
         actionsClick = new HashMap<>();
         inventoriesByUUID.put(getUuid(), this);
     }
-
-
     public Inventory getInventory() {
         return inventory;
     }

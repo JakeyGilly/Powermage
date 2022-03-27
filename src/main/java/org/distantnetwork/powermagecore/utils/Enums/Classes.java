@@ -3,7 +3,7 @@ package org.distantnetwork.powermagecore.utils.Enums;
 import org.bukkit.entity.Player;
 
 public enum Classes {
-    WARRIOR(0.2f, 20.0, 100) {
+    WARRIOR(0.2f, 20.0, 100){
         @Override
         public void OnAbility(Player player) {
             player.sendMessage("Warrior ability");

@@ -26,6 +26,7 @@ import org.distantnetwork.powermagecore.commands.GUICommands.UpgradeCommand;
 import org.distantnetwork.powermagecore.commands.PluginCommand.PluginCommand;
 import org.distantnetwork.powermagecore.listeners.*;
 import org.distantnetwork.powermagecore.utils.Config.ConfigurationManager;
+import org.distantnetwork.powermagecore.utils.Enums.Classes;
 import org.distantnetwork.powermagecore.utils.Enums.Rarity;
 import org.distantnetwork.powermagecore.utils.PowermagePlayer;
 import org.distantnetwork.powermagecore.utils.WeaponItem;
@@ -106,5 +107,8 @@ public final class PowermageCore extends JavaPlugin implements Listener {
         getServer().getPluginManager().registerEvents(new OnPlayerDeath(), this);
         getServer().getPluginManager().registerEvents(new OnDamage(), this);
         getServer().getPluginManager().registerEvents(new OnPlayerJoin(), this);
+
+        //? Abilitys
+        getServer().getPluginManager().registerEvents(this, this);
     }
 }

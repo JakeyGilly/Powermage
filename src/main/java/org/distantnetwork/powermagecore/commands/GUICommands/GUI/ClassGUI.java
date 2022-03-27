@@ -35,7 +35,7 @@ public class ClassGUI extends InventoryBuilder {
                 PowermagePlayer pmPlayer = new PowermagePlayer(p);
                 player.closeInventory();
                 player.sendMessage(String.format("%s[%sClass Selector%s] %sYou have selected the %sWarrior %s%sclass!", ChatColor.GRAY, ChatColor.RED, ChatColor.GRAY, ChatColor.RED, ChatColor.BOLD, ChatColor.RESET, ChatColor.GRAY));
-                player.sendMessage(String.format("%s===========================\n%s%sNEW STATS:\n\n%s%s❤ Base Health: %s\n%s%s✦ Base Speed: %s%%\n%s%s☄ Base Mana: %s100\n%s===========================",
+                player.sendMessage(String.format("%s===========================\n%s%sNEW STATS:\n\n%s%s❤ Base Health: %s%%\n%s%s✦ Base Speed: %s%%\n%s%s☄ Base Mana: %s100\n%s===========================",
                         ChatColor.RED,
                         ChatColor.RESET, ChatColor.BOLD,
                         ChatColor.RESET, ChatColor.RED, (c.getMaxHealth() + pmPlayer.getHealthUpgrade() * ConfigurationManager.getDefaultConfig().getDouble("upgrades.speed.speedPerLevel")) * 5,
