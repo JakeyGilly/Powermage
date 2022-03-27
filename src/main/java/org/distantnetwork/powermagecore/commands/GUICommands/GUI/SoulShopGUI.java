@@ -8,7 +8,7 @@ import org.bukkit.inventory.ItemFlag;
 import org.distantnetwork.powermagecore.builders.InventoryBuilder;
 import org.distantnetwork.powermagecore.builders.ItemBuilder;
 import org.distantnetwork.powermagecore.utils.Config.ConfigurationManager;
-import org.distantnetwork.powermagecore.utils.Config.Hashmap.PlayerSouls;
+import org.distantnetwork.powermagecore.utils.PowermagePlayer;
 import org.distantnetwork.powermagecore.utils.WeaponItem;
 
 import static org.distantnetwork.powermagecore.utils.Config.ConfigurationManager.getFileFile;
@@ -25,13 +25,14 @@ public class SoulShopGUI extends InventoryBuilder {
             for (String name : list) {
                 WeaponItem weaponItem = new WeaponItem(getFileFile(name));
                 setItem(i, weaponItem.getItem(), (player -> {
+                    PowermagePlayer pmPlayer = new PowermagePlayer(player);
                     if (player.getInventory().firstEmpty() == -1) {
                         player.sendMessage(ChatColor.RED + "Your inventory is full!");
-                    }
-                    if (PlayerSouls.getSouls(player.getUniqueId()) < weaponItem.getPrice()) {
+                    } else if (pmPlayer.getSouls() < weaponItem.getPrice()) {
                         player.sendMessage(ChatColor.RED + "You don't have enough souls!");
                     }
-                    PlayerSouls.removeSouls(player.getUniqueId(), weaponItem.getPrice());
+                    pmPlayer.setSouls(pmPlayer.getSouls() - weaponItem.getPrice());
+                    pmPlayer = pmPlayer.save();
                     player.getInventory().addItem(weaponItem.getItem());
                     player.sendMessage(ChatColor.GREEN + "You bought " + weaponItem.getName() + " for " + weaponItem.getPrice() + " souls!");
                 }));

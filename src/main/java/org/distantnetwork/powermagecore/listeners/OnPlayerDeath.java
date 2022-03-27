@@ -4,26 +4,30 @@ import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
-import org.distantnetwork.powermagecore.utils.Config.Hashmap.PlayerDeaths;
-import org.distantnetwork.powermagecore.utils.Config.Hashmap.PlayerKills;
-import org.distantnetwork.powermagecore.utils.Config.NonFileHashMaps.PlayerCombatLog;
-import org.distantnetwork.powermagecore.utils.Config.NonFileHashMaps.PlayerKillStreak;
+import org.distantnetwork.powermagecore.utils.PowermagePlayer;
+import org.jetbrains.annotations.NotNull;
 
 public class OnPlayerDeath implements Listener {
     @EventHandler
-    public void onPlayerDeath(PlayerDeathEvent e) {
+    public void onPlayerDeath(@NotNull PlayerDeathEvent e) {
         e.setDroppedExp(0);
         e.getDrops().clear();
         e.setDeathMessage(null);
         e.setKeepInventory(true);
         e.setKeepLevel(true);
         if (e.getEntity().getKiller() == null) return;
-        PlayerDeaths.addDeaths(e.getEntity().getUniqueId(), 1);
-        PlayerKills.addKills(e.getEntity().getKiller().getUniqueId(), 1);
-        if (PlayerCombatLog.get(e.getEntity().getUniqueId())) PlayerCombatLog.unset(e.getEntity().getUniqueId());
-        PlayerKillStreak.incrementKillStreak(e.getEntity().getKiller().getUniqueId());
-        PlayerKillStreak.removeKillStreak(e.getEntity().getUniqueId());
-        e.getEntity().sendMessage(ChatColor.RED + "You have died to " + e.getEntity().getKiller().getName() + "!");
-        e.getEntity().getKiller().sendMessage(String.format("%sYou have killed %s%s%s!", ChatColor.GREEN, ChatColor.RED, e.getEntity().getName(), ChatColor.GREEN));
+        PowermagePlayer victim = new PowermagePlayer(e.getEntity());
+        PowermagePlayer killer = new PowermagePlayer(e.getEntity().getKiller());
+        victim.setDeaths(victim.getDeaths() + 1);
+        victim.setSouls(victim.getSouls() - 1);
+        victim.setKillStreak(0);
+        victim.setCombatLog(false);
+        killer.setKills(killer.getKills() + 1);
+        killer.setKillStreak(killer.getKillStreak() + 1);
+        killer.setSouls(killer.getSouls() + 1);
+        victim = victim.save();
+        killer = killer.save();
+        victim.getPlayer().sendMessage(ChatColor.RED + "You have died to " + e.getEntity().getKiller().getName() + "!");
+        killer.getPlayer().sendMessage(String.format("%sYou have killed %s%s%s!", ChatColor.GREEN, ChatColor.RED, e.getEntity().getName(), ChatColor.GREEN));
     }
 }

@@ -6,8 +6,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.distantnetwork.powermagecore.utils.Config.ConfigurationManager;
-import org.distantnetwork.powermagecore.utils.Config.Hashmap.PlayerUpgrades;
-import org.distantnetwork.powermagecore.utils.Enums.Upgrades;
+import org.distantnetwork.powermagecore.utils.PowermagePlayer;
 import org.distantnetwork.powermagecore.utils.WeaponItem;
 import org.jetbrains.annotations.NotNull;
 
@@ -19,7 +18,7 @@ public class OnDamage implements Listener {
             if (attacker == null) return;
             WeaponItem weapon = new WeaponItem(attacker.getInventory().getItemInMainHand());
             if (weapon.getHitDamage() == 0) e.setCancelled(true);
-            e.setDamage(weapon.getDamage() + (PlayerUpgrades.getUpgradeLevel(attacker.getUniqueId(), Upgrades.STRENGTH) * ConfigurationManager.getDefaultConfig().getInt("upgrades.strength.strengthPerLevel")));
+            e.setDamage(weapon.getHitDamage() + (new PowermagePlayer(attacker).getStrengthUpgrade() * ConfigurationManager.getDefaultConfig().getInt("upgrades.strength.strengthPerLevel")));
         }
     }
 }

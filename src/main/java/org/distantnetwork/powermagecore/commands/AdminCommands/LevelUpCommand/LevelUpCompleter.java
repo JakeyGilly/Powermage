@@ -3,12 +3,13 @@ package org.distantnetwork.powermagecore.commands.AdminCommands.LevelUpCommand;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
-import org.distantnetwork.powermagecore.PowermageCore;
-import org.distantnetwork.powermagecore.utils.Enums.ClassesEnum;
+import org.distantnetwork.powermagecore.utils.Enums.Classes;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import static org.distantnetwork.powermagecore.PowermageCore.getInstance;
 
 public class LevelUpCompleter implements TabCompleter {
     List<String> list = new ArrayList<>();
@@ -16,11 +17,11 @@ public class LevelUpCompleter implements TabCompleter {
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
         if (args.length == 1) {
             list.clear();
-            Arrays.stream(ClassesEnum.values()).forEach(classes -> list.add(classes.name()));
+            Arrays.stream(Classes.values()).forEach(classes -> list.add(classes.name()));
         }
         if (args.length == 2) {
             list.clear();
-            PowermageCore.getInstance().getServer().getOnlinePlayers().forEach(player -> list.add(player.getName()));
+            getInstance().getServer().getOnlinePlayers().forEach(player -> list.add(player.getName()));
         }
         if (args.length == 3) {
             list.clear();

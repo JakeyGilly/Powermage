@@ -6,8 +6,9 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.distantnetwork.powermagecore.PowermageCore;
-import org.distantnetwork.powermagecore.utils.Config.Hashmap.PlayerUpgrades;
-import org.distantnetwork.powermagecore.utils.Enums.Upgrades;
+import org.distantnetwork.powermagecore.utils.Config.ConfigurationManager;
+import org.distantnetwork.powermagecore.utils.Enums.Classes;
+import org.distantnetwork.powermagecore.utils.PowermagePlayer;
 
 public class SetUpgradesCommand implements CommandExecutor {
     @Override
@@ -19,7 +20,6 @@ public class SetUpgradesCommand implements CommandExecutor {
                 player.sendMessage(String.format("%sYou don't have permission to use this command.", ChatColor.RED));
                 return true;
             }
-            Upgrades upgrade = Upgrades.valueOf(args[0]);
             int value;
             try {
                 value = Integer.parseInt(args[1]);
@@ -34,7 +34,28 @@ public class SetUpgradesCommand implements CommandExecutor {
                     return true;
                 }
             }
-            PlayerUpgrades.setUpgrade(player.getUniqueId(), upgrade, value);
+            PowermagePlayer pmPlayer = new PowermagePlayer(player);
+            if (args[0].equalsIgnoreCase("mana")) {
+                pmPlayer.setManaUpgrade(value);
+            }
+            if (args[0].equalsIgnoreCase("health")) {
+                pmPlayer.setHealthUpgrade(value);
+                pmPlayer = pmPlayer.save();
+                try {
+                    player.setHealthScale(pmPlayer.getClassType().getMaxHealth() + pmPlayer.getHealthUpgrade() * ConfigurationManager.getDefaultConfig().getDouble("upgrades.health.healthPerLevel"));
+                } catch (Exception ignored) {}
+                try {
+                    player.setHealth(pmPlayer.getClassType().getMaxHealth() + pmPlayer.getHealthUpgrade() * ConfigurationManager.getDefaultConfig().getDouble("upgrades.health.healthPerLevel"));
+                } catch (Exception ignored) {}
+            }
+            if (args[0].equalsIgnoreCase("strength")) {
+                pmPlayer.setStrengthUpgrade(value);
+            }
+            if (args[0].equalsIgnoreCase("speed")) {
+                pmPlayer.setSpeedUpgrade(value);
+                pmPlayer = pmPlayer.save();
+                player.setWalkSpeed((float) (pmPlayer.getClassType().getSpeed() + pmPlayer.getManaUpgrade() * ConfigurationManager.getDefaultConfig().getDouble("upgrades.speed.speedPerLevel")));
+            }
         } else sender.sendMessage(String.format("%sThis command is only for players!", ChatColor.RED));
         return true;
     }

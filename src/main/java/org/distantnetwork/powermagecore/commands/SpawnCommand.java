@@ -6,7 +6,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.distantnetwork.powermagecore.PowermageCore;
+import org.distantnetwork.powermagecore.utils.PowermagePlayer;
 
 import java.util.concurrent.TimeUnit;
 
@@ -19,7 +19,8 @@ public class SpawnCommand implements CommandExecutor {
                 player.sendMessage(String.format("%sYou don't have permission to use this command!", ChatColor.RED));
                 return true;
             }
-            if (PowermageCore.playerCombatLog.get(player.getUniqueId()) != null && PowermageCore.playerCombatLog.get(player.getUniqueId())) {
+            PowermagePlayer powermagePlayer = new PowermagePlayer(player);
+            if (powermagePlayer.isCombatLog()) {
                 player.sendMessage(String.format("%sYou are currently in combat!", ChatColor.RED));
                 return true;
             }
