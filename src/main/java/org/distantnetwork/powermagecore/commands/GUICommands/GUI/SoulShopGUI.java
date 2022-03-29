@@ -16,7 +16,7 @@ import static org.distantnetwork.powermagecore.utils.Config.ConfigurationManager
 
 public class SoulShopGUI extends InventoryBuilder {
     public SoulShopGUI(Player p) {
-        super((getFilesAmountInFolder("weapons") % 9 == 0 ? getFilesAmountInFolder("weapons") :  + (9 - (getFilesAmountInFolder("weapons") % 9)))+9, String.format("%sPowermage Soul Shop", ChatColor.AQUA));
+        super((getFilesAmountInFolder("weapons") % 9 == 0 ? getFilesAmountInFolder("weapons") : getFilesAmountInFolder("weapons") + (9 - (getFilesAmountInFolder("weapons") % 9)))+9, String.format("%sPowermage Soul Shop", ChatColor.AQUA));
         for (int i = 0; i < getInventory().getSize(); i++) setItem(i, new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setName(" ").addItemFlags(ItemFlag.HIDE_ATTRIBUTES).toItem());
         File weaponsFolder = getFileFolder("weapons");
         if (weaponsFolder == null) throw new NullPointerException("Weapons folder is file");
@@ -40,7 +40,7 @@ public class SoulShopGUI extends InventoryBuilder {
                     pmPlayer.setSouls(pmPlayer.getSouls() - weaponItem.getPrice());
                     pmPlayer.save();
                     player.getInventory().addItem(weaponItem.getItem());
-                    player.sendMessage(ChatColor.GREEN + "You bought " + weaponItem.getName() + " for " + weaponItem.getPrice() + " souls!");
+                    player.sendMessage(ChatColor.GREEN + "You bought " + weaponItem.getFormattedName() + ChatColor.GREEN + " for " + weaponItem.getPrice() + " souls!");
                 }));
                 i++;
             }

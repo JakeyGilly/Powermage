@@ -131,12 +131,24 @@ public class Item {
         return lore;
     }
 
+    public String[] getFormattedLore() {
+        String[] lore2 = new String[this.lore.length];
+        for (int i = 0; i < this.lore.length; i++) {
+            lore2[i] = ChatColor.translateAlternateColorCodes('&', this.lore[i]);
+        }
+        return lore2;
+    }
+
     public void setLore(String[] lore) {
         this.lore = lore;
     }
 
     public String getName() {
         return name;
+    }
+
+    public String getFormattedName() {
+        return ChatColor.translateAlternateColorCodes('&', name);
     }
 
     public void setName(String name) {
