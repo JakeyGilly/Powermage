@@ -1,6 +1,8 @@
 package org.distantnetwork.powermagecore;
 
 import org.bukkit.Material;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -27,8 +29,9 @@ import org.distantnetwork.powermagecore.utils.PowermagePlayer;
 import org.distantnetwork.powermagecore.utils.WeaponItem;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.*;
+
+import static org.distantnetwork.powermagecore.utils.Config.ConfigurationManager.*;
 
 public final class PowermageCore extends JavaPlugin implements Listener {
     private static PowermageCore instance;
@@ -40,25 +43,22 @@ public final class PowermageCore extends JavaPlugin implements Listener {
     public void onEnable() {
         instance = this;
         this.saveDefaultConfig();
-        if (instance.getConfig().getValues(false).size() > 0) ConfigurationManager.saveDefaultConfig();
-        File folder = ConfigurationManager.getFileFolder(instance.getDataFolder() + File.separator + "weapons");
-        if (folder == null) throw new IllegalStateException("Weapons folder is a file.");
-        if (ConfigurationManager.getFilesAmountInFolder(folder) == 0) {
-            File file = new File(folder, "weapon-example.yml");
-            try {
-                file.createNewFile();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            List<ItemFlag> itemFlagList = new ArrayList<>();
-            itemFlagList.add(ItemFlag.HIDE_ENCHANTS);
-            itemFlagList.add(ItemFlag.HIDE_ATTRIBUTES);
-            itemFlagList.add(ItemFlag.HIDE_UNBREAKABLE);
-            String[] lorelist = new ArrayList<String>() {{
-                add("&7&oThis is an example weapon.");
-            }}.toArray(new String[0]);
-            new WeaponItem(Material.WOODEN_SWORD, 1, itemFlagList, null,
-                    lorelist, "&7&oExample Weapon", 0, true, 1, Rarity.CORE).save(file.getPath());
+        if (getFilesAmountInFolder("weapons") > 0) {
+            File weaponsFolder = getFileFolder(getDataFolder() + "weapons");
+            if (weaponsFolder == null) throw new NullPointerException("Weapons folder is file");
+            File[] list = weaponsFolder.listFiles();
+            if (list != null) Arrays.stream(list).filter(file -> file.getName().endsWith(".yml")).forEach(file -> getLogger().info("Loading weapon: " + file.getName()));
+        } else {
+            File file = getFileFile("weapons" + File.separator + "weapon-example.yml");
+            if (file == null) throw new IllegalStateException("Weapon example file is a folder.");
+            FileConfiguration config = new WeaponItem(Material.WOODEN_SWORD, 1,
+                    Arrays.asList(ItemFlag.HIDE_ENCHANTS, ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_UNBREAKABLE),
+                    new HashMap<Enchantment, Integer>() {{
+                        put(Enchantment.MENDING, 1);
+                    }},
+                    Collections.singletonList("&7&oThis is an example weapon."),
+                    "&7&oExample Weapon", 0, true, 1, Rarity.CORE).save("weapons" + File.separator + "weapon-example.yml");
+            ConfigurationManager.saveConfig(file, config);
         }
         setCommands();
         setListeners();
@@ -66,10 +66,12 @@ public final class PowermageCore extends JavaPlugin implements Listener {
 
     @EventHandler
     public void onPlayerAbility(PlayerInteractEvent e) {
-        if (e.getAction() == Action.RIGHT_CLICK_AIR ||
+        if ((e.getAction() == Action.RIGHT_CLICK_AIR ||
                 e.getAction() == Action.RIGHT_CLICK_BLOCK ||
                 e.getAction() == Action.LEFT_CLICK_AIR ||
-                e.getAction() == Action.LEFT_CLICK_BLOCK) {
+                e.getAction() == Action.LEFT_CLICK_BLOCK) &&
+                e.getPlayer().isSneaking() &&
+                e.getPlayer().getInventory().getItemInMainHand().getType() == Material.END_CRYSTAL) {
             Player player = e.getPlayer();
             new PowermagePlayer(player).getClassType().OnAbility(player);
         }

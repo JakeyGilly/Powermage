@@ -33,6 +33,14 @@ public class WeaponItem extends Item {
         this.price = 0;
     }
 
+    public WeaponItem(Material material, int amount, List<ItemFlag> itemFlags, Map<Enchantment, Integer> enchantmentLevels, List<String> lore, String name, int damage, boolean unbreakable, int hitDamage, Rarity rarity) {
+        super(material, amount, itemFlags, enchantmentLevels, lore, name, damage, unbreakable);
+        this.hitDamage = hitDamage;
+        this.rarity = rarity;
+        this.level = 0;
+        this.price = 0;
+    }
+
     public WeaponItem() {
         super();
         this.hitDamage = 0;
@@ -94,18 +102,17 @@ public class WeaponItem extends Item {
     }
 
     @Override
-    public void save(String path) {
-        super.save(path);
-        File file = getFileFile(path);
-        if (file == null) return;
-        FileConfiguration config = getConfig(file);
-        if (config == null) return;
+    public FileConfiguration save(String path) {
+        FileConfiguration config = super.save(path);
         HashMap<String, Object> map = new HashMap<>();
         map.put("hitDamage", hitDamage);
         map.put("rarity", rarity.name());
         map.put("price", price);
         map.put("level", level);
-        map.forEach(config::set);
+        for (Map.Entry<String, Object> entry : map.entrySet()) {
+            config.set(entry.getKey(), entry.getValue());
+        }
+        return config;
     }
 
     public static @Nullable Item getWeaponItem(@NotNull String filename) {

@@ -198,6 +198,30 @@ public class ConfigurationManager {
         folder.delete(); // delete the folder
     }
 
+    public static boolean folderExists(@NotNull String folderPath) {
+        File folder = getFileFolder(folderPath); // get the folder
+        if (folder == null) return false; // if the folder isn't a folder, return false
+        return folder.exists(); // return if the folder exists
+    }
+
+    public static boolean folderExists(@NotNull File folder) {
+        folder = getFileFolder(folder); // get the folder
+        if (folder == null) return false; // if the folder isn't a folder, return false
+        return folder.exists(); // return if the folder exists
+    }
+
+    public static boolean fileExists(@NotNull String filePath) {
+        File file = getFileFile(filePath); // get the file
+        if (file == null) return false; // if the file isn't a file, return false
+        return file.exists(); // return if the file exists
+    }
+
+    public static boolean fileExists(@NotNull File file) {
+        file = getFileFile(file); // get the file
+        if (file == null) return false; // if the file isn't a file, return false
+        return file.exists(); // return if the file exists
+    }
+
 
 
     //? DEFAULT CONFIGURATION
@@ -210,9 +234,7 @@ public class ConfigurationManager {
         getInstance().saveConfig();
     }
 
-    //? WEAPONS CONFIGURATION
-
-    public static File getWeaponsFolder() {
-        return getFileFolder(getInstance().getDataFolder() + "weapons");
+    public static File getDefaultFolder() {
+        return getInstance().getDataFolder();
     }
 }

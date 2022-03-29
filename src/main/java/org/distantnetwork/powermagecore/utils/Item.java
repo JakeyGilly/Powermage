@@ -1,5 +1,6 @@
 package org.distantnetwork.powermagecore.utils;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -10,13 +11,9 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.Damageable;
 import org.distantnetwork.powermagecore.builders.ItemBuilder;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static org.distantnetwork.powermagecore.utils.Config.ConfigurationManager.*;
 
@@ -36,6 +33,17 @@ public class Item {
         this.itemFlags = itemFlags;
         this.enchantmentLevels = enchantmentLevels;
         this.lore = lore;
+        this.name = name;
+        this.damage = damage;
+        this.unbreakable = unbreakable;
+    }
+
+    public Item(Material material, int amount, List<ItemFlag> itemFlags, Map<Enchantment, Integer> enchantmentLevels, List<String> lore, String name, int damage, boolean unbreakable) {
+        this.material = material;
+        this.amount = amount;
+        this.itemFlags = itemFlags;
+        this.enchantmentLevels = enchantmentLevels;
+        this.lore = lore.toArray(new String[0]);
         this.name = name;
         this.damage = damage;
         this.unbreakable = unbreakable;
@@ -67,6 +75,11 @@ public class Item {
         this.name = fileConfiguration.getString("name");
         this.damage = fileConfiguration.getInt("damage");
         this.unbreakable = fileConfiguration.getBoolean("unbreakable");
+        this.itemFlags = new ArrayList<ItemFlag>() {{
+            for (String itemFlag : fileConfiguration.getStringList("itemFlags")) {
+                add(ItemFlag.valueOf(itemFlag));
+            }
+        }};
     }
 
     public Item(@NotNull ItemStack itemStack) {
@@ -146,7 +159,7 @@ public class Item {
         this.unbreakable = unbreakable;
     }
 
-    public void save(String path) {
+    public FileConfiguration save(String path) {
         Map<String, Object> itemMap = new HashMap<String, Object>();
         itemMap.put("material", this.material.name());
         if (this.amount > 1) itemMap.put("amount", this.amount);
@@ -155,58 +168,21 @@ public class Item {
         if (this.lore != null) itemMap.put("lore", this.lore);
         if (this.damage > 0) itemMap.put("damage", this.damage);
         if (this.unbreakable) itemMap.put("unbreakable", true);
-        if (this.itemFlags.size() > 0) itemMap.put("itemFlags", this.itemFlags);
+        if (this.itemFlags.size() > 0) {
+            String[] itemFlagsstr = new String[this.itemFlags.size()];
+            for (int i = 0; i < this.itemFlags.size(); i++) {
+                itemFlagsstr[i] = this.itemFlags.get(i).name();
+            }
+            itemFlags.forEach(itemFlag -> itemMap.put("itemFlags", itemFlagsstr));
+        }
         File file = getFileFile(path);
-        if (file == null) return;
+        if (file == null) return null;
         FileConfiguration config = getConfig(file);
-        if (config == null) return;
+        if (config == null) return null;
         for (String key : itemMap.keySet()) {
             config.set(key, itemMap.get(key));
         }
-    }
-
-    public static @Nullable Item getItem(@NotNull String filename) {
-        File file = getFileFile(filename);
-        if (file == null) return null;
-        FileConfiguration config = getConfig(file);
-        if (config == null) return null;
-        if (!config.contains("material")) return null;
-        Item item = new Item();
-        item.setMaterial(Material.valueOf(config.getString("material")));
-        item.setAmount(config.contains("amount") ? config.getInt("amount") : 1);
-        if (config.contains("name")) item.setName(config.getString("name"));
-        if (config.contains("lore")) item.setLore(config.getStringList("lore").toArray(new String[0]));
-        if (config.contains("enchantmentLevels")) config.getConfigurationSection("enchantmentLevels").getValues(false).forEach((enchantment, lvl) -> {
-            item.getEnchantmentLevels().put(Enchantment.getByKey(NamespacedKey.minecraft(enchantment)), (Integer) lvl);
-        });
-        if (config.contains("damage")) item.setDamage(config.getInt("damage"));
-        if (config.contains("unbreakable")) item.setUnbreakable(config.getBoolean("unbreakable"));
-        if (config.contains("flags")) config.getStringList("flags").forEach(flag -> {
-            item.getItemFlags().add(ItemFlag.valueOf(flag));
-        });
-        return item;
-    }
-
-    public static @Nullable Item getItem(@NotNull File filepath) {
-        File file = getFileFile(filepath);
-        if (file == null) return null;
-        FileConfiguration config = getConfig(file);
-        if (config == null) return null;
-        if (!config.contains("material")) return null;
-        Item item = new Item();
-        item.setMaterial(Material.valueOf(config.getString("material")));
-        item.setAmount(config.contains("amount") ? config.getInt("amount") : 1);
-        if (config.contains("name")) item.setName(config.getString("name"));
-        if (config.contains("lore")) item.setLore(config.getStringList("lore").toArray(new String[0]));
-        if (config.contains("enchantmentLevels")) config.getConfigurationSection("enchantmentLevels").getValues(false).forEach((enchantment, lvl) -> {
-            item.getEnchantmentLevels().put(Enchantment.getByKey(NamespacedKey.minecraft(enchantment)), (Integer) lvl);
-        });
-        if (config.contains("damage")) item.setDamage(config.getInt("damage"));
-        if (config.contains("unbreakable")) item.setUnbreakable(config.getBoolean("unbreakable"));
-        if (config.contains("flags")) config.getStringList("flags").forEach(flag -> {
-            item.getItemFlags().add(ItemFlag.valueOf(flag));
-        });
-        return item;
+        return config;
     }
 
     public void give(Player player) {
@@ -215,19 +191,25 @@ public class Item {
         if (this.lore != null) itemBuilder.setLore(this.lore);
         if (this.damage > 0) itemBuilder.setDurability((short) this.damage);
         if (this.unbreakable) itemBuilder.setUnbreakable(true);
-        if (this.itemFlags.size() > 0) itemBuilder.addItemFlags(this.itemFlags);
+        if (this.itemFlags != null && this.itemFlags.size() > 0) itemBuilder.addItemFlags(this.itemFlags);
         if (this.enchantmentLevels.size() > 0) this.enchantmentLevels.forEach(itemBuilder::setEnchantment);
         player.getInventory().addItem(itemBuilder.build());
     }
 
     public ItemStack getItem() {
         ItemBuilder itemBuilder = new ItemBuilder(this.material, this.amount);
-        if (this.name != null) itemBuilder.setName(this.name);
-        if (this.lore != null) itemBuilder.setLore(this.lore);
+        if (this.name != null) itemBuilder.setName(ChatColor.translateAlternateColorCodes('&', this.name));
+        if (this.lore != null) {
+            for (int i = 0; i < this.lore.length; i++) {
+                this.lore[i] = ChatColor.translateAlternateColorCodes('&', this.lore[i]);
+            }
+            itemBuilder.setLore(this.lore);
+        }
         if (this.damage > 0) itemBuilder.setDurability((short) this.damage);
         if (this.unbreakable) itemBuilder.setUnbreakable(true);
-        if (this.itemFlags.size() > 0) itemBuilder.addItemFlags(this.itemFlags);
+        if (this.itemFlags != null && this.itemFlags.size() > 0) itemBuilder.addItemFlags(this.itemFlags);
         if (this.enchantmentLevels.size() > 0) this.enchantmentLevels.forEach(itemBuilder::setEnchantment);
+        itemBuilder.setAmount(1);
         return itemBuilder.build();
     }
 }

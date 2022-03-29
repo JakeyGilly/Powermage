@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static org.distantnetwork.powermagecore.utils.Config.ConfigurationManager.getWeaponsFolder;
+import static org.distantnetwork.powermagecore.utils.Config.ConfigurationManager.*;
 
 public class GiveWeaponsCompleter implements TabCompleter {
     List<String> list = new ArrayList<>();
@@ -17,7 +17,7 @@ public class GiveWeaponsCompleter implements TabCompleter {
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
         if (args.length == 1) {
             list.clear();
-            String[] weaponsfolderlist = getWeaponsFolder().list();
+            String[] weaponsfolderlist = getFileFolder("weapons").list();
             if (weaponsfolderlist != null) {
                 Collections.addAll(list, weaponsfolderlist);
             }
