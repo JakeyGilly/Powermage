@@ -1,13 +1,45 @@
 package org.distantnetwork.powermagecore.utils.Enums;
 
+import org.bukkit.ChatColor;
+import org.bukkit.Material;
+import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.distantnetwork.powermagecore.utils.Config.ConfigurationManager;
 import org.distantnetwork.powermagecore.utils.PowermagePlayer;
 
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+
+import static org.distantnetwork.powermagecore.PowermageCore.getInstance;
+
 public enum Classes {
-    WARRIOR(0.2f, 20.0, 100){
+    WARRIOR(0.2f, 20.0, 100, Material.IRON_SWORD,
+            Arrays.asList(" ",
+                String.format("%sClass Ability: %sCharge", ChatColor.BOLD, ChatColor.GOLD),
+                String.format("%sGives player %s+100 %s✦ Speed %sfor %s10 %sseconds.", ChatColor.GRAY, ChatColor.GREEN, ChatColor.GOLD, ChatColor.GRAY, ChatColor.GREEN, ChatColor.GRAY),
+                String.format("%sCooldown: %s30 Seconds", ChatColor.DARK_GRAY, ChatColor.GREEN), String.format("%sLeft Click on your menu to activate!", ChatColor.YELLOW),
+                " "
+            ).toArray(new String[0]), "\uD83D\uDDE1") {
         @Override
         public void OnAbility(Player player) {
-            player.sendMessage("Warrior ability");
+            PowermagePlayer pmPlayer = new PowermagePlayer(player);
+            if (pmPlayer.hasCooldown()) {
+                player.sendMessage(String.format("%sYou cant use this ability for %s%s seconds!", ChatColor.RED, ChatColor.GOLD, pmPlayer.getCooldown()));
+                return;
+            }
+            pmPlayer.setCooldown(60);
+            pmPlayer.save();
+            player.setWalkSpeed((float) (pmPlayer.getClassType().getSpeed() + pmPlayer.getSpeedUpgrade() * ConfigurationManager.getDefaultConfig().getDouble("upgrades.speed.speedPerLevel") + 0.2f));
+            new BukkitRunnable() {
+                @Override
+                public void run() {
+                    player.setWalkSpeed((float) (pmPlayer.getClassType().getSpeed() + pmPlayer.getSpeedUpgrade() * ConfigurationManager.getDefaultConfig().getDouble("upgrades.speed.speedPerLevel")));
+                }
+            }.runTaskLater(getInstance(), 200);
         }
         private int wlevel = 0;
         private int wexp = 0;
@@ -42,10 +74,30 @@ public enum Classes {
             return wexp;
         }
     },
-    ARCHER(0.4f, 10.0, 100) {
+    ARCHER(0.4f, 10.0, 100, Material.CROSSBOW,
+            Arrays.asList(" ",
+                    String.format("%sClass Ability: %sQuickshot", ChatColor.BOLD, ChatColor.GOLD),
+                    String.format("%sRapid-fires arrows to where the player is looking at for %s3 seconds.", ChatColor.GRAY, ChatColor.GREEN),
+                    String.format("%sCooldown: %s30 Seconds", ChatColor.DARK_GRAY, ChatColor.GREEN), String.format("%sLeft Click on your menu to activate!", ChatColor.YELLOW),
+                    " "
+            ).toArray(new String[0]), "\uD83C\uDFF9") {
+
         @Override
         public void OnAbility(Player player) {
-            player.sendMessage("Archer ability");
+            PowermagePlayer pmPlayer = new PowermagePlayer(player);
+            if (pmPlayer.hasCooldown()) {
+                player.sendMessage(String.format("%sYou cant use this ability for %s%s seconds!", ChatColor.RED, ChatColor.GOLD, pmPlayer.getCooldown()));
+                return;
+            }
+            pmPlayer.setCooldown(60);
+            pmPlayer.save();
+            for (int i = 0; i < 10; i++) {
+                new BukkitRunnable() {
+                    @Override
+                    public void run() {player.launchProjectile(Arrow.class);
+                    }
+                }.runTaskLater(getInstance(), i * 3);
+            }
         }
         private int alevel;
         private int aexp;
@@ -79,10 +131,31 @@ public enum Classes {
             return aexp;
         }
     },
-    WIZARD(0.16f, 15.0, 300) {
+    WIZARD(0.16f, 15.0, 300, Material.POTION,
+            Arrays.asList(" ",
+                    String.format("%sClass Ability: %sHeart of Magic", ChatColor.BOLD, ChatColor.GOLD),
+                    String.format("%sGives you infinite mana for %s5 seconds.", ChatColor.GRAY, ChatColor.GREEN),
+                    String.format("%sCooldown: %s30 Seconds", ChatColor.DARK_GRAY, ChatColor.GREEN), String.format("%sLeft Click on your menu to activate!", ChatColor.YELLOW),
+                    " "
+            ).toArray(new String[0]), "\uD83E\uDDEA") {
+
         @Override
         public void OnAbility(Player player) {
-            player.sendMessage("Wizard ability");
+            PowermagePlayer pmPlayer = new PowermagePlayer(player);
+            if (pmPlayer.hasCooldown()) {
+                player.sendMessage(String.format("%sYou cant use this ability for %s%s seconds!", ChatColor.RED, ChatColor.GOLD, pmPlayer.getCooldown()));
+                return;
+            }
+            pmPlayer.setCooldown(60);
+            pmPlayer.setInfiniteMana(true);
+            pmPlayer.save();
+            new BukkitRunnable() {
+                @Override
+                public void run() {
+                    pmPlayer.setInfiniteMana(false);
+                    pmPlayer.save();
+                }
+            }.runTaskLater(getInstance(), 100);
         }
         private int wilevel;
         private int wiexp;
@@ -116,10 +189,24 @@ public enum Classes {
             return wiexp;
         }
     },
-    TANK(0.1f, 40.0, 100) {
+    TANK(0.1f, 40.0, 100, Material.IRON_CHESTPLATE,
+            Arrays.asList(" ",
+                    String.format("%sClass Ability: %sTurtle Up", ChatColor.BOLD, ChatColor.GOLD),
+                    String.format("%sGives player %sResistance 2 %sand %sRegen 5 %sfor %s10 seconds.", ChatColor.GRAY, ChatColor.BLUE, ChatColor.GRAY, ChatColor.BLUE, ChatColor.GRAY, ChatColor.GREEN),
+                    String.format("%sCooldown: %s30 Seconds", ChatColor.DARK_GRAY, ChatColor.GREEN), String.format("%sLeft Click on your menu to activate!", ChatColor.YELLOW),
+                    " "
+            ).toArray(new String[0]), "\uD83D\uDEE1") {
         @Override
         public void OnAbility(Player player) {
-            player.sendMessage("Tank ability");
+            PowermagePlayer pmPlayer = new PowermagePlayer(player);
+            if (pmPlayer.hasCooldown()) {
+                player.sendMessage(String.format("%sYou cant use this ability for %s%s seconds!", ChatColor.RED, ChatColor.GOLD, pmPlayer.getCooldown()));
+                return;
+            }
+            pmPlayer.setCooldown(60);
+            pmPlayer.save();
+            player.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 200, 2));
+            player.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 200, 5));
         }
         private int tlevel;
         private int texp;
@@ -153,32 +240,42 @@ public enum Classes {
             return texp;
         }
     };
-
+    public abstract int getLvl(Player player);
+    public abstract int getExp(Player player);
     public abstract void OnAbility(Player player);
     public abstract void setLvl(Player player, int level);
     public abstract void setExp(Player player, int exp);
-    public abstract int getLvl(Player player);
-    public abstract int getExp(Player player);
-
     private final float speed;
     private final double maxHealth;
     private final double maxMana;
+    private final Material material;
+    private final String[] description;
+    private final String emoji;
 
-    private Classes(float speed, double maxHealth, double maxMana) {
+    private Classes(float speed, double maxHealth, double maxMana, Material material, String[] description, String emoji) {
         this.maxHealth = maxHealth;
         this.maxMana = maxMana;
         this.speed = speed;
+        this.material = material;
+        this.description = description;
+        this.emoji = emoji;
     }
-
     public float getSpeed() {
         return speed;
     }
-
     public double getMaxHealth() {
         return maxHealth;
     }
-
     public double getMaxMana() {
         return maxMana;
+    }
+    public Material getMaterial() {
+        return material;
+    }
+    public String[] getDescription() {
+        return description;
+    }
+    public String getEmoji() {
+        return emoji;
     }
 }

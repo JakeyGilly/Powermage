@@ -1,7 +1,7 @@
 package org.distantnetwork.powermagecore.utils;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
@@ -9,52 +9,72 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.distantnetwork.powermagecore.builders.ItemBuilder;
 import org.distantnetwork.powermagecore.utils.Enums.Rarity;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static org.distantnetwork.powermagecore.utils.Config.ConfigurationManager.*;
+import static org.distantnetwork.powermagecore.PowermageCore.getInstance;
 
 public class WeaponItem extends Item {
     int hitDamage;
     Rarity rarity;
     int price;
-    int level;
+    String[] description;
+    boolean storeItem;
 
-    public WeaponItem(Material material, int amount, List<ItemFlag> itemFlags, Map<Enchantment, Integer> enchantmentLevels, String[] lore, String name, int damage, boolean unbreakable, int hitDamage, Rarity rarity) {
+    public WeaponItem(Material material, int amount, List<ItemFlag> itemFlags, Map<Enchantment, Integer> enchantmentLevels, String[] lore, String name, int damage, boolean unbreakable, int hitDamage, Rarity rarity, int price, String[] description, boolean storeItem) {
         super(material, amount, itemFlags, enchantmentLevels, lore, name, damage, unbreakable);
         this.hitDamage = hitDamage;
         this.rarity = rarity;
-        this.level = 0;
-        this.price = 0;
+        this.price = price;
+        this.description = description;
+        this.storeItem = storeItem;
     }
 
-    public WeaponItem(Material material, int amount, List<ItemFlag> itemFlags, Map<Enchantment, Integer> enchantmentLevels, List<String> lore, String name, int damage, boolean unbreakable, int hitDamage, Rarity rarity) {
+    public WeaponItem(Material material, int amount, List<ItemFlag> itemFlags, Map<Enchantment, Integer> enchantmentLevels, List<String> lore, String name, int damage, boolean unbreakable, int hitDamage, Rarity rarity, int price, List<String> description, boolean storeItem) {
         super(material, amount, itemFlags, enchantmentLevels, lore, name, damage, unbreakable);
         this.hitDamage = hitDamage;
         this.rarity = rarity;
-        this.level = 0;
-        this.price = 0;
+        this.price = price;
+        this.description = description.toArray(new String[0]);
+        this.storeItem = storeItem;
+    }
+
+    public WeaponItem(Material material, int amount, List<ItemFlag> itemFlags, Map<Enchantment, Integer> enchantmentLevels, String[] lore, String name, int damage, boolean unbreakable, int hitDamage, Rarity rarity, int price, List<String> description, boolean storeItem) {
+        super(material, amount, itemFlags, enchantmentLevels, lore, name, damage, unbreakable);
+        this.hitDamage = hitDamage;
+        this.rarity = rarity;
+        this.price = price;
+        this.description = description.toArray(new String[0]);
+        this.storeItem = storeItem;
+    }
+
+    public WeaponItem(Material material, int amount, List<ItemFlag> itemFlags, Map<Enchantment, Integer> enchantmentLevels, List<String> lore, String name, int damage, boolean unbreakable, int hitDamage, Rarity rarity, int price, String[] description, boolean storeItem) {
+        super(material, amount, itemFlags, enchantmentLevels, lore, name, damage, unbreakable);
+        this.hitDamage = hitDamage;
+        this.rarity = rarity;
+        this.price = price;
+        this.description = description;
+        this.storeItem = storeItem;
     }
 
     public WeaponItem() {
         super();
         this.hitDamage = 0;
         this.rarity = Rarity.COMMON;
-        this.level = 0;
         this.price = 0;
+        this.description = null;
+        this.storeItem = false;
     }
 
     public WeaponItem(ItemStack item) {
         super(item);
         this.hitDamage = 0;
         this.rarity = Rarity.COMMON;
-        this.level = 0;
         this.price = 0;
+        this.description = null;
+        this.storeItem = false;
     }
 
     public WeaponItem(File filepath) {
@@ -64,10 +84,15 @@ public class WeaponItem extends Item {
         FileConfiguration config = getConfig(file);
         if (config == null) return;
         this.hitDamage = config.getInt("hitDamage");
-        this.rarity = Rarity.valueOf(config.getString("rarity"));
+        String rarit = config.getString("rarity");
+        if (rarit == null) rarit = Rarity.COMMON.name();
+        this.rarity = Rarity.valueOf(rarit);
         this.price = config.getInt("price");
-        this.level = config.getInt("level");
+        this.description = config.getStringList("description").toArray(new String[0]);
+        this.storeItem = config.getBoolean("storeItem");
     }
+
+
 
     public int getHitDamage() {
         return hitDamage;
@@ -93,12 +118,20 @@ public class WeaponItem extends Item {
         this.price = price;
     }
 
-    public int getLevel() {
-        return level;
+    public String[] getDescription() {
+        return description;
     }
 
-    public void setLevel(int level) {
-        this.level = level;
+    public void setDescription(String[] description) {
+        this.description = description;
+    }
+
+    public boolean isStoreItem() {
+        return storeItem;
+    }
+
+    public void setStoreItem(boolean storeItem) {
+        this.storeItem = storeItem;
     }
 
     @Override
@@ -108,58 +141,53 @@ public class WeaponItem extends Item {
         map.put("hitDamage", hitDamage);
         map.put("rarity", rarity.name());
         map.put("price", price);
-        map.put("level", level);
+        map.put("description", description);
+        map.put("storeItem", storeItem);
         for (Map.Entry<String, Object> entry : map.entrySet()) {
             config.set(entry.getKey(), entry.getValue());
         }
         return config;
     }
 
-    public static @Nullable Item getWeaponItem(@NotNull String filename) {
-        File file = getFileFile(filename);
-        if (file == null) return null;
-        FileConfiguration config = getConfig(file);
-        if (config == null) return null;
-        if (!config.contains("material")) return null;
-        WeaponItem item = new WeaponItem();
-        item.setMaterial(Material.valueOf(config.getString("material")));
-        item.setAmount(config.contains("amount") ? config.getInt("amount") : 1);
-        if (config.contains("name")) item.setName(config.getString("name"));
-        if (config.contains("lore")) item.setLore(config.getStringList("lore").toArray(new String[0]));
-        if (config.contains("enchantmentLevels")) config.getConfigurationSection("enchantmentLevels").getValues(false).forEach((enchantment, lvl) -> {
-            item.getEnchantmentLevels().put(Enchantment.getByKey(NamespacedKey.minecraft(enchantment)), (Integer) lvl);
-        });
-        if (config.contains("damage")) item.setDamage(config.getInt("damage"));
-        if (config.contains("unbreakable")) item.setUnbreakable(config.getBoolean("unbreakable"));
-        if (config.contains("flags")) config.getStringList("flags").forEach(flag -> {
-            item.getItemFlags().add(ItemFlag.valueOf(flag));
-        });
-        if (config.contains("hitDamage")) item.setHitDamage(config.getInt("hitDamage"));
-        if (config.contains("rarity")) item.setRarity(Rarity.valueOf(config.getString("rarity")));
-        return item;
+    @Override
+    public void give(Player player) {
+        ItemBuilder itemBuilder = new ItemBuilder(this.getMaterial(), this.getAmount());
+        if (this.getName() != null) itemBuilder.setName(this.getFormattedName());
+        if (this.getLore() != null) itemBuilder.setLore(this.getFormattedLore());
+        if (this.getRarity() != null) {
+            StringBuilder s = new StringBuilder();
+            for (ChatColor colour : this.getRarity().getColor()) s.append(colour);
+            itemBuilder.addLoreLine(s.toString() + this.getRarity().name() + " WEAPON");
+        }
+        if (this.getDamage() > 0) itemBuilder.setDurability((short) this.getDamage());
+        if (this.isUnbreakable()) itemBuilder.setUnbreakable(true);
+        if (this.getItemFlags() != null && this.getItemFlags().size() > 0)
+            itemBuilder.addItemFlags(this.getItemFlags());
+        if (this.getEnchantmentLevels() != null && this.getEnchantmentLevels().size() > 0) this.getEnchantmentLevels().forEach(itemBuilder::setEnchantment);
+        player.getInventory().addItem(itemBuilder.build());
     }
 
-    public static @Nullable Item getWeaponItem(@NotNull File filepath) {
-        File file = getFileFile(filepath);
-        if (file == null) return null;
-        FileConfiguration config = getConfig(file);
-        if (config == null) return null;
-        if (!config.contains("material")) return null;
-        WeaponItem item = new WeaponItem();
-        item.setMaterial(Material.valueOf(config.getString("material")));
-        item.setAmount(config.contains("amount") ? config.getInt("amount") : 1);
-        if (config.contains("name")) item.setName(config.getString("name"));
-        if (config.contains("lore")) item.setLore(config.getStringList("lore").toArray(new String[0]));
-        if (config.contains("enchantmentLevels")) config.getConfigurationSection("enchantmentLevels").getValues(false).forEach((enchantment, lvl) -> {
-            item.getEnchantmentLevels().put(Enchantment.getByKey(NamespacedKey.minecraft(enchantment)), (Integer) lvl);
-        });
-        if (config.contains("damage")) item.setDamage(config.getInt("damage"));
-        if (config.contains("unbreakable")) item.setUnbreakable(config.getBoolean("unbreakable"));
-        if (config.contains("flags")) config.getStringList("flags").forEach(flag -> {
-            item.getItemFlags().add(ItemFlag.valueOf(flag));
-        });
-        if (config.contains("hitDamage")) item.setHitDamage(config.getInt("hitDamage"));
-        if (config.contains("rarity")) item.setRarity(Rarity.valueOf(config.getString("rarity")));
-        return item;
+    @Override
+    public ItemStack getItem() {
+        ItemBuilder itemBuilder = new ItemBuilder(this.getMaterial(), this.getAmount());
+        if (this.getName() != null) itemBuilder.setName(this.getFormattedName());
+        if (this.getLore() != null) itemBuilder.setLore(this.getFormattedLore());
+        if (this.getRarity() != null) {
+            StringBuilder s = new StringBuilder();
+            for (ChatColor colour : this.getRarity().getColor()) s.append(colour);
+            itemBuilder.addLoreLine(s.toString() + this.getRarity().name() + " WEAPON");
+        }
+        if (this.description != null) {
+            itemBuilder.addLoreLine("");
+            for (String s : this.description) itemBuilder.addLoreLine(ChatColor.translateAlternateColorCodes('&', s));
+        }
+        if (this.storeItem) itemBuilder.addLoreLine(String.format("%sPrice: %d souls", ChatColor.AQUA, this.getPrice()));
+        if (this.getDamage() > 0) itemBuilder.setDurability((short) this.getDamage());
+        if (this.isUnbreakable()) itemBuilder.setUnbreakable(true);
+        if (this.getItemFlags() != null && this.getItemFlags().size() > 0)
+            itemBuilder.addItemFlags(this.getItemFlags());
+        if (this.getEnchantmentLevels().size() > 0)
+            this.getEnchantmentLevels().forEach(itemBuilder::setEnchantment);
+        return itemBuilder.build();
     }
 }

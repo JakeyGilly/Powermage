@@ -39,13 +39,13 @@ public class SoulShopGUI extends InventoryBuilder {
                     }
                     pmPlayer.setSouls(pmPlayer.getSouls() - weaponItem.getPrice());
                     pmPlayer.save();
-                    player.getInventory().addItem(weaponItem.getItem());
+                    weaponItem.give(player);
                     player.sendMessage(ChatColor.GREEN + "You bought " + weaponItem.getFormattedName() + ChatColor.GREEN + " for " + weaponItem.getPrice() + " souls!");
                 }));
                 i++;
             }
         }
         setItem(getInventory().getSize() - 9, new ItemBuilder(Material.ARROW).setName(String.format("%sBack to Main Menu", ChatColor.GRAY)).addItemFlags(ItemFlag.HIDE_ATTRIBUTES).toItem(), player -> new MenuGUI(player).open(player));
-        setItem(getInventory().getSize() - 5, new ItemBuilder(Material.BARRIER).setName(String.format("%sClose Menu", org.bukkit.ChatColor.RED)).addItemFlags(ItemFlag.HIDE_ATTRIBUTES).toItem(), HumanEntity::closeInventory);
+        setItem(getInventory().getSize() - 5, new ItemBuilder(Material.BARRIER).setName(String.format("%sClose Menu", ChatColor.RED)).addItemFlags(ItemFlag.HIDE_ATTRIBUTES).toItem(), HumanEntity::closeInventory);
     }
 }

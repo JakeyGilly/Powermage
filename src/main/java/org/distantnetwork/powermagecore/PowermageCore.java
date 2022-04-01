@@ -1,5 +1,8 @@
 package org.distantnetwork.powermagecore;
 
+import net.md_5.bungee.api.ChatMessageType;
+import net.md_5.bungee.api.chat.TextComponent;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.enchantments.Enchantment;
@@ -10,14 +13,9 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.distantnetwork.powermagecore.builders.InventoryBuilderListeners;
 import org.distantnetwork.powermagecore.commands.*;
-import org.distantnetwork.powermagecore.commands.AdminCommands.GiveMoneyCommand;
-import org.distantnetwork.powermagecore.commands.AdminCommands.GiveSoulsCommand;
-import org.distantnetwork.powermagecore.commands.AdminCommands.GiveWeaponsCommand.GiveWeaponCommand;
-import org.distantnetwork.powermagecore.commands.AdminCommands.GiveWeaponsCommand.GiveWeaponsCompleter;
-import org.distantnetwork.powermagecore.commands.AdminCommands.LevelUp.LevelUpCommand;
-import org.distantnetwork.powermagecore.commands.AdminCommands.LevelUp.LevelUpCompleter;
 import org.distantnetwork.powermagecore.commands.GUICommands.ClassCommand;
 import org.distantnetwork.powermagecore.commands.GUICommands.MenuCommand;
 import org.distantnetwork.powermagecore.commands.GUICommands.SoulShopCommand;
@@ -44,7 +42,7 @@ public final class PowermageCore extends JavaPlugin implements Listener {
         instance = this;
         this.saveDefaultConfig();
         if (getFilesAmountInFolder("weapons") > 0) {
-            File weaponsFolder = getFileFolder(getDataFolder() + "weapons");
+            File weaponsFolder = getFileFolder("weapons");
             if (weaponsFolder == null) throw new NullPointerException("Weapons folder is file");
             File[] list = weaponsFolder.listFiles();
             if (list != null) Arrays.stream(list).filter(file -> file.getName().endsWith(".yml")).forEach(file -> getLogger().info("Loading weapon: " + file.getName()));
@@ -57,9 +55,46 @@ public final class PowermageCore extends JavaPlugin implements Listener {
                         put(Enchantment.MENDING, 1);
                     }},
                     Collections.singletonList("&7&oThis is an example weapon."),
-                    "&7&oExample Weapon", 0, true, 1, Rarity.CORE).save("weapons" + File.separator + "weapon-example.yml");
+                    "&7&oExample Weapon", 0, true, 1, Rarity.CORE, 1, Collections.singletonList("A sword forged in the heart of a dwarven star idk im just making stuff up"), true).save("weapons" + File.separator + "weapon-example.yml");
             ConfigurationManager.saveConfig(file, config);
         }
+
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                FileConfiguration defaultConfig = getInstance().getConfig();
+                for (Player player : PowermageCore.getInstance().getServer().getOnlinePlayers()) {
+                    PowermagePlayer pmPlayer = new PowermagePlayer(player);
+                    if (pmPlayer.getClassType() != null) {
+                        double maxMana = pmPlayer.getClassType() == null ? 0 : pmPlayer.getClassType().getMaxMana();
+                        String mana = ChatColor.AQUA + "Mana: " + pmPlayer.getMana() + "/" + Math.round(maxMana + pmPlayer.getManaUpgrade() * defaultConfig.getInt("upgrades.mana.manaPerLevel"));
+                        String health = ChatColor.RED + "Health: " + Math.round(player.getHealth() / 20 * player.getHealthScale()) + "/" + Math.round(player.getHealthScale());
+                        String speed = ChatColor.WHITE + "Speed: " + Math.round(player.getWalkSpeed() * 500);
+                        player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(mana + "    " + health + "    " + speed));
+                        return;
+                    }
+                    player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatColor.RED + "Please select a class to continue."));
+                }
+            }
+        }.runTaskTimer(this, 0, 0);
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                FileConfiguration defaultConfig = getInstance().getConfig();
+                for (Player player : PowermageCore.getInstance().getServer().getOnlinePlayers()) {
+                    PowermagePlayer pmPlayer = new PowermagePlayer(player);
+                    if (pmPlayer.getCooldown() > 0) {
+                        pmPlayer.setCooldown(pmPlayer.getCooldown() - 1);
+                        pmPlayer.save();
+                    }
+                    if (pmPlayer.getClassType() != null) {
+                        pmPlayer.setMana(pmPlayer.getMana() + 5 > pmPlayer.getClassType().getMaxMana() + pmPlayer.getManaUpgrade() * defaultConfig.getDouble("upgrades.mana.manaPerLevel") ?
+                                (int)(pmPlayer.getClassType().getMaxMana() + pmPlayer.getManaUpgrade() * defaultConfig.getDouble("upgrades.mana.manaPerLevel")) : pmPlayer.getMana() + 5);
+                        pmPlayer.save();
+                    }
+                }
+            }
+        }.runTaskTimer(this, 0, 20);
         setCommands();
         setListeners();
     }
@@ -85,12 +120,6 @@ public final class PowermageCore extends JavaPlugin implements Listener {
         getCommand("class").setExecutor(new ClassCommand());
         getCommand("soulshop").setExecutor(new SoulShopCommand());
         getCommand("upgrade").setExecutor(new UpgradeCommand());
-        getCommand("givesouls").setExecutor(new GiveSoulsCommand());
-        getCommand("givecoins").setExecutor(new GiveMoneyCommand());
-        getCommand("giveitem").setExecutor(new GiveWeaponCommand());
-        getCommand("giveitem").setTabCompleter(new GiveWeaponsCompleter());
-        getCommand("levelup").setExecutor(new LevelUpCommand());
-        getCommand("levelup").setTabCompleter(new LevelUpCompleter());
     }
 
     private void setListeners() {

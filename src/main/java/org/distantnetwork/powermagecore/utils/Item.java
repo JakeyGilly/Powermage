@@ -174,7 +174,7 @@ public class Item {
     public FileConfiguration save(String path) {
         Map<String, Object> itemMap = new HashMap<String, Object>();
         itemMap.put("material", this.material.name());
-        if (this.amount > 1) itemMap.put("amount", this.amount);
+        if (this.amount >= 1) itemMap.put("amount", this.amount);
         if (this.enchantmentLevels.size() > 0) enchantmentLevels.forEach((enchantment, level) -> itemMap.put("enchantments." + enchantment.getKey().getKey(), level));
         if (this.name != null) itemMap.put("name", this.name);
         if (this.lore != null) itemMap.put("lore", this.lore);

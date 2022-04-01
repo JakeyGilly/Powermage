@@ -17,7 +17,6 @@ import static org.distantnetwork.powermagecore.utils.Config.ConfigurationManager
 public class UpgradeGUI extends InventoryBuilder {
     //TODO: implement money & soul spending
     //TODO: implement % or amount increase in config per upgrade
-
     public UpgradeGUI(Player p) {
         super(54, String.format("%sUpgrade Stats", ChatColor.RED));
         for (int i = 0; i < getInventory().getSize(); i++)
@@ -122,6 +121,7 @@ public class UpgradeGUI extends InventoryBuilder {
         } else {
             setItem(25, new ItemBuilder(Material.SUGAR).setName(String.format("%sSpeed", ChatColor.WHITE)).addItemFlags(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_ENCHANTS).setEnchantment(Enchantment.DURABILITY, 1)
                     .setLore(String.format("%sLevel %d", ChatColor.DARK_GREEN, pmPlayer.getSpeedUpgrade()), String.format("%sSouls for next upgrade: %s", ChatColor.GOLD, getDefaultConfig().getIntegerList("upgrades.speed.cost").get(pmPlayer.getSpeedUpgrade()))).toItem(), player -> {
+                // do if they dont exist error message
                 if (!(getDefaultConfig().get("upgrades.speed.cost") != null && getDefaultConfig().getIntegerList("upgrades.speed.cost").size() == getDefaultConfig().getInt("upgrades.speed.maxLevel"))) {
                     p.sendMessage("The config is not set up correctly!");
                     PowermageCore.getInstance().getLogger().warning("The Speed upgrade costs length are not equal to the max level!");
@@ -143,7 +143,7 @@ public class UpgradeGUI extends InventoryBuilder {
                                 newpmPlayer.getSpeedUpgrade() == getDefaultConfig().getInt("upgrades.speed.maxLevel") ? String.format("%sMAX LEVEL", ChatColor.DARK_RED) :
                                         String.format("%sSouls for next upgrade: %s", ChatColor.GOLD, getDefaultConfig().getIntegerList("upgrades.speed.cost").get(newpmPlayer.getSpeedUpgrade()))).toItem());
                 player.sendMessage(String.format("%sYou have bought the %sSpeed %supgrade for %s!", ChatColor.DARK_GREEN, ChatColor.RED, ChatColor.DARK_GREEN, getDefaultConfig().getIntegerList("upgrades.speed.cost").get(newpmPlayer.getSpeedUpgrade()-1)));
-                player.setWalkSpeed((float) (newpmPlayer.getClassType().getSpeed() + newpmPlayer.getSpeedUpgrade() * ConfigurationManager.getDefaultConfig().getDouble("upgrades.speed.speedPerLevel")));
+                player.setWalkSpeed((float) (newpmPlayer.getClassType().getSpeed() + (newpmPlayer.getSpeedUpgrade() * ConfigurationManager.getDefaultConfig().getDouble("upgrades.speed.speedPerLevel"))));
             });
         }
         setItem(getInventory().getSize() - 9, new ItemBuilder(Material.ARROW).setName(String.format("%sBack to Main Menu", ChatColor.GRAY)).addItemFlags(ItemFlag.HIDE_ATTRIBUTES).toItem(), player -> new MenuGUI(player).open(player));

@@ -13,37 +13,18 @@ commands:
     description: Opens the Store
     aliases:
       - ranks
-  menu:
-    usage: /menu
-    description: Opens the Menu
   spawn:
     usage: /spawn
     description: Opens the Spawn Menu
+  menu:
+    usage: /menu
+    description: Opens the Menu
   class:
     usage: /class
     description: Selects your class
   soulshop:
     usage: /soulshop
     description: Opens the Soulshop
-  giveitem:
-    usage: /giveitem itemid
-    description: Gives an CustomItem to a Player
   upgrade:
     usage: /upgrade
     description: Opens the Upgrade Menu
-  givecoins:
-    usage: /givecoins <player> amount
-    description: Gives Coins to a Player
-    aliases:
-      - givemoney
-      - givecoin
-  givesouls:
-    usage: /givesouls <player> amount
-    description: Gives Souls to a Player
-    aliases:
-      - givesoul
-  levelup:
-    usage: /levelup
-    description: Opens the Levelup Menu
-    aliases:
-      - lvlup
