@@ -2,6 +2,7 @@ package org.distantnetwork.powermagecore.utils.Enums;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.entity.AbstractArrow;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
@@ -94,7 +95,12 @@ public enum Classes {
             for (int i = 0; i < 10; i++) {
                 new BukkitRunnable() {
                     @Override
-                    public void run() {player.launchProjectile(Arrow.class);
+                    public void run() {
+                        Arrow arrow = player.launchProjectile(Arrow.class);
+                        arrow.setVelocity(arrow.getVelocity().multiply(2));
+                        arrow.setShooter(player);
+                        arrow.setBounce(false);
+                        arrow.setPickupStatus(AbstractArrow.PickupStatus.DISALLOWED);
                     }
                 }.runTaskLater(getInstance(), i * 3);
             }
