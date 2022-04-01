@@ -99,19 +99,6 @@ public final class PowermageCore extends JavaPlugin implements Listener {
         setListeners();
     }
 
-    @EventHandler
-    public void onPlayerAbility(PlayerInteractEvent e) {
-        if ((e.getAction() == Action.RIGHT_CLICK_AIR ||
-                e.getAction() == Action.RIGHT_CLICK_BLOCK ||
-                e.getAction() == Action.LEFT_CLICK_AIR ||
-                e.getAction() == Action.LEFT_CLICK_BLOCK) &&
-                e.getPlayer().isSneaking() &&
-                e.getPlayer().getInventory().getItemInMainHand().getType() == Material.END_CRYSTAL) {
-            Player player = e.getPlayer();
-            new PowermagePlayer(player).getClassType().OnAbility(player);
-        }
-    }
-
     private void setCommands() {
         getCommand("menu").setExecutor(new MenuCommand());
         getCommand("discord").setExecutor(new DiscordCommand());
@@ -129,8 +116,5 @@ public final class PowermageCore extends JavaPlugin implements Listener {
         getServer().getPluginManager().registerEvents(new OnPlayerDeath(), this);
         getServer().getPluginManager().registerEvents(new OnDamage(), this);
         getServer().getPluginManager().registerEvents(new OnPlayerJoin(), this);
-
-        //? Abilitys
-        getServer().getPluginManager().registerEvents(this, this);
     }
 }
