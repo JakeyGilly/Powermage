@@ -6,7 +6,8 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.distantnetwork.powermagecore.commands.GUICommands.GUI.SoulShopGUI;
-import org.distantnetwork.powermagecore.utils.Enums.Classes;
+import org.distantnetwork.powermagecore.utils.Classes;
+import org.distantnetwork.powermagecore.utils.PowermagePlayer;
 
 public class SoulShopCommand implements CommandExecutor {
     @Override
@@ -16,8 +17,9 @@ public class SoulShopCommand implements CommandExecutor {
             if (!player.hasPermission("powermage.soulshop")) {
                 player.sendMessage(String.format("%sYou don't have permission to use this command!", ChatColor.RED));
             }
-            for (Classes classes : Classes.values()) {
-                if (classes.getLvl(player) >= 5) {
+            PowermagePlayer pmPlayer = new PowermagePlayer(player);
+            for (Classes c : Classes.getClasses()) {
+                if (pmPlayer.getClassLvl(c) >= 5) {
                     new SoulShopGUI(player).open(player);
                     return true;
                 }

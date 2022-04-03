@@ -7,9 +7,10 @@ import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
+import org.distantnetwork.powermagecore.PowermageCore;
 import org.distantnetwork.powermagecore.builders.InventoryBuilder;
 import org.distantnetwork.powermagecore.builders.ItemBuilder;
-import org.distantnetwork.powermagecore.utils.Enums.Classes;
+import org.distantnetwork.powermagecore.utils.Classes;
 import org.distantnetwork.powermagecore.utils.PowermagePlayer;
 
 import java.util.ArrayList;
@@ -22,8 +23,8 @@ public class MenuGUI extends InventoryBuilder {
         ItemStack item;
         PowermagePlayer pmPlayer = new PowermagePlayer(p);
         List<String> lore = new ArrayList<String>() {{
-            for (Classes c : Classes.values()) {
-                add(String.format("%s%s Level: %s%d", ChatColor.DARK_AQUA, c.name().substring(0, 1).toUpperCase() + c.name().substring(1).toLowerCase(), ChatColor.GOLD, c.getLvl(p)));
+            for (Classes c : Classes.getClasses()) {
+                add(String.format("%s%s Level: %s%d", ChatColor.DARK_AQUA, c.getName(), ChatColor.GOLD, pmPlayer.getClassLvl(c)));
             }
             add(String.format("%sBalance: %s%s Coins", ChatColor.GRAY, ChatColor.GOLD, pmPlayer.getMoney()));
             add(String.format("%sSouls: %s%s Souls", ChatColor.GRAY, ChatColor.AQUA, pmPlayer.getSouls()));
@@ -46,8 +47,8 @@ public class MenuGUI extends InventoryBuilder {
         setItem(23, item, player -> new ClassGUI(player).open(player));
         ItemBuilder itembuild = new ItemBuilder(Material.BEACON).setName(String.format("%sSoul Shop", ChatColor.RED)).addItemFlags(ItemFlag.HIDE_ATTRIBUTES).setLore(String.format("%sGot too many %sSouls%s?", ChatColor.GRAY, ChatColor.AQUA, ChatColor.GRAY), String.format("%sSpend your %sSouls %sto get special items", ChatColor.GRAY, ChatColor.AQUA, ChatColor.GRAY), " ");
         boolean unlocked = false;
-        for (Classes c : Classes.values()) {
-            if (c.getLvl(p) >= 5) {
+        for (Classes c : Classes.getClasses()) {
+            if (pmPlayer.getClassLvl(c) >= 5) {
                 unlocked = true;
                 itembuild.addLoreLine(String.format("%sClick to view the shop", ChatColor.GOLD));
                 setItem(24, itembuild.toItem(), player -> new SoulShopGUI(player).open(player));

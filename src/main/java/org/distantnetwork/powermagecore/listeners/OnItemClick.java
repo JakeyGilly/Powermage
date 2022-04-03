@@ -13,7 +13,7 @@ public class OnItemClick implements Listener {
     public void onItemClick(PlayerInteractEvent event) {
         if ((event.getAction().equals(Action.RIGHT_CLICK_AIR) || event.getAction().equals(Action.RIGHT_CLICK_BLOCK) || event.getAction().equals(Action.LEFT_CLICK_AIR) || event.getAction().equals(Action.LEFT_CLICK_BLOCK)) && event.getPlayer().getInventory().getItemInMainHand().getType() == Material.END_CRYSTAL) {
             if (event.getPlayer().isSneaking()) {
-                new PowermagePlayer(event.getPlayer()).getClassType().OnAbility(event.getPlayer());
+                new PowermagePlayer(event.getPlayer()).getClassType().onAbility(event.getPlayer());
             } else {
                 event.setCancelled(true);
                 event.getPlayer().performCommand("menu");

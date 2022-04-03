@@ -79,10 +79,10 @@ public class UpgradeGUI extends InventoryBuilder {
                                         String.format("%sSouls for next upgrade: %s", ChatColor.GOLD, getDefaultConfig().getIntegerList("upgrades.health.cost").get(newpmPlayer.getHealthUpgrade()))).toItem());
                 player.sendMessage(String.format("%sYou have bought the %sHealth %supgrade for %s!", ChatColor.DARK_GREEN, ChatColor.RED, ChatColor.DARK_GREEN, getDefaultConfig().getIntegerList("upgrades.health.cost").get(newpmPlayer.getHealthUpgrade()-1)));
                 try {
-                    player.setHealthScale(newpmPlayer.getClassType().getMaxHealth() + newpmPlayer.getHealthUpgrade() * getDefaultConfig().getInt("upgrades.health.healthPerLevel"));
+                    player.setHealthScale(newpmPlayer.getClassType().getBaseHealth() + newpmPlayer.getHealthUpgrade() * getDefaultConfig().getInt("upgrades.health.healthPerLevel"));
                 } catch (IllegalArgumentException ignored) {}
                 try {
-                    player.setHealth(newpmPlayer.getClassType().getMaxHealth() + newpmPlayer.getHealthUpgrade() * getDefaultConfig().getInt("upgrades.health.healthPerLevel"));
+                    player.setHealth(newpmPlayer.getClassType().getBaseHealth() + newpmPlayer.getHealthUpgrade() * getDefaultConfig().getInt("upgrades.health.healthPerLevel"));
                 } catch (IllegalArgumentException ignored) {}
             });
         }
@@ -143,7 +143,7 @@ public class UpgradeGUI extends InventoryBuilder {
                                 newpmPlayer.getSpeedUpgrade() == getDefaultConfig().getInt("upgrades.speed.maxLevel") ? String.format("%sMAX LEVEL", ChatColor.DARK_RED) :
                                         String.format("%sSouls for next upgrade: %s", ChatColor.GOLD, getDefaultConfig().getIntegerList("upgrades.speed.cost").get(newpmPlayer.getSpeedUpgrade()))).toItem());
                 player.sendMessage(String.format("%sYou have bought the %sSpeed %supgrade for %s!", ChatColor.DARK_GREEN, ChatColor.RED, ChatColor.DARK_GREEN, getDefaultConfig().getIntegerList("upgrades.speed.cost").get(newpmPlayer.getSpeedUpgrade()-1)));
-                player.setWalkSpeed((float) (newpmPlayer.getClassType().getSpeed() + (newpmPlayer.getSpeedUpgrade() * ConfigurationManager.getDefaultConfig().getDouble("upgrades.speed.speedPerLevel"))));
+                player.setWalkSpeed((float) (newpmPlayer.getClassType().getBaseSpeed() + (newpmPlayer.getSpeedUpgrade() * ConfigurationManager.getDefaultConfig().getDouble("upgrades.speed.speedPerLevel"))));
             });
         }
         setItem(getInventory().getSize() - 9, new ItemBuilder(Material.ARROW).setName(String.format("%sBack to Main Menu", ChatColor.GRAY)).addItemFlags(ItemFlag.HIDE_ATTRIBUTES).toItem(), player -> new MenuGUI(player).open(player));

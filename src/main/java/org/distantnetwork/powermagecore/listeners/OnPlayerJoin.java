@@ -12,11 +12,11 @@ public class OnPlayerJoin implements Listener {
         e.getPlayer().sendTitle(String.format("%s%sPowerMage", ChatColor.RED, ChatColor.BOLD), String.format("%sDo /start to get started!", ChatColor.GRAY), 10, 70, 20);
         PowermagePlayer player = new PowermagePlayer(e.getPlayer());
         try {
-            player.getPlayer().setHealthScale(player.getClassType().getMaxHealth() + player.getHealthUpgrade() * ConfigurationManager.getDefaultConfig().getDouble("upgrades.health.healthPerLevel"));
+            player.getPlayer().setHealthScale(player.getClassType().getBaseHealth() + player.getHealthUpgrade() * ConfigurationManager.getDefaultConfig().getDouble("upgrades.health.healthPerLevel"));
         } catch (IllegalArgumentException ignored) {}
         try {
-            player.getPlayer().setHealth(player.getClassType().getMaxHealth() + player.getHealthUpgrade() * ConfigurationManager.getDefaultConfig().getDouble("upgrades.health.healthPerLevel"));
+            player.getPlayer().setHealth(player.getClassType().getBaseHealth() + player.getHealthUpgrade() * ConfigurationManager.getDefaultConfig().getDouble("upgrades.health.healthPerLevel"));
         } catch (IllegalArgumentException ignored) {}
-        player.getPlayer().setWalkSpeed((float) (player.getClassType().getSpeed() + player.getSpeedUpgrade() * ConfigurationManager.getDefaultConfig().getDouble("upgrades.speed.speedPerLevel")));
+        player.getPlayer().setWalkSpeed((float) (player.getClassType().getBaseSpeed() + player.getSpeedUpgrade() * ConfigurationManager.getDefaultConfig().getDouble("upgrades.speed.speedPerLevel")));
     }
 }

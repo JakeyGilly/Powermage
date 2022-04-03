@@ -26,7 +26,7 @@ public class ShopItem extends Item {
         this.description = description;
         this.storeItem = storeItem;
         this.rarity = rarity;
-        shopItems.add(this);
+        ShopItem.shopItems.add(this);
     }
 
     public int getPrice() {
