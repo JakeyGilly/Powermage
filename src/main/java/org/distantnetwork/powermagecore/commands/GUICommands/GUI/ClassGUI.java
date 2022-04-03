@@ -7,15 +7,14 @@ import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
+import org.distantnetwork.powermagecore.Items.Weapons.ClassWeapons.ArcherBow;
+import org.distantnetwork.powermagecore.Items.Weapons.ClassWeapons.TankSword;
+import org.distantnetwork.powermagecore.Items.Weapons.ClassWeapons.WarriorSword;
+import org.distantnetwork.powermagecore.Items.Weapons.ClassWeapons.WizardSword;
 import org.distantnetwork.powermagecore.builders.InventoryBuilder;
 import org.distantnetwork.powermagecore.builders.ItemBuilder;
-import org.distantnetwork.powermagecore.utils.Config.ConfigurationManager;
 import org.distantnetwork.powermagecore.utils.Enums.Classes;
-import org.distantnetwork.powermagecore.utils.Enums.Rarity;
 import org.distantnetwork.powermagecore.utils.PowermagePlayer;
-import org.distantnetwork.powermagecore.utils.WeaponItem;
-
-import java.util.Arrays;
 
 import static org.distantnetwork.powermagecore.utils.Config.ConfigurationManager.getDefaultConfig;
 
@@ -54,8 +53,21 @@ public class ClassGUI extends InventoryBuilder {
                 }
                 player.setWalkSpeed((float) (c.getSpeed() + pmPlayer.getSpeedUpgrade() * getDefaultConfig().getDouble("upgrades.speed.speedPerLevel")));
                 if (c.getLvl(player) == 0) {
-                    // TODO: Replace with class weapon
-                    // give class weapon
+                    switch (c) {
+                        case WARRIOR:
+                            new WarriorSword().give(player);
+                            break;
+                        case ARCHER:
+                            new ArcherBow().give(player);
+                            player.getInventory().addItem(new ItemBuilder(Material.ARROW).build());
+                            break;
+                        case WIZARD:
+                            new WizardSword().give(player);
+                            break;
+                        case TANK:
+                            new TankSword().give(player);
+                            break;
+                    }
                 }
 
                 pmPlayer.setClassType(c);
