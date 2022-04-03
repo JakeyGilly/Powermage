@@ -39,20 +39,22 @@ public class MenuGUI extends InventoryBuilder {
         item = new ItemBuilder(Material.GOLD_INGOT).setName(String.format("%sItem Shop", ChatColor.GOLD)).addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
                 .setLore(String.format("%sBuy powerful weapons, armor", ChatColor.GRAY), String.format("%sand gadgets for a price", ChatColor.GRAY), " ", String.format("%sClick to view the shop", ChatColor.GOLD))
                 .toItem();
-        setItem(22, item); // , player -> new ShopGUI().open(player));
+        setItem(22, item, player -> new ShopGUI(player).open(player));
         item = new ItemBuilder(Material.NETHER_STAR).setName(String.format("%sSwitch Classes", ChatColor.RED)).addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
                 .setLore(String.format("%sDon't like your current class?", ChatColor.GRAY), String.format("%sSwitch to a another", ChatColor.GRAY), String.format("%sPowermage class!", ChatColor.GRAY), " ", String.format("%sClick to view", ChatColor.GOLD))
                 .toItem();
         setItem(23, item, player -> new ClassGUI(player).open(player));
-        ItemBuilder itembuild = new ItemBuilder(Material.BEACON).setName(String.format("%sSoul Shop", ChatColor.RED)).addItemFlags(ItemFlag.HIDE_ATTRIBUTES).setLore(String.format("%sGot too many %sSouls%s?", ChatColor.GRAY, ChatColor.AQUA, ChatColor.GRAY), String.format("%sSpend your %sSouls %sto get special items", ChatColor.GRAY, ChatColor.AQUA, ChatColor.GRAY), " ", String.format("%sClick to view the shop", ChatColor.GOLD));
+        ItemBuilder itembuild = new ItemBuilder(Material.BEACON).setName(String.format("%sSoul Shop", ChatColor.RED)).addItemFlags(ItemFlag.HIDE_ATTRIBUTES).setLore(String.format("%sGot too many %sSouls%s?", ChatColor.GRAY, ChatColor.AQUA, ChatColor.GRAY), String.format("%sSpend your %sSouls %sto get special items", ChatColor.GRAY, ChatColor.AQUA, ChatColor.GRAY), " ");
+        boolean unlocked = false;
         for (Classes c : Classes.values()) {
             if (c.getLvl(p) >= 5) {
-                itembuild.setLore(String.format("%sClick to view the shop", ChatColor.GOLD));
+                unlocked = true;
+                itembuild.addLoreLine(String.format("%sClick to view the shop", ChatColor.GOLD));
                 setItem(24, itembuild.toItem(), player -> new SoulShopGUI(player).open(player));
             }
         }
-        if (getInventory().getItem(24) == null) {
-            itembuild.addLoreLine(String.format("%sUnlocked at level 5 of any class", ChatColor.DARK_RED), 3);
+        if (!unlocked) {
+            itembuild.addLoreLine(String.format("%sUnlocked at level 5 of any class", ChatColor.DARK_RED));
             setItem(24, itembuild.toItem());
         }
         item = new ItemBuilder(Material.GOLD_NUGGET).setName(String.format("%sRanks Shop", ChatColor.GOLD)).addItemFlags(ItemFlag.HIDE_ATTRIBUTES)

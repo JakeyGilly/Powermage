@@ -14,6 +14,8 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.distantnetwork.powermagecore.Items.ExampleItem;
+import org.distantnetwork.powermagecore.Items.Weapons.ExampleWeapon;
 import org.distantnetwork.powermagecore.builders.InventoryBuilderListeners;
 import org.distantnetwork.powermagecore.commands.*;
 import org.distantnetwork.powermagecore.commands.GUICommands.ClassCommand;
@@ -41,24 +43,8 @@ public final class PowermageCore extends JavaPlugin implements Listener {
     public void onEnable() {
         instance = this;
         this.saveDefaultConfig();
-        if (getFilesAmountInFolder("weapons") > 0) {
-            File weaponsFolder = getFileFolder("weapons");
-            if (weaponsFolder == null) throw new NullPointerException("Weapons folder is file");
-            File[] list = weaponsFolder.listFiles();
-            if (list != null) Arrays.stream(list).filter(file -> file.getName().endsWith(".yml")).forEach(file -> getLogger().info("Loading weapon: " + file.getName()));
-        } else {
-            File file = getFileFile("weapons" + File.separator + "weapon-example.yml");
-            if (file == null) throw new IllegalStateException("Weapon example file is a folder.");
-            FileConfiguration config = new WeaponItem(Material.WOODEN_SWORD, 1,
-                    Arrays.asList(ItemFlag.HIDE_ENCHANTS, ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_UNBREAKABLE),
-                    new HashMap<Enchantment, Integer>() {{
-                        put(Enchantment.MENDING, 1);
-                    }},
-                    Collections.singletonList("&7&oThis is an example weapon."),
-                    "&7&oExample Weapon", 0, true, 1, Rarity.CORE, 1, Collections.singletonList("A sword forged in the heart of a dwarven star idk im just making stuff up"), true).save("weapons" + File.separator + "weapon-example.yml");
-            ConfigurationManager.saveConfig(file, config);
-        }
-
+        new ExampleWeapon();
+        new ExampleItem();
         new BukkitRunnable() {
             @Override
             public void run() {
@@ -116,5 +102,6 @@ public final class PowermageCore extends JavaPlugin implements Listener {
         getServer().getPluginManager().registerEvents(new OnPlayerDeath(), this);
         getServer().getPluginManager().registerEvents(new OnDamage(), this);
         getServer().getPluginManager().registerEvents(new OnPlayerJoin(), this);
+        getServer().getPluginManager().registerEvents(new WeaponAbilityManager(), this);
     }
 }

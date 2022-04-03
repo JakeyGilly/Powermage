@@ -55,8 +55,7 @@ public class ClassGUI extends InventoryBuilder {
                 player.setWalkSpeed((float) (c.getSpeed() + pmPlayer.getSpeedUpgrade() * getDefaultConfig().getDouble("upgrades.speed.speedPerLevel")));
                 if (c.getLvl(player) == 0) {
                     // TODO: Replace with class weapon
-                    new WeaponItem(Material.WOODEN_SWORD, 1, Arrays.asList(ItemFlag.HIDE_ATTRIBUTES), null, Arrays.asList(String.format("%sThe starter weapon for the %s class", ChatColor.GRAY, c.name())), String.format("%s%s Sword", ChatColor.GRAY, c.name().substring(0, 1).toUpperCase() + c.name().substring(1)), 0, true, 2, Rarity.COMMON, 0, Arrays.asList("The start of a journey"), false
-                    ).give(player);
+                    // give class weapon
                 }
 
                 pmPlayer.setClassType(c);

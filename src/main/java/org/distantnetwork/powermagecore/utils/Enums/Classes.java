@@ -12,8 +12,6 @@ import org.distantnetwork.powermagecore.utils.Config.ConfigurationManager;
 import org.distantnetwork.powermagecore.utils.PowermagePlayer;
 
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 
 import static org.distantnetwork.powermagecore.PowermageCore.getInstance;
 

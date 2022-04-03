@@ -2,104 +2,47 @@ package org.distantnetwork.powermagecore.utils;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.NamespacedKey;
+import org.bukkit.block.Block;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.persistence.PersistentDataType;
 import org.distantnetwork.powermagecore.builders.ItemBuilder;
 import org.distantnetwork.powermagecore.utils.Enums.Rarity;
 
-import java.io.File;
 import java.util.*;
 
-import static org.distantnetwork.powermagecore.utils.Config.ConfigurationManager.*;
 import static org.distantnetwork.powermagecore.PowermageCore.getInstance;
 
-public class WeaponItem extends Item {
-    int hitDamage;
+public abstract class WeaponItem extends Item {
+    int damage;
     Rarity rarity;
     int price;
-    String[] description;
+    List<String> description;
     boolean storeItem;
+    static List<WeaponItem> weapons = new ArrayList<>();
 
-    public WeaponItem(Material material, int amount, List<ItemFlag> itemFlags, Map<Enchantment, Integer> enchantmentLevels, String[] lore, String name, int damage, boolean unbreakable, int hitDamage, Rarity rarity, int price, String[] description, boolean storeItem) {
-        super(material, amount, itemFlags, enchantmentLevels, lore, name, damage, unbreakable);
-        this.hitDamage = hitDamage;
+    public WeaponItem(Material material, int amount, String name, List<String> lore, List<ItemFlag> itemFlags, Map<Enchantment, Integer> enchantmentLevels, int durability, boolean unbreakable, Rarity rarity, int damage, int price, List<String> description, boolean storeItem) {
+        super(material, amount, name, lore, itemFlags, enchantmentLevels, durability, unbreakable);
         this.rarity = rarity;
+        this.damage = damage;
         this.price = price;
         this.description = description;
         this.storeItem = storeItem;
+        weapons.add(this);
     }
 
-    public WeaponItem(Material material, int amount, List<ItemFlag> itemFlags, Map<Enchantment, Integer> enchantmentLevels, List<String> lore, String name, int damage, boolean unbreakable, int hitDamage, Rarity rarity, int price, List<String> description, boolean storeItem) {
-        super(material, amount, itemFlags, enchantmentLevels, lore, name, damage, unbreakable);
-        this.hitDamage = hitDamage;
-        this.rarity = rarity;
-        this.price = price;
-        this.description = description.toArray(new String[0]);
-        this.storeItem = storeItem;
+    public int getDamage() {
+        return damage;
     }
 
-    public WeaponItem(Material material, int amount, List<ItemFlag> itemFlags, Map<Enchantment, Integer> enchantmentLevels, String[] lore, String name, int damage, boolean unbreakable, int hitDamage, Rarity rarity, int price, List<String> description, boolean storeItem) {
-        super(material, amount, itemFlags, enchantmentLevels, lore, name, damage, unbreakable);
-        this.hitDamage = hitDamage;
-        this.rarity = rarity;
-        this.price = price;
-        this.description = description.toArray(new String[0]);
-        this.storeItem = storeItem;
-    }
-
-    public WeaponItem(Material material, int amount, List<ItemFlag> itemFlags, Map<Enchantment, Integer> enchantmentLevels, List<String> lore, String name, int damage, boolean unbreakable, int hitDamage, Rarity rarity, int price, String[] description, boolean storeItem) {
-        super(material, amount, itemFlags, enchantmentLevels, lore, name, damage, unbreakable);
-        this.hitDamage = hitDamage;
-        this.rarity = rarity;
-        this.price = price;
-        this.description = description;
-        this.storeItem = storeItem;
-    }
-
-    public WeaponItem() {
-        super();
-        this.hitDamage = 0;
-        this.rarity = Rarity.COMMON;
-        this.price = 0;
-        this.description = null;
-        this.storeItem = false;
-    }
-
-    public WeaponItem(ItemStack item) {
-        super(item);
-        this.hitDamage = 0;
-        this.rarity = Rarity.COMMON;
-        this.price = 0;
-        this.description = null;
-        this.storeItem = false;
-    }
-
-    public WeaponItem(File filepath) {
-        super(filepath);
-        File file = getFileFile(filepath);
-        if (file == null) return;
-        FileConfiguration config = getConfig(file);
-        if (config == null) return;
-        this.hitDamage = config.getInt("hitDamage");
-        String rarit = config.getString("rarity");
-        if (rarit == null) rarit = Rarity.COMMON.name();
-        this.rarity = Rarity.valueOf(rarit);
-        this.price = config.getInt("price");
-        this.description = config.getStringList("description").toArray(new String[0]);
-        this.storeItem = config.getBoolean("storeItem");
-    }
-
-
-
-    public int getHitDamage() {
-        return hitDamage;
-    }
-
-    public void setHitDamage(int hitDamage) {
-        this.hitDamage = hitDamage;
+    public void setDamage(int hitDamage) {
+        this.damage = hitDamage;
     }
 
     public Rarity getRarity() {
@@ -118,11 +61,11 @@ public class WeaponItem extends Item {
         this.price = price;
     }
 
-    public String[] getDescription() {
+    public List<String> getDescription() {
         return description;
     }
 
-    public void setDescription(String[] description) {
+    public void setDescription(List<String> description) {
         this.description = description;
     }
 
@@ -134,20 +77,18 @@ public class WeaponItem extends Item {
         this.storeItem = storeItem;
     }
 
-    @Override
-    public FileConfiguration save(String path) {
-        FileConfiguration config = super.save(path);
-        HashMap<String, Object> map = new HashMap<>();
-        map.put("hitDamage", hitDamage);
-        map.put("rarity", rarity.name());
-        map.put("price", price);
-        map.put("description", description);
-        map.put("storeItem", storeItem);
-        for (Map.Entry<String, Object> entry : map.entrySet()) {
-            config.set(entry.getKey(), entry.getValue());
-        }
-        return config;
-    }
+    public abstract void onEquip(Player player);
+    public abstract void onUnequip(Player player);
+    public abstract void clickEntity(Player player, Entity target, boolean shifting);
+    public abstract void punchEntity(Player player, Entity target, double damage, boolean shifting);
+    public abstract void leftClickOnBlock(Player player, Block block, boolean shifting);
+    public abstract void leftClickOnAir(Player player, Block block, boolean shifting);
+    public abstract void rightClickOnBlock(Player player, Block block, boolean shifting);
+    public abstract void rightClickOnAir(Player player, Block block, boolean shifting);
+    public abstract void onBlockBreak(Player player, Block block, boolean shifting);
+    public abstract void onBlockPlace(Player player, Block block, boolean shifting);
+    public abstract void onDrop(Player player);
+    public abstract void onPickup(Player player);
 
     @Override
     public void give(Player player) {
@@ -159,16 +100,24 @@ public class WeaponItem extends Item {
             for (ChatColor colour : this.getRarity().getColor()) s.append(colour);
             itemBuilder.addLoreLine(s.toString() + this.getRarity().name() + " WEAPON");
         }
-        if (this.getDamage() > 0) itemBuilder.setDurability((short) this.getDamage());
+        if (this.getDurability() > 0) itemBuilder.setDurability((short) this.getDurability());
         if (this.isUnbreakable()) itemBuilder.setUnbreakable(true);
         if (this.getItemFlags() != null && this.getItemFlags().size() > 0)
             itemBuilder.addItemFlags(this.getItemFlags());
         if (this.getEnchantmentLevels() != null && this.getEnchantmentLevels().size() > 0) this.getEnchantmentLevels().forEach(itemBuilder::setEnchantment);
-        player.getInventory().addItem(itemBuilder.build());
+        ItemStack item = itemBuilder.build();
+        NamespacedKey key = new NamespacedKey(getInstance(), "weaponItem");
+        ItemMeta itemMeta = item.getItemMeta();
+        if (itemMeta == null) return;
+        PersistentDataContainer container = itemMeta.getPersistentDataContainer();
+        container.set(key, PersistentDataType.STRING, itemMeta.getDisplayName());
+        item.setItemMeta(itemMeta);
+        player.getInventory().addItem(item);
     }
 
     @Override
     public ItemStack getItem() {
+        super.getItem();
         ItemBuilder itemBuilder = new ItemBuilder(this.getMaterial(), this.getAmount());
         if (this.getName() != null) itemBuilder.setName(this.getFormattedName());
         if (this.getLore() != null) itemBuilder.setLore(this.getFormattedLore());
@@ -182,12 +131,50 @@ public class WeaponItem extends Item {
             for (String s : this.description) itemBuilder.addLoreLine(ChatColor.translateAlternateColorCodes('&', s));
         }
         if (this.storeItem) itemBuilder.addLoreLine(String.format("%sPrice: %d souls", ChatColor.AQUA, this.getPrice()));
-        if (this.getDamage() > 0) itemBuilder.setDurability((short) this.getDamage());
+        if (this.getDurability() > 0) itemBuilder.setDurability((short) this.getDurability());
         if (this.isUnbreakable()) itemBuilder.setUnbreakable(true);
         if (this.getItemFlags() != null && this.getItemFlags().size() > 0)
             itemBuilder.addItemFlags(this.getItemFlags());
         if (this.getEnchantmentLevels().size() > 0)
             this.getEnchantmentLevels().forEach(itemBuilder::setEnchantment);
+        ItemStack item = itemBuilder.build();
+        NamespacedKey key = new NamespacedKey(getInstance(), "weaponItem");
+        ItemMeta itemMeta = item.getItemMeta();
+        if (itemMeta == null) return null;
+        PersistentDataContainer container = itemMeta.getPersistentDataContainer();
+        container.set(key, PersistentDataType.STRING, itemMeta.getDisplayName());
+        item.setItemMeta(itemMeta);
         return itemBuilder.build();
+    }
+
+    public static WeaponItem getWeaponItem(ItemStack item) {
+        NamespacedKey key = new NamespacedKey(getInstance(), "weaponItem");
+        ItemMeta itemMeta = item.getItemMeta();
+        if (itemMeta == null) return null;
+        PersistentDataContainer container = itemMeta.getPersistentDataContainer();
+        if (!container.has(key, PersistentDataType.STRING)) return null;
+        String name = container.get(key, PersistentDataType.STRING);
+        for (WeaponItem weaponItem : weapons) {
+            if (weaponItem.getFormattedName().equals(name)) return weaponItem;
+        }
+        return null;
+    }
+
+    public static boolean isWeaponItem(ItemStack item) {
+        NamespacedKey k = new NamespacedKey(getInstance(), "weaponItem");
+        if (item == null) return false;
+        if (!item.hasItemMeta()) return false;
+        ItemMeta itemMeta = item.getItemMeta();
+        if (itemMeta == null) return false;
+        PersistentDataContainer container = itemMeta.getPersistentDataContainer();
+        return container.has(k, PersistentDataType.STRING);
+    }
+
+    public static void setWeapons(List<WeaponItem> weapons) {
+        WeaponItem.weapons = weapons;
+    }
+
+    public static List<WeaponItem> getWeapons() {
+        return WeaponItem.weapons;
     }
 }
