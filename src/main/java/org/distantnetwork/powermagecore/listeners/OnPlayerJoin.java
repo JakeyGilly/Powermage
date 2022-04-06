@@ -8,8 +8,6 @@ import org.distantnetwork.powermagecore.utils.PowermagePlayer;
 
 public class OnPlayerJoin implements Listener {
     public static void onPlayerJoin(PlayerJoinEvent e) {
-        e.setJoinMessage(null);
-        e.getPlayer().sendTitle(String.format("%s%sPowerMage", ChatColor.RED, ChatColor.BOLD), String.format("%sDo /start to get started!", ChatColor.GRAY), 10, 70, 20);
         PowermagePlayer player = new PowermagePlayer(e.getPlayer());
         try {
             player.getPlayer().setHealthScale(player.getClassType().getBaseHealth() + player.getHealthUpgrade() * ConfigurationManager.getDefaultConfig().getDouble("upgrades.health.healthPerLevel"));
@@ -18,5 +16,10 @@ public class OnPlayerJoin implements Listener {
             player.getPlayer().setHealth(player.getClassType().getBaseHealth() + player.getHealthUpgrade() * ConfigurationManager.getDefaultConfig().getDouble("upgrades.health.healthPerLevel"));
         } catch (IllegalArgumentException ignored) {}
         player.getPlayer().setWalkSpeed((float) (player.getClassType().getBaseSpeed() + player.getSpeedUpgrade() * ConfigurationManager.getDefaultConfig().getDouble("upgrades.speed.speedPerLevel")));
+        if (!e.getPlayer().hasPlayedBefore()) {
+            e.getPlayer().sendTitle(String.format("%s%sPowerMage", ChatColor.RED, ChatColor.BOLD), String.format("%sDo /start to get started!", ChatColor.GRAY), 10, 70, 20);
+            player.setMoney(1000);
+            e.getPlayer().performCommand("class");
+        }
     }
 }
