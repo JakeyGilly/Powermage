@@ -93,7 +93,7 @@ public final class PowermageCore extends JavaPlugin implements Listener {
     private void setListeners() {
         getServer().getPluginManager().registerEvents(new InventoryBuilderListeners(), this);
         getServer().getPluginManager().registerEvents(new FoodChangeEvent(), this);
-        getServer().getPluginManager().registerEvents(new OnItemClick(), this);
+        getServer().getPluginManager().registerEvents(new MenuListener(), this);
         getServer().getPluginManager().registerEvents(new OnPlayerDeath(), this);
         getServer().getPluginManager().registerEvents(new OnDamage(), this);
         getServer().getPluginManager().registerEvents(new OnPlayerJoin(), this);

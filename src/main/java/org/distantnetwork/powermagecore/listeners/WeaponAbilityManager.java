@@ -17,10 +17,14 @@ public class WeaponAbilityManager implements Listener {
     private void onChangeWeapon(PlayerItemHeldEvent event) {
         if (WeaponItem.isWeaponItem(event.getPlayer().getInventory().getItem(event.getNewSlot()))) {
             WeaponItem weaponItem = WeaponItem.getWeaponItem(event.getPlayer().getInventory().getItem(event.getNewSlot()));
-            weaponItem.onEquip(event.getPlayer());
+            if (weaponItem != null) {
+                weaponItem.onEquip(event.getPlayer());
+            }
         } else if (WeaponItem.isWeaponItem(event.getPlayer().getInventory().getItem(event.getPreviousSlot()))) {
             WeaponItem weaponItem = WeaponItem.getWeaponItem(event.getPlayer().getInventory().getItem(event.getPreviousSlot()));
-            weaponItem.onUnequip(event.getPlayer());
+            if (weaponItem != null) {
+                weaponItem.onUnequip(event.getPlayer());
+            }
         }
     }
 
@@ -30,7 +34,9 @@ public class WeaponAbilityManager implements Listener {
             Player player = (Player) event.getDamager();
             if (WeaponItem.isWeaponItem(player.getInventory().getItemInMainHand())) {
                 WeaponItem weaponItem = WeaponItem.getWeaponItem(player.getInventory().getItemInMainHand());
-                weaponItem.punchEntity(player, event.getEntity(), event.getDamage(), player.isSneaking());
+                if (weaponItem != null) {
+                    weaponItem.punchEntity(player, event.getEntity(), event.getDamage(), player.isSneaking());
+                }
             }
         }
     }
@@ -73,7 +79,9 @@ public class WeaponAbilityManager implements Listener {
     private void playerBreakBlock(BlockBreakEvent event) {
         if (WeaponItem.isWeaponItem(event.getPlayer().getInventory().getItemInMainHand())) {
             WeaponItem weaponItem = WeaponItem.getWeaponItem(event.getPlayer().getInventory().getItemInMainHand());
-            weaponItem.onBlockBreak(event.getPlayer(), event.getBlock(), event.getPlayer().isSneaking());
+            if (weaponItem != null) {
+                weaponItem.onBlockBreak(event.getPlayer(), event.getBlock(), event.getPlayer().isSneaking());
+            }
         }
     }
 
@@ -94,7 +102,9 @@ public class WeaponAbilityManager implements Listener {
     private void playerDropItem(PlayerDropItemEvent event) {
         if (WeaponItem.isWeaponItem(event.getItemDrop().getItemStack())) {
             WeaponItem weaponItem = WeaponItem.getWeaponItem(event.getItemDrop().getItemStack());
-            weaponItem.onDrop(event.getPlayer());
+            if (weaponItem != null) {
+                weaponItem.onDrop(event.getPlayer());
+            }
         }
     }
 
@@ -104,7 +114,9 @@ public class WeaponAbilityManager implements Listener {
             Player player = (Player) event.getEntity();
             if (WeaponItem.isWeaponItem(event.getItem().getItemStack())) {
                 WeaponItem weaponItem = WeaponItem.getWeaponItem(event.getItem().getItemStack());
-                weaponItem.onPickup(player);
+                if (weaponItem != null) {
+                    weaponItem.onPickup(player);
+                }
             }
         }
     }

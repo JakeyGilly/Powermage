@@ -24,6 +24,7 @@ public class OnPlayerJoin implements Listener {
             e.getPlayer().performCommand("class");
             e.getPlayer().getInventory().setItem(8, new ItemBuilder(Material.END_CRYSTAL).setName(ChatColor.LIGHT_PURPLE + "Menu " + ChatColor.GRAY + "(Right/Sneak Left Click)")
                     .setLore(ChatColor.GRAY + "Click to open the menu!", "", ChatColor.GRAY + "Click while sneaking to", ChatColor.GRAY + "use your selected class ability!", "", ChatColor.RED + "" + ChatColor.BOLD + "CORE ITEM").build());
+            // todo make this not moveable
         }
     }
 }
