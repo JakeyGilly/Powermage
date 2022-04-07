@@ -27,8 +27,8 @@ public class ClassGUI extends InventoryBuilder {
         for (Classes c : Classes.getClasses()) {
             item = new ItemBuilder(c.getWeaponIcon()).addItemFlags(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_ENCHANTS).setEnchantment(Enchantment.DURABILITY, 1)
                     .setName(String.format("%s[Lvl 0] %s%s%s", ChatColor.GRAY, ChatColor.RED, c.getEmoji(), c.getName()))
-                    .setLore(String.format("%s❤ Health: %s%%", ChatColor.RED, c.getBaseHealth() * 5),
-                            String.format("%s✦ Base Speed: %s%%", ChatColor.GOLD, c.getBaseSpeed() * 500),
+                    .setLore(String.format("%s❤ Health: %s%%", ChatColor.RED, (int)Math.round(c.getBaseHealth() * 5)),
+                            String.format("%s✦ Base Speed: %s%%", ChatColor.GOLD, Math.round(c.getBaseSpeed() * 500)),
                             String.format("%s☄ Base Mana: %s", ChatColor.LIGHT_PURPLE, c.getBaseMana()));
             for (String s : c.getDescription()) item.addLoreLine(s);
             item.addLoreLine(String.format("%s%sCLICK TO SELECT", ChatColor.YELLOW, ChatColor.BOLD));
@@ -36,12 +36,12 @@ public class ClassGUI extends InventoryBuilder {
                 PowermagePlayer pmPlayer = new PowermagePlayer(p);
                 player.closeInventory();
                 player.sendMessage(String.format("%s[%sClass Selector%s] %sYou have selected the %s%s %s%sclass!", ChatColor.GRAY, ChatColor.RED, ChatColor.GRAY, ChatColor.RED, ChatColor.BOLD, c.getName(), ChatColor.RESET, ChatColor.GRAY));
-                player.sendMessage(String.format("%s===========================\n%s%sNEW STATS:\n\n%s%s❤ Base Health: %s%%\n%s%s✦ Base Speed: %s%%\n%s%s☄ Base Mana: %s100\n%s===========================",
+                player.sendMessage(String.format("%s===========================\n%s%sNEW STATS:\n\n%s%s❤ Base Health: %s%%\n%s%s✦ Base Speed: %s%%\n%s%s☄ Base Mana: %s\n%s===========================",
                         ChatColor.RED,
                         ChatColor.RESET, ChatColor.BOLD,
-                        ChatColor.RESET, ChatColor.RED, (int) (c.getBaseHealth() + (pmPlayer.getHealthUpgrade() * getDefaultConfig().getDouble("upgrades.speed.speedPerLevel") * 5)),
-                        ChatColor.RESET, ChatColor.GOLD, (int) (c.getBaseSpeed() + (pmPlayer.getSpeedUpgrade() * getDefaultConfig().getDouble("upgrades.speed.speedPerLevel") * 500)),
-                        ChatColor.RESET, ChatColor.LIGHT_PURPLE, (int) (c.getBaseMana() + (pmPlayer.getManaUpgrade() * getDefaultConfig().getDouble("upgrades.mana.manaPerLevel"))),
+                        ChatColor.RESET, ChatColor.RED, (int)Math.round((c.getBaseHealth() * 5) + (pmPlayer.getHealthUpgrade() * getDefaultConfig().getDouble("upgrades.speed.speedPerLevel"))),
+                        ChatColor.RESET, ChatColor.GOLD, (int)Math.round((c.getBaseSpeed() * 500) + (pmPlayer.getSpeedUpgrade() * getDefaultConfig().getDouble("upgrades.speed.speedPerLevel"))),
+                        ChatColor.RESET, ChatColor.LIGHT_PURPLE, (int)Math.round(c.getBaseMana() + (pmPlayer.getManaUpgrade() * getDefaultConfig().getDouble("upgrades.mana.manaPerLevel"))),
                         ChatColor.RED));
                 try {
                     player.setHealthScale(c.getBaseHealth() + pmPlayer.getHealthUpgrade() * getDefaultConfig().getDouble("upgrades.health.healthPerLevel"));

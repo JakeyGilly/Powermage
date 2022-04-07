@@ -17,7 +17,6 @@ public abstract class Classes {
     private String emoji;
     private ItemStack weaponIcon;
     private static List<Classes> classes = new ArrayList<>();
-    private List<Player> players;
     public abstract void onAbility(Player player);
     public abstract WeaponItem getWeaponItem();
 
@@ -96,15 +95,6 @@ public abstract class Classes {
 
     public static void setClasses(List<Classes> classes) {
         Classes.classes = classes;
-    }
-
-
-    public List<Player> getPlayers() {
-        return players;
-    }
-
-    public void setPlayers(List<Player> players) {
-        this.players = players;
     }
 
     public String getName() {

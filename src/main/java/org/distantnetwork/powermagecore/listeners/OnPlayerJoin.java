@@ -1,8 +1,10 @@
 package org.distantnetwork.powermagecore.listeners;
 
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.distantnetwork.powermagecore.builders.ItemBuilder;
 import org.distantnetwork.powermagecore.utils.Config.ConfigurationManager;
 import org.distantnetwork.powermagecore.utils.PowermagePlayer;
 
@@ -20,6 +22,8 @@ public class OnPlayerJoin implements Listener {
             e.getPlayer().sendTitle(String.format("%s%sPowerMage", ChatColor.RED, ChatColor.BOLD), String.format("%sDo /start to get started!", ChatColor.GRAY), 10, 70, 20);
             player.setMoney(1000);
             e.getPlayer().performCommand("class");
+            e.getPlayer().getInventory().setItem(8, new ItemBuilder(Material.END_CRYSTAL).setName(ChatColor.LIGHT_PURPLE + "Menu " + ChatColor.GRAY + "(Right/Sneak Left Click)")
+                    .setLore(ChatColor.GRAY + "Click to open the menu!", "", ChatColor.GRAY + "Click while sneaking to", ChatColor.GRAY + "use your selected class ability!", "", ChatColor.RED + "" + ChatColor.BOLD + "CORE ITEM").build());
         }
     }
 }
