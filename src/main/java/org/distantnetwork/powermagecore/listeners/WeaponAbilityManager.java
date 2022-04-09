@@ -1,5 +1,6 @@
 package org.distantnetwork.powermagecore.listeners;
 
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -8,10 +9,18 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityPickupItemEvent;
+import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.inventory.EquipmentSlot;
+import org.distantnetwork.powermagecore.Items.Weapons.ClassWeapons.ArcherBow;
+import org.distantnetwork.powermagecore.Items.Weapons.ClassWeapons.TankSword;
+import org.distantnetwork.powermagecore.Items.Weapons.ClassWeapons.WarriorSword;
+import org.distantnetwork.powermagecore.Items.Weapons.ClassWeapons.WizardSword;
+import org.distantnetwork.powermagecore.PowermageCore;
+import org.distantnetwork.powermagecore.utils.PowermagePlayer;
 import org.distantnetwork.powermagecore.utils.WeaponItem;
 
+import static org.distantnetwork.powermagecore.PowermageCore.getInstance;
 public class WeaponAbilityManager implements Listener {
     @EventHandler
     private void onChangeWeapon(PlayerItemHeldEvent event) {
@@ -35,6 +44,30 @@ public class WeaponAbilityManager implements Listener {
             if (WeaponItem.isWeaponItem(player.getInventory().getItemInMainHand())) {
                 WeaponItem weaponItem = WeaponItem.getWeaponItem(player.getInventory().getItemInMainHand());
                 if (weaponItem != null) {
+                    if (weaponItem.equals(PowermageCore.archerBow)) {
+                        if (!new PowermagePlayer(player).getClassType().getName().equalsIgnoreCase("archer")) {
+                            event.setCancelled(true);
+                            player.sendMessage(ChatColor.RED + "You must be an archer to use this bow!");
+                        }
+                    }
+                    if (weaponItem.equals(PowermageCore.tankSword)) {
+                        if (!new PowermagePlayer(player).getClassType().getName().equalsIgnoreCase("tank")) {
+                            event.setCancelled(true);
+                            player.sendMessage(ChatColor.RED + "You must be a tank to use this weapon!");
+                        }
+                    }
+                    if (weaponItem.equals(PowermageCore.warriorSword)) {
+                        if (!new PowermagePlayer(player).getClassType().getName().equalsIgnoreCase("warrior")) {
+                            event.setCancelled(true);
+                            player.sendMessage(ChatColor.RED + "You must be a warrior to use this weapon!");
+                        }
+                    }
+                    if (weaponItem.equals(PowermageCore.wizardSword)) {
+                        if (!new PowermagePlayer(player).getClassType().getName().equalsIgnoreCase("wizard")) {
+                            event.setCancelled(true);
+                            player.sendMessage(ChatColor.RED + "You must be a wizard to use this weapon!");
+                        }
+                    }
                     weaponItem.punchEntity(player, event.getEntity(), event.getDamage(), player.isSneaking());
                 }
             }
@@ -120,4 +153,17 @@ public class WeaponAbilityManager implements Listener {
             }
         }
     }
+
+    @EventHandler
+    private void bowUse(EntityShootBowEvent event) {
+        if (event.getEntity() instanceof Player) {
+            Player player = (Player) event.getEntity();
+            if (!new PowermagePlayer(player).getClassType().getName().equalsIgnoreCase("archer")) {
+                event.setCancelled(true);
+                player.sendMessage(ChatColor.RED + "You must be an archer to use this bow!");
+            }
+        }
+    }
+
+
 }

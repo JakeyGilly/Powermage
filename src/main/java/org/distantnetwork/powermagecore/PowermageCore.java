@@ -9,6 +9,10 @@ import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.distantnetwork.powermagecore.Items.ExampleItem;
+import org.distantnetwork.powermagecore.Items.Weapons.ClassWeapons.ArcherBow;
+import org.distantnetwork.powermagecore.Items.Weapons.ClassWeapons.TankSword;
+import org.distantnetwork.powermagecore.Items.Weapons.ClassWeapons.WarriorSword;
+import org.distantnetwork.powermagecore.Items.Weapons.ClassWeapons.WizardSword;
 import org.distantnetwork.powermagecore.Items.Weapons.ExampleWeapon;
 import org.distantnetwork.powermagecore.builders.InventoryBuilderListeners;
 import org.distantnetwork.powermagecore.commands.*;
@@ -26,6 +30,10 @@ import org.distantnetwork.powermagecore.utils.PowermagePlayer;
 public final class PowermageCore extends JavaPlugin implements Listener {
     private static PowermageCore instance;
     public static PowermageCore getInstance() {return instance;}
+    public static TankSword tankSword;
+    public static ArcherBow archerBow;
+    public static WarriorSword warriorSword;
+    public static WizardSword wizardSword;
 
     // TODO UPGRADING TOOLS AND WEAPONS
     // TODO CUSTOM ENCHANTMENTS
@@ -39,6 +47,10 @@ public final class PowermageCore extends JavaPlugin implements Listener {
         new Tank();
         new Wizard();
         new ExampleWeapon();
+        archerBow = new ArcherBow();
+        tankSword = new TankSword();
+        warriorSword = new WarriorSword();
+        wizardSword = new WizardSword();
         new ExampleItem();
         new BukkitRunnable() {
             @Override
@@ -82,9 +94,6 @@ public final class PowermageCore extends JavaPlugin implements Listener {
 
     private void setCommands() {
         getCommand("menu").setExecutor(new MenuCommand());
-        getCommand("discord").setExecutor(new DiscordCommand());
-        getCommand("store").setExecutor(new StoreCommand());
-        getCommand("spawn").setExecutor(new SpawnCommand());
         getCommand("class").setExecutor(new ClassCommand());
         getCommand("soulshop").setExecutor(new SoulShopCommand());
         getCommand("upgrade").setExecutor(new UpgradeCommand());

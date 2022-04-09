@@ -12,7 +12,7 @@ public class ClassCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (sender instanceof Player) {
             Player player = (Player) sender;
-            if (!player.hasPermission("powermage.start")) {
+            if (!player.hasPermission("powermage.class")) {
                 player.sendMessage(String.format("%sYou don't have permission to use this command!", ChatColor.RED));
             }
             new ClassGUI(player).open(player);

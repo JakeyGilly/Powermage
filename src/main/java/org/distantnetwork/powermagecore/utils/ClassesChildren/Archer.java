@@ -8,6 +8,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.distantnetwork.powermagecore.Items.Weapons.ClassWeapons.ArcherBow;
+import org.distantnetwork.powermagecore.PowermageCore;
 import org.distantnetwork.powermagecore.utils.Classes;
 import org.distantnetwork.powermagecore.utils.PowermagePlayer;
 import org.distantnetwork.powermagecore.utils.WeaponItem;
@@ -52,6 +53,6 @@ public class Archer extends Classes {
 
     @Override
     public WeaponItem getWeaponItem() {
-        return new ArcherBow();
+        return PowermageCore.archerBow;
     }
 }

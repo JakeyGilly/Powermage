@@ -25,26 +25,6 @@ public class OnDamage implements Listener {
                 if (weapon.getDamage() == 0) e.setCancelled(true);
                 e.setDamage(weapon.getDamage() + (new PowermagePlayer(attacker).getStrengthUpgrade() * ConfigurationManager.getDefaultConfig().getInt("upgrades.strength.strengthPerLevel")));
             }
-            ArmorStand armourStand = (ArmorStand) e.getEntity().getLocation().getWorld().spawnEntity(e.getEntity().getLocation(), EntityType.ARMOR_STAND);
-            armourStand.setVisible(false);
-            armourStand.setCustomNameVisible(true);
-            armourStand.setGravity(false);
-            if (attacker.getFallDistance() > 0.0F &&
-                    !attacker.isOnGround() &&
-                    !attacker.isInsideVehicle() &&
-                    !attacker.getLocation().getBlock().isLiquid() &&
-                    !attacker.getActivePotionEffects().contains(PotionEffectType.BLINDNESS) &&
-                    !attacker.isSprinting()) {
-                armourStand.setCustomName(String.format("%s✧-%s✧", ChatColor.RED, e.getDamage()));
-            } else {
-                armourStand.setCustomName(String.format("%s-%s", ChatColor.RED, e.getDamage()));
-            }
-            new BukkitRunnable() {
-                @Override
-                public void run() {
-                    armourStand.remove();
-                }
-            }.runTaskLater(getInstance(), 20);
         }
     }
 }

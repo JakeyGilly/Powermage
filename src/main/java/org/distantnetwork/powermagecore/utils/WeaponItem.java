@@ -5,8 +5,10 @@ import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -35,6 +37,7 @@ public abstract class WeaponItem extends Item {
         this.description = description;
         this.storeItem = storeItem;
         weapons.add(this);
+        getInstance().getLogger().info("Registered weapon: " + name);
     }
 
     public int getDamage() {

@@ -6,6 +6,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.distantnetwork.powermagecore.Items.Weapons.ClassWeapons.WarriorSword;
+import org.distantnetwork.powermagecore.PowermageCore;
 import org.distantnetwork.powermagecore.utils.Classes;
 import org.distantnetwork.powermagecore.utils.Config.ConfigurationManager;
 import org.distantnetwork.powermagecore.utils.PowermagePlayer;
@@ -46,6 +47,6 @@ public class Warrior extends Classes {
 
     @Override
     public WeaponItem getWeaponItem() {
-        return new WarriorSword();
+        return PowermageCore.warriorSword;
     }
 }
