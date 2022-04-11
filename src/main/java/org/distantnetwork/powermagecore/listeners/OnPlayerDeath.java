@@ -1,13 +1,16 @@
 package org.distantnetwork.powermagecore.listeners;
 
 import org.bukkit.ChatColor;
-import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.GameMode;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.distantnetwork.powermagecore.utils.Config.ConfigurationManager;
 import org.distantnetwork.powermagecore.utils.PowermagePlayer;
 import org.jetbrains.annotations.NotNull;
+
+import static org.distantnetwork.powermagecore.PowermageCore.getInstance;
 
 public class OnPlayerDeath implements Listener {
     @EventHandler
@@ -53,5 +56,32 @@ public class OnPlayerDeath implements Listener {
         killer = killer.save();
         victim.getPlayer().sendMessage(ChatColor.RED + "You have died to " + e.getEntity().getKiller().getName() + "!");
         killer.getPlayer().sendMessage(String.format("%sYou have killed %s%s%s!", ChatColor.GREEN, ChatColor.RED, e.getEntity().getName(), ChatColor.GREEN));
+        int respawnTime;
+        if (victim.getPlayer().hasPermission("powermage.respawn.legend")) respawnTime = 0;
+        else if (victim.getPlayer().hasPermission("powermage.respawn.elite")) respawnTime = 1;
+        else if (victim.getPlayer().hasPermission("powermage.respawn.super")) respawnTime = 2;
+        else respawnTime = 5;
+        if (respawnTime > 0) {
+            victim.getPlayer().setGameMode(GameMode.SPECTATOR);
+            victim.getPlayer().sendTitle(ChatColor.RED + "You are dead!", ChatColor.GOLD + "You will respawn in " + respawnTime + " seconds", 10, 20, 10);
+            victim.getPlayer().sendMessage(ChatColor.GREEN + "You will respawn in " + respawnTime + " seconds");
+            PowermagePlayer finalVictim = victim;
+            new BukkitRunnable() {
+                int time = respawnTime;
+                PowermagePlayer p = finalVictim;
+                @Override
+                public void run() {
+                    if (time == 0) {
+                        p.getPlayer().setGameMode(GameMode.ADVENTURE);
+                        p.getPlayer().teleport(p.getPlayer().getWorld().getSpawnLocation());
+                        this.cancel();
+                    } else {
+                        p.getPlayer().sendTitle(ChatColor.RED + "You are dead!", ChatColor.GOLD + "You will respawn in " + time + " seconds", 10, 20, 10);
+                        p.getPlayer().sendMessage(ChatColor.GREEN + "You will respawn in " + time + " seconds");
+                        time--;
+                    }
+                }
+            }.runTaskTimer(getInstance(), 0, 20);
+        }
     }
 }
