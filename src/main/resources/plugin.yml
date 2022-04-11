@@ -5,17 +5,6 @@ api-version: 1.18
 authors: [ JakeyGilly, Explorer017, CaptainATW, InvernessBlock ]
 description: The Core Plugin For Powermage
 commands:
-  discord:
-    usage: /discord
-    description: Opens the Discord Server
-  store:
-    usage: /store
-    description: Opens the Store
-    aliases:
-      - ranks
-  spawn:
-    usage: /spawn
-    description: Opens the Spawn Menu
   menu:
     usage: /menu
     description: Opens the Menu
