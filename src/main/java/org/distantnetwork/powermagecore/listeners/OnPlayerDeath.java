@@ -34,14 +34,22 @@ public class OnPlayerDeath implements Listener {
         killer.setSouls(killer.getSouls() + 1);
         int money;
         if (victim.getMoney() != 0) {
-            money = (int) (Math.random() * (victim.getMoney() / 10));
+            if (killer.getPlayer().hasPermission("powermage.coinmultiplier.legend")) money = (int) ((Math.random() * victim.getMoney() / 10) * 1.2);
+            else if (killer.getPlayer().hasPermission("powermage.coinmultiplier.elite")) money = (int) ((Math.random() * victim.getMoney() / 10) * 1.4);
+            else if (killer.getPlayer().hasPermission("powermage.coinmultiplier.super")) money = (int) ((Math.random() * victim.getMoney() / 10) * 2);
+            else money = (int) (Math.random() * (victim.getMoney() / 10));
         } else {
-            money = (int) (Math.random() * 10);
+            if (killer.getPlayer().hasPermission("powermage.coinmultiplier.legend")) money = (int) (Math.random() * 12);
+            else if (killer.getPlayer().hasPermission("powermage.coinmultiplier.elite")) money = (int) (Math.random() * 14);
+            else if (killer.getPlayer().hasPermission("powermage.coinmultiplier.super")) money = (int) (Math.random() * 20);
+            else money = (int) (Math.random() * 10);
         }
         if (victim.getMoney() - money >= 0) {
             victim.setMoney(victim.getMoney() - money);
+            victim.getPlayer().sendMessage(ChatColor.RED + "You dropped " + money + " coins!");
         }
         killer.setMoney(killer.getMoney() + money);
+        killer.getPlayer().sendMessage(ChatColor.GREEN + "You gained " + money + " coins!");
         if (killer.getClassType() != null) {
             killer.setClassesExp(killer.getClassType(), (int) (killer.getClassExp(killer.getClassType()) + ConfigurationManager.getDefaultConfig().getDouble("expPerKill")));
             killer = killer.save();
