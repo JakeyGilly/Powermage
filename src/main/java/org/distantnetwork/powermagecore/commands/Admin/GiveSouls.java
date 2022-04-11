@@ -42,6 +42,12 @@ public class GiveSouls implements CommandExecutor {
             PowermagePlayer pmplayer = new PowermagePlayer(player);
             pmplayer.setSouls(pmplayer.getSouls() + amount);
             pmplayer.save();
+            if (player != (Player) sender) {
+                ((Player) sender).sendMessage(String.format("%sYou have given %s%d%s souls to %s%s%s", ChatColor.GREEN, ChatColor.AQUA, amount, ChatColor.GREEN, ChatColor.GOLD, player.getName(), ChatColor.GREEN));
+                player.sendMessage(String.format("%sYou have been given %s%d%s souls", ChatColor.GREEN, ChatColor.AQUA, amount, ChatColor.GREEN));
+            } else {
+                player.sendMessage(String.format("%sYou have been given %s%d%s souls", ChatColor.GREEN, ChatColor.AQUA, amount, ChatColor.GREEN));
+            }
         } else sender.sendMessage(String.format("%sThis command is only for players!", ChatColor.RED));
         return true;
     }

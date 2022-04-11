@@ -42,6 +42,12 @@ public class GiveCoins implements CommandExecutor {
             PowermagePlayer pmplayer = new PowermagePlayer(player);
             pmplayer.setMoney(pmplayer.getMoney() + amount);
             pmplayer.save();
+            if (player != (Player) sender) {
+                ((Player) sender).sendMessage(String.format("%sYou have given %s%d%s coins to %s%s%s", ChatColor.GREEN, ChatColor.GOLD, amount, ChatColor.GREEN, ChatColor.GOLD, player.getName(), ChatColor.GREEN));
+                player.sendMessage(String.format("%sYou have been given %s%d%s coins", ChatColor.GREEN, ChatColor.GOLD, amount, ChatColor.GREEN));
+            } else {
+                player.sendMessage(String.format("%sYou have been given %s%d%s coins", ChatColor.GREEN, ChatColor.GOLD, amount, ChatColor.GREEN));
+            }
         } else sender.sendMessage(String.format("%sThis command is only for players!", ChatColor.RED));
         return true;
     }
