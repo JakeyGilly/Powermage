@@ -16,6 +16,7 @@ public class SoulShopCommand implements CommandExecutor {
             Player player = (Player) sender;
             if (!player.hasPermission("powermage.soulshop")) {
                 player.sendMessage(String.format("%sYou don't have permission to use this command!", ChatColor.RED));
+                return true;
             }
             PowermagePlayer pmPlayer = new PowermagePlayer(player);
             for (Classes c : Classes.getClasses()) {
