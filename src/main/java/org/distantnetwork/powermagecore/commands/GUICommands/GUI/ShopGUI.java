@@ -18,7 +18,8 @@ public class ShopGUI extends InventoryBuilder {
         if (ShopItem.getShopItems().size() < 1) setItem(i, new ItemBuilder(Material.BARRIER).setName(ChatColor.RED + "No items found!").toItem());
         for (ShopItem shopItem : ShopItem.getShopItems()) {
             setItem(i, shopItem.getItem(), player -> {
-                if (shopItem.getPrice() > new PowermagePlayer(player).getMoney()) {
+                PowermagePlayer pmplayer = new PowermagePlayer(player);
+                if (shopItem.getPrice() > pmplayer.getMoney()) {
                     player.sendMessage(ChatColor.RED + "You don't have enough coins!");
                     return;
                 }
@@ -27,10 +28,13 @@ public class ShopGUI extends InventoryBuilder {
                     return;
                 }
                 shopItem.give(player);
+                pmplayer.setMoney(pmplayer.getMoney() - shopItem.getPrice());
+                player.sendMessage(ChatColor.GREEN + "You bought " + shopItem.getName() + " for " + shopItem.getPrice() + " coins!");
+                pmplayer.save();
             });
             i++;
         }
-        setItem(getInventory().getSize() - 9, new ItemBuilder(Material.ARROW).setName(String.format("%sBack to Main Menu", net.md_5.bungee.api.ChatColor.GRAY)).addItemFlags(ItemFlag.HIDE_ATTRIBUTES).toItem(), player -> new MenuGUI(player).open(player));
-        setItem(getInventory().getSize() - 5, new ItemBuilder(Material.BARRIER).setName(String.format("%sClose Menu", net.md_5.bungee.api.ChatColor.RED)).addItemFlags(ItemFlag.HIDE_ATTRIBUTES).toItem(), HumanEntity::closeInventory);
+        setItem(getInventory().getSize() - 9, new ItemBuilder(Material.ARROW).setName(String.format("%sBack to Main Menu", ChatColor.GRAY)).addItemFlags(ItemFlag.HIDE_ATTRIBUTES).toItem(), player -> new MenuGUI(player).open(player));
+        setItem(getInventory().getSize() - 5, new ItemBuilder(Material.BARRIER).setName(String.format("%sClose Menu", ChatColor.RED)).addItemFlags(ItemFlag.HIDE_ATTRIBUTES).toItem(), HumanEntity::closeInventory);
     }
 }

@@ -19,7 +19,7 @@ public class ArcherBow extends WeaponItem {
     public ArcherBow() {
         super(Material.BOW, 1, "&7Archer Bow", Arrays.asList("The starter bow for the Archer Class"), Arrays.asList(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_ENCHANTS, ItemFlag.HIDE_UNBREAKABLE), new HashMap<Enchantment, Integer>() {{
             put(Enchantment.ARROW_INFINITE, 1);
-        }}, 0, true, Rarity.COMMON, 2, 0, Arrays.asList("A bit of wood with some string"), false);
+        }}, 0, true, Rarity.COMMON, 2, 0, Arrays.asList("A bit of wood with some string"), true);
     }
 
     @Override

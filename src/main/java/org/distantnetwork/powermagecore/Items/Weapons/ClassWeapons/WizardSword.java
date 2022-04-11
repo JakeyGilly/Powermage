@@ -30,7 +30,7 @@ public class WizardSword extends WeaponItem {
                 2,
                 0,
                 Arrays.asList("A sharp pointy object"),
-                false
+                true
         );
     }
 

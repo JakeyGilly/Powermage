@@ -23,8 +23,13 @@ public class MenuGUI extends InventoryBuilder {
         ItemStack item;
         PowermagePlayer pmPlayer = new PowermagePlayer(p);
         List<String> lore = new ArrayList<String>() {{
+            if (pmPlayer.getClassType() == null) add(ChatColor.BLUE + "Class: " + ChatColor.GRAY + "None");
+            else add(ChatColor.BLUE + "Class: " + ChatColor.GREEN + pmPlayer.getClassType().getName());
             for (Classes c : Classes.getClasses()) {
-                add(String.format("%s%s Level: %s%d", ChatColor.DARK_AQUA, c.getName(), ChatColor.GOLD, pmPlayer.getClassLvl(c)));
+                if (c == pmPlayer.getClassType()) {
+                    add(String.format("%s%s Level: %s%d", ChatColor.DARK_AQUA, c.getName(), ChatColor.GOLD, pmPlayer.getClassLvl(c)));
+                    add(String.format("%s%s Exp: %s%d", ChatColor.DARK_AQUA, c.getName(), ChatColor.GOLD, pmPlayer.getClassExp(c)));
+                }
             }
             add(String.format("%sBalance: %s%s Coins", ChatColor.GRAY, ChatColor.GOLD, pmPlayer.getMoney()));
             add(String.format("%sSouls: %s%s Souls", ChatColor.GRAY, ChatColor.AQUA, pmPlayer.getSouls()));

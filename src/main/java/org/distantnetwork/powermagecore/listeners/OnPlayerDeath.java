@@ -21,18 +21,33 @@ public class OnPlayerDeath implements Listener {
         PowermagePlayer victim = new PowermagePlayer(e.getEntity());
         PowermagePlayer killer = new PowermagePlayer(e.getEntity().getKiller());
         victim.setDeaths(victim.getDeaths() + 1);
-        victim.setSouls(victim.getSouls() - 1);
+        if (victim.getSouls() > 0) {
+            victim.setSouls(victim.getSouls() - 1);
+        }
         victim.setKillStreak(0);
         victim.setCombatLog(false);
         killer.setKills(killer.getKills() + 1);
         killer.setKillStreak(killer.getKillStreak() + 1);
         killer.setSouls(killer.getSouls() + 1);
-        int money = (int) (Math.random() * (victim.getMoney() / 10));
-        victim.setMoney(victim.getMoney() - money);
+        int money;
+        if (victim.getMoney() != 0) {
+            money = (int) (Math.random() * (victim.getMoney() / 10));
+        } else {
+            money = (int) (Math.random() * 10);
+        }
+        if (victim.getMoney() - money >= 0) {
+            victim.setMoney(victim.getMoney() - money);
+        }
         killer.setMoney(killer.getMoney() + money);
-        killer.setClassesExp(killer.getClassType(), (int) Math.round(killer.getClassExp(killer.getClassType()) + ConfigurationManager.getDefaultConfig().getDouble("expPerKill")));
-        if (killer.getClassExp(killer.getClassType()) >= ConfigurationManager.getDefaultConfig().getDoubleList("levelUpExp").get(killer.getClassLvl(killer.getClassType()))) {
-            killer.setClassesLvl(killer.getClassType(), killer.getClassLvl(killer.getClassType()) + 1);
+        if (killer.getClassType() != null) {
+            killer.setClassesExp(killer.getClassType(), (int) (killer.getClassExp(killer.getClassType()) + ConfigurationManager.getDefaultConfig().getDouble("expPerKill")));
+            killer = killer.save();
+            if (killer.getClassExp(killer.getClassType()) >= ConfigurationManager.getDefaultConfig().getDoubleList("levelUpExp").get(killer.getClassLvl(killer.getClassType()))) {
+                killer.setClassesLvl(killer.getClassType(), killer.getClassLvl(killer.getClassType()) + 1);
+                killer.setClassesExp(killer.getClassType(), 0);
+                killer.getPlayer().sendTitle(ChatColor.RED + "Level up!", ChatColor.GOLD + "" + (killer.getClassLvl(killer.getClassType())-1) + " -> " + (killer.getClassLvl(killer.getClassType())), 10, 20, 10);
+                killer.getPlayer().sendMessage(ChatColor.GREEN + "You have leveled up to " + killer.getClassLvl(killer.getClassType()) + "!");
+            }
         }
         victim = victim.save();
         killer = killer.save();

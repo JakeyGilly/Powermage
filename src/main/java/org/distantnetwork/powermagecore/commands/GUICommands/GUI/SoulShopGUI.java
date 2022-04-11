@@ -18,7 +18,8 @@ public class SoulShopGUI extends InventoryBuilder {
         if (WeaponItem.getWeapons().size() < 1) setItem(i, new ItemBuilder(Material.BARRIER).setName(ChatColor.RED + "No weapons found!").toItem());
         for (WeaponItem weaponItem : WeaponItem.getWeapons()) {
             setItem(i, weaponItem.getItem(), player -> {
-                if (weaponItem.getPrice() > new PowermagePlayer(player).getSouls()) {
+                PowermagePlayer pmplayer = new PowermagePlayer(player);
+                if (weaponItem.getPrice() > pmplayer.getSouls()) {
                     player.sendMessage(ChatColor.RED + "You don't have enough souls!");
                     return;
                 }
@@ -27,6 +28,9 @@ public class SoulShopGUI extends InventoryBuilder {
                     return;
                 }
                 weaponItem.give(player);
+                pmplayer.setSouls(pmplayer.getSouls() - weaponItem.getPrice());
+                player.sendMessage(ChatColor.GREEN + "You bought " + weaponItem.getName() + " for " + weaponItem.getPrice() + " souls!");
+                pmplayer.save();
             });
             i++;
         }

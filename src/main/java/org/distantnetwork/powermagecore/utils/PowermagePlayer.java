@@ -351,7 +351,9 @@ public class PowermagePlayer {
         FileConfiguration config = getConfig(file);
         if (config == null) return null;
         config.set(String.valueOf(player.getUniqueId()), new HashMap<String, Object>() {{
-            put("class", classesType.getName());
+            if (classesType != null) {
+                put("class", classesType.getName());
+            }
             put("warriorLevel", warriorLevel);
             put("archerLevel", archerLevel);
             put("wizardLevel", wizardLevel);
