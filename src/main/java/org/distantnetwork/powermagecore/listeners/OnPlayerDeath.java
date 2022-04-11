@@ -74,7 +74,7 @@ public class OnPlayerDeath implements Listener {
             PowermagePlayer finalVictim = victim;
             new BukkitRunnable() {
                 int time = respawnTime;
-                PowermagePlayer p = finalVictim;
+                final PowermagePlayer p = finalVictim;
                 @Override
                 public void run() {
                     if (time == 0) {

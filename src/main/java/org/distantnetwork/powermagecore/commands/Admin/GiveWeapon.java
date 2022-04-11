@@ -43,15 +43,15 @@ public class GiveWeapon implements CommandExecutor {
                     return true;
                 }
             }
-            if (player != (Player) sender) {
+            if (player != sender) {
                 if (!player.hasPermission("powermage.admin.others")) {
                     sender.sendMessage(String.format("%sYou don't have permission to give money to others", ChatColor.RED));
                     player = (Player) sender;
                 }
             }
             weaponItem.give(player);
-            if (player != (Player) sender) {
-                ((Player) sender).sendMessage(String.format("%sGiven %s%s%s to %s", ChatColor.GREEN, ChatColor.LIGHT_PURPLE, weaponItem.getName(), ChatColor.GREEN, player.getName()));
+            if (player != sender) {
+                sender.sendMessage(String.format("%sGiven %s%s%s to %s", ChatColor.GREEN, ChatColor.LIGHT_PURPLE, weaponItem.getName(), ChatColor.GREEN, player.getName()));
                 player.sendMessage(String.format("%sYou have been given %s%s", ChatColor.GREEN, ChatColor.LIGHT_PURPLE, weaponItem.getName()));
             } else {
                 player.sendMessage(String.format("%sYou have been given %s%s", ChatColor.GREEN, ChatColor.LIGHT_PURPLE, weaponItem.getName()));

@@ -6,10 +6,11 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.distantnetwork.powermagecore.commands.GUICommands.GUI.ClassGUI;
+import org.jetbrains.annotations.NotNull;
 
 public class ClassCommand implements CommandExecutor {
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
         if (sender instanceof Player) {
             Player player = (Player) sender;
             if (!player.hasPermission("powermage.class")) {

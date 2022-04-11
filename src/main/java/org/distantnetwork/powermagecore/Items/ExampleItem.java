@@ -1,7 +1,6 @@
 package org.distantnetwork.powermagecore.Items;
 
 import org.bukkit.Material;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
 import org.distantnetwork.powermagecore.utils.Enums.Rarity;
 import org.distantnetwork.powermagecore.utils.ShopItem;
@@ -18,7 +17,7 @@ public class ExampleItem extends ShopItem {
                 "&7&oExample Item",
                 Collections.singletonList("&7&oThis is an example item."),
                 Arrays.asList(ItemFlag.HIDE_ENCHANTS, ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_UNBREAKABLE),
-                new HashMap<Enchantment, Integer>(),
+                new HashMap<>(),
                 0,
                 true,
                 Rarity.CORE,

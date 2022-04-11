@@ -33,7 +33,7 @@ public class GiveSouls implements CommandExecutor {
                     return true;
                 }
             }
-            if (player != (Player) sender) {
+            if (player != sender) {
                 if (!player.hasPermission("powermage.admin.others")) {
                     sender.sendMessage(String.format("%sYou don't have permission to give souls to others", ChatColor.RED));
                     player = (Player) sender;
@@ -42,8 +42,8 @@ public class GiveSouls implements CommandExecutor {
             PowermagePlayer pmplayer = new PowermagePlayer(player);
             pmplayer.setSouls(pmplayer.getSouls() + amount);
             pmplayer.save();
-            if (player != (Player) sender) {
-                ((Player) sender).sendMessage(String.format("%sYou have given %s%d%s souls to %s%s%s", ChatColor.GREEN, ChatColor.AQUA, amount, ChatColor.GREEN, ChatColor.GOLD, player.getName(), ChatColor.GREEN));
+            if (player != sender) {
+                sender.sendMessage(String.format("%sYou have given %s%d%s souls to %s%s%s", ChatColor.GREEN, ChatColor.AQUA, amount, ChatColor.GREEN, ChatColor.GOLD, player.getName(), ChatColor.GREEN));
                 player.sendMessage(String.format("%sYou have been given %s%d%s souls", ChatColor.GREEN, ChatColor.AQUA, amount, ChatColor.GREEN));
             } else {
                 player.sendMessage(String.format("%sYou have been given %s%d%s souls", ChatColor.GREEN, ChatColor.AQUA, amount, ChatColor.GREEN));

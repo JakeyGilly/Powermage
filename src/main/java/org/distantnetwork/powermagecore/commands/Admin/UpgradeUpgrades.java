@@ -39,7 +39,7 @@ public class UpgradeUpgrades implements CommandExecutor {
                     return true;
                 }
             }
-            if (player != (Player) sender) {
+            if (player != sender) {
                 if (!player.hasPermission("powermage.admin.others")) {
                     sender.sendMessage(String.format("%sYou don't have permission to give money to others", ChatColor.RED));
                     player = (Player) sender;
@@ -61,8 +61,8 @@ public class UpgradeUpgrades implements CommandExecutor {
                     break;
             }
             pmplayer.save();
-            if (player != (Player) sender) {
-                ((Player) sender).sendMessage(String.format("%s%s's %s%s upgrade has been increased by %d", ChatColor.GREEN, ChatColor.LIGHT_PURPLE, player.getName(), args[0], amount));
+            if (player != sender) {
+                sender.sendMessage(String.format("%s%s's %s%s upgrade has been increased by %d", ChatColor.GREEN, ChatColor.LIGHT_PURPLE, player.getName(), args[0], amount));
                 player.sendMessage(String.format("%sYour %s%s upgrade has been increased by %d", ChatColor.GREEN, ChatColor.LIGHT_PURPLE, args[0], amount));
             } else {
                 sender.sendMessage(String.format("%sYour %s%s upgrade has been increased by %d", ChatColor.GREEN, ChatColor.LIGHT_PURPLE, args[0], amount));

@@ -99,7 +99,7 @@ public abstract class WeaponItem extends Item {
         if (this.getRarity() != null) {
             StringBuilder s = new StringBuilder();
             for (ChatColor colour : this.getRarity().getColor()) s.append(colour);
-            itemBuilder.addLoreLine(String.format("%s%s WEAPON", s.toString(), this.getRarity().name()));
+            itemBuilder.addLoreLine(String.format("%s%s WEAPON", s, this.getRarity().name()));
         }
         if (this.getDurability() > 0) itemBuilder.setDurability((short) this.getDurability());
         if (this.isUnbreakable()) itemBuilder.setUnbreakable(true);
@@ -125,7 +125,7 @@ public abstract class WeaponItem extends Item {
         if (this.getRarity() != null) {
             StringBuilder s = new StringBuilder();
             for (ChatColor colour : this.getRarity().getColor()) s.append(colour);
-            itemBuilder.addLoreLine(String.format("%s%s WEAPON", s.toString(), this.getRarity().name()));
+            itemBuilder.addLoreLine(String.format("%s%s WEAPON", s, this.getRarity().name()));
         }
         if (this.description != null) {
             itemBuilder.addLoreLine("");

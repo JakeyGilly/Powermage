@@ -33,7 +33,7 @@ public class GiveCoins implements CommandExecutor {
                     return true;
                 }
             }
-            if (player != (Player) sender) {
+            if (player != sender) {
                 if (!player.hasPermission("powermage.admin.others")) {
                     sender.sendMessage(String.format("%sYou don't have permission to give money to others", ChatColor.RED));
                     player = (Player) sender;
@@ -42,8 +42,8 @@ public class GiveCoins implements CommandExecutor {
             PowermagePlayer pmplayer = new PowermagePlayer(player);
             pmplayer.setMoney(pmplayer.getMoney() + amount);
             pmplayer.save();
-            if (player != (Player) sender) {
-                ((Player) sender).sendMessage(String.format("%sYou have given %s%d%s coins to %s%s%s", ChatColor.GREEN, ChatColor.GOLD, amount, ChatColor.GREEN, ChatColor.GOLD, player.getName(), ChatColor.GREEN));
+            if (player != sender) {
+                sender.sendMessage(String.format("%sYou have given %s%d%s coins to %s%s%s", ChatColor.GREEN, ChatColor.GOLD, amount, ChatColor.GREEN, ChatColor.GOLD, player.getName(), ChatColor.GREEN));
                 player.sendMessage(String.format("%sYou have been given %s%d%s coins", ChatColor.GREEN, ChatColor.GOLD, amount, ChatColor.GREEN));
             } else {
                 player.sendMessage(String.format("%sYou have been given %s%d%s coins", ChatColor.GREEN, ChatColor.GOLD, amount, ChatColor.GREEN));

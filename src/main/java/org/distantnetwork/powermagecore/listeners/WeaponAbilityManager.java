@@ -12,6 +12,7 @@ import org.bukkit.event.entity.EntityPickupItemEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.inventory.EquipmentSlot;
+import org.bukkit.inventory.ItemStack;
 import org.distantnetwork.powermagecore.PowermageCore;
 import org.distantnetwork.powermagecore.utils.PowermagePlayer;
 import org.distantnetwork.powermagecore.utils.WeaponItem;
@@ -19,13 +20,15 @@ import org.distantnetwork.powermagecore.utils.WeaponItem;
 public class WeaponAbilityManager implements Listener {
     @EventHandler
     private void onChangeWeapon(PlayerItemHeldEvent event) {
-        if (WeaponItem.isWeaponItem(event.getPlayer().getInventory().getItem(event.getNewSlot()))) {
-            WeaponItem weaponItem = WeaponItem.getWeaponItem(event.getPlayer().getInventory().getItem(event.getNewSlot()));
+        ItemStack prev = event.getPlayer().getInventory().getItem(event.getPreviousSlot());
+        ItemStack next = event.getPlayer().getInventory().getItem(event.getNewSlot());
+        if (next != null && WeaponItem.isWeaponItem(next)) {
+            WeaponItem weaponItem = WeaponItem.getWeaponItem(next);
             if (weaponItem != null) {
                 weaponItem.onEquip(event.getPlayer());
             }
-        } else if (WeaponItem.isWeaponItem(event.getPlayer().getInventory().getItem(event.getPreviousSlot()))) {
-            WeaponItem weaponItem = WeaponItem.getWeaponItem(event.getPlayer().getInventory().getItem(event.getPreviousSlot()));
+        } else if (prev != null && WeaponItem.isWeaponItem(prev)) {
+            WeaponItem weaponItem = WeaponItem.getWeaponItem(prev);
             if (weaponItem != null) {
                 weaponItem.onUnequip(event.getPlayer());
             }

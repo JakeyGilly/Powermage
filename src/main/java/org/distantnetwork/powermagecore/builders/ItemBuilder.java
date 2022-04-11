@@ -14,6 +14,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
+@SuppressWarnings("UnusedReturnValue")
 public class ItemBuilder {
     private final ItemStack item;
     public ItemBuilder(Material material, int amount){
@@ -28,8 +29,10 @@ public class ItemBuilder {
 
     public ItemBuilder setName(String name){
         ItemMeta meta = item.getItemMeta();
-        meta.setDisplayName(name);
-        item.setItemMeta(meta);
+        if (meta != null) {
+            meta.setDisplayName(name);
+            item.setItemMeta(meta);
+        }
         return this;
     }
     public ItemBuilder setMaterial(Material material){
@@ -69,7 +72,7 @@ public class ItemBuilder {
                     addAll(meta.getLore());
                 }};
             } else {
-                lore = new ArrayList<String>();
+                lore = new ArrayList<>();
             }
             lore.add(line);
             meta.setLore(lore);
@@ -103,7 +106,9 @@ public class ItemBuilder {
     }
     public ItemBuilder setUnbreakable(boolean unbreakable){
         ItemMeta meta = item.getItemMeta();
-        meta.setUnbreakable(unbreakable);
+        if (meta != null) {
+            meta.setUnbreakable(unbreakable);
+        }
         return this;
     }
     public ItemBuilder setDurability(short durability){

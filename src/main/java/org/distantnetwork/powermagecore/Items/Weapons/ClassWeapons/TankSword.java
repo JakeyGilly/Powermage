@@ -10,13 +10,14 @@ import org.distantnetwork.powermagecore.utils.Enums.Rarity;
 import org.distantnetwork.powermagecore.utils.WeaponItem;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 
 public class TankSword extends WeaponItem {
     public TankSword() {
-        super(Material.IRON_SWORD, 1, "&7Tank Sword", Arrays.asList("The starter sword for the Tank Class"), Arrays.asList(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_ENCHANTS, ItemFlag.HIDE_UNBREAKABLE), new HashMap<Enchantment, Integer>() {{
+        super(Material.IRON_SWORD, 1, "&7Tank Sword", Collections.singletonList("The starter sword for the Tank Class"), Arrays.asList(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_ENCHANTS, ItemFlag.HIDE_UNBREAKABLE), new HashMap<Enchantment, Integer>() {{
             put(Enchantment.MENDING, 1);
-        }}, 0, true, Rarity.COMMON, 2, 0, Arrays.asList("A sharp pointy object"), true);
+        }}, 0, true, Rarity.COMMON, 2, 0, Collections.singletonList("A sharp pointy object"), true);
     }
 
     @Override

@@ -10,13 +10,14 @@ import org.distantnetwork.powermagecore.utils.Enums.Rarity;
 import org.distantnetwork.powermagecore.utils.WeaponItem;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 
 public class ArcherBow extends WeaponItem {
     public ArcherBow() {
-        super(Material.BOW, 1, "&7Archer Bow", Arrays.asList("The starter bow for the Archer Class"), Arrays.asList(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_ENCHANTS, ItemFlag.HIDE_UNBREAKABLE), new HashMap<Enchantment, Integer>() {{
+        super(Material.BOW, 1, "&7Archer Bow", Collections.singletonList("The starter bow for the Archer Class"), Arrays.asList(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_ENCHANTS, ItemFlag.HIDE_UNBREAKABLE), new HashMap<Enchantment, Integer>() {{
             put(Enchantment.ARROW_INFINITE, 1);
-        }}, 0, true, Rarity.COMMON, 2, 0, Arrays.asList("A bit of wood with some string"), true);
+        }}, 0, true, Rarity.COMMON, 2, 0, Collections.singletonList("A bit of wood with some string"), true);
     }
 
     @Override

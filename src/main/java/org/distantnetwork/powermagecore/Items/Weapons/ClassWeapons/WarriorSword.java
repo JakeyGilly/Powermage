@@ -10,11 +10,12 @@ import org.distantnetwork.powermagecore.utils.Enums.Rarity;
 import org.distantnetwork.powermagecore.utils.WeaponItem;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 
 public class WarriorSword extends WeaponItem {
     public WarriorSword() {
-        super(Material.STONE_SWORD, 1, "&7Warrior Sword", Arrays.asList("The starter sword for the Warrior Class"), Arrays.asList(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_ENCHANTS, ItemFlag.HIDE_UNBREAKABLE), new HashMap<Enchantment, Integer>() {{put(Enchantment.MENDING, 1);}}, 0, true, Rarity.COMMON, 2, 0, Arrays.asList("A sharp pointy object"), true);
+        super(Material.STONE_SWORD, 1, "&7Warrior Sword", Collections.singletonList("The starter sword for the Warrior Class"), Arrays.asList(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_ENCHANTS, ItemFlag.HIDE_UNBREAKABLE), new HashMap<Enchantment, Integer>() {{put(Enchantment.MENDING, 1);}}, 0, true, Rarity.COMMON, 2, 0, Collections.singletonList("A sharp pointy object"), true);
     }
 
     @Override

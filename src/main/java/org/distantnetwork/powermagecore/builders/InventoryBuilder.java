@@ -15,8 +15,8 @@ public class InventoryBuilder implements Listener {
     private final UUID uuid;
     private final Inventory inventory;
     private final Map<Integer, onInventoryClick> actionsClick;
-    public static Map<UUID, InventoryBuilder> inventoriesByUUID = new HashMap<>();
-    public static Map<UUID, UUID> openInventories = new HashMap<>();
+    public final static Map<UUID, InventoryBuilder> inventoriesByUUID = new HashMap<>();
+    public final static Map<UUID, UUID> openInventories = new HashMap<>();
     public InventoryBuilder(int size, String title) {
         uuid = UUID.randomUUID();
         inventory = Bukkit.createInventory(null, size, title);
@@ -29,9 +29,11 @@ public class InventoryBuilder implements Listener {
     public UUID getUuid() {
         return uuid;
     }
+    @SuppressWarnings("SameReturnValue")
     public static Map<UUID, InventoryBuilder> getInventoriesByUUID() {
         return inventoriesByUUID;
     }
+    @SuppressWarnings("SameReturnValue")
     public static Map<UUID, UUID> getOpenInventories() {
         return openInventories;
     }

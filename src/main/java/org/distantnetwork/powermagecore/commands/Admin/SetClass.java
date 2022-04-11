@@ -37,7 +37,7 @@ public class SetClass implements CommandExecutor {
                     return true;
                 }
             }
-            if (player != (Player) sender) {
+            if (player != sender) {
                 if (!player.hasPermission("powermage.admin.others")) {
                     sender.sendMessage(String.format("%sYou don't have permission to give money to others", ChatColor.RED));
                     player = (Player) sender;
@@ -46,8 +46,8 @@ public class SetClass implements CommandExecutor {
             PowermagePlayer pmplayer = new PowermagePlayer(player);
             pmplayer.setClassType(clazz);
             pmplayer.save();
-            if (player != (Player) sender) {
-                ((Player) sender).sendMessage(String.format("%s %s's class has been set to %s%s", ChatColor.GREEN, player.getDisplayName(), ChatColor.RED, clazz.getName()));
+            if (player != sender) {
+                sender.sendMessage(String.format("%s %s's class has been set to %s%s", ChatColor.GREEN, player.getDisplayName(), ChatColor.RED, clazz.getName()));
                 player.sendMessage(String.format("%sYour class has been set to %s%s", ChatColor.GREEN, ChatColor.RED, clazz.getName()));
             } else {
                 sender.sendMessage(String.format("%sYour class has been set to %s%s", ChatColor.GREEN, ChatColor.RED, clazz.getName()));
