@@ -15,8 +15,6 @@ import org.distantnetwork.powermagecore.utils.PowermagePlayer;
 import static org.distantnetwork.powermagecore.utils.Config.ConfigurationManager.getDefaultConfig;
 
 public class UpgradeGUI extends InventoryBuilder {
-    //TODO: implement money & soul spending
-    //TODO: implement % or amount increase in config per upgrade
     public UpgradeGUI(Player p) {
         super(54, String.format("%sUpgrade Stats", ChatColor.RED));
         for (int i = 0; i < getInventory().getSize(); i++)
@@ -121,7 +119,6 @@ public class UpgradeGUI extends InventoryBuilder {
         } else {
             setItem(25, new ItemBuilder(Material.SUGAR).setName(String.format("%sSpeed", ChatColor.WHITE)).addItemFlags(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_ENCHANTS).setEnchantment(Enchantment.DURABILITY, 1)
                     .setLore(String.format("%sLevel %d", ChatColor.DARK_GREEN, pmPlayer.getSpeedUpgrade()), String.format("%sSouls for next upgrade: %s", ChatColor.GOLD, getDefaultConfig().getIntegerList("upgrades.speed.cost").get(pmPlayer.getSpeedUpgrade()))).toItem(), player -> {
-                // do if they dont exist error message
                 if (!(getDefaultConfig().get("upgrades.speed.cost") != null && getDefaultConfig().getIntegerList("upgrades.speed.cost").size() == getDefaultConfig().getInt("upgrades.speed.maxLevel"))) {
                     p.sendMessage("The config is not set up correctly!");
                     PowermageCore.getInstance().getLogger().warning("The Speed upgrade costs length are not equal to the max level!");

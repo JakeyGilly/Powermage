@@ -5,10 +5,8 @@ import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -37,7 +35,7 @@ public abstract class WeaponItem extends Item {
         this.description = description;
         this.storeItem = storeItem;
         weapons.add(this);
-        getInstance().getLogger().info("Registered weapon: " + name);
+        getInstance().getLogger().info(String.format("Registered weapon: %s", name));
     }
 
     public int getDamage() {
@@ -101,7 +99,7 @@ public abstract class WeaponItem extends Item {
         if (this.getRarity() != null) {
             StringBuilder s = new StringBuilder();
             for (ChatColor colour : this.getRarity().getColor()) s.append(colour);
-            itemBuilder.addLoreLine(s.toString() + this.getRarity().name() + " WEAPON");
+            itemBuilder.addLoreLine(String.format("%s%s WEAPON", s.toString(), this.getRarity().name()));
         }
         if (this.getDurability() > 0) itemBuilder.setDurability((short) this.getDurability());
         if (this.isUnbreakable()) itemBuilder.setUnbreakable(true);
@@ -127,7 +125,7 @@ public abstract class WeaponItem extends Item {
         if (this.getRarity() != null) {
             StringBuilder s = new StringBuilder();
             for (ChatColor colour : this.getRarity().getColor()) s.append(colour);
-            itemBuilder.addLoreLine(s.toString() + this.getRarity().name() + " WEAPON");
+            itemBuilder.addLoreLine(String.format("%s%s WEAPON", s.toString(), this.getRarity().name()));
         }
         if (this.description != null) {
             itemBuilder.addLoreLine("");

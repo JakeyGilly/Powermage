@@ -1,18 +1,13 @@
 package org.distantnetwork.powermagecore.listeners;
 
-import org.bukkit.ChatColor;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.potion.PotionEffectType;
-import org.bukkit.scheduler.BukkitRunnable;
 import org.distantnetwork.powermagecore.utils.Config.ConfigurationManager;
 import org.distantnetwork.powermagecore.utils.PowermagePlayer;
 import org.distantnetwork.powermagecore.utils.WeaponItem;
 import org.jetbrains.annotations.NotNull;
-
-import static org.distantnetwork.powermagecore.PowermageCore.getInstance;
 
 public class OnDamage implements Listener {
     @EventHandler

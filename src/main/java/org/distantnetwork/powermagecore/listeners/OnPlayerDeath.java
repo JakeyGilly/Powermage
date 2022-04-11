@@ -46,23 +46,23 @@ public class OnPlayerDeath implements Listener {
         }
         if (victim.getMoney() - money >= 0) {
             victim.setMoney(victim.getMoney() - money);
-            victim.getPlayer().sendMessage(ChatColor.RED + "You dropped " + money + " coins!");
+            victim.getPlayer().sendMessage(String.format("%sYou dropped %d coins!", ChatColor.RED, money));
         }
         killer.setMoney(killer.getMoney() + money);
-        killer.getPlayer().sendMessage(ChatColor.GREEN + "You gained " + money + " coins!");
+        killer.getPlayer().sendMessage(String.format("%sYou gained %d coins!", ChatColor.GREEN, money));
         if (killer.getClassType() != null) {
             killer.setClassesExp(killer.getClassType(), (int) (killer.getClassExp(killer.getClassType()) + ConfigurationManager.getDefaultConfig().getDouble("expPerKill")));
             killer = killer.save();
             if (killer.getClassExp(killer.getClassType()) >= ConfigurationManager.getDefaultConfig().getDoubleList("levelUpExp").get(killer.getClassLvl(killer.getClassType()))) {
                 killer.setClassesLvl(killer.getClassType(), killer.getClassLvl(killer.getClassType()) + 1);
                 killer.setClassesExp(killer.getClassType(), 0);
-                killer.getPlayer().sendTitle(ChatColor.RED + "Level up!", ChatColor.GOLD + "" + (killer.getClassLvl(killer.getClassType())-1) + " -> " + (killer.getClassLvl(killer.getClassType())), 10, 20, 10);
-                killer.getPlayer().sendMessage(ChatColor.GREEN + "You have leveled up to " + killer.getClassLvl(killer.getClassType()) + "!");
+                killer.getPlayer().sendTitle(String.format("%sLevel up!", ChatColor.RED), String.format("%s%d -> %d", ChatColor.GOLD, killer.getClassLvl(killer.getClassType()) - 1, killer.getClassLvl(killer.getClassType())), 10, 20, 10);
+                killer.getPlayer().sendMessage(String.format("%sYou have leveled up to %d!", ChatColor.GREEN, killer.getClassLvl(killer.getClassType())));
             }
         }
         victim = victim.save();
         killer = killer.save();
-        victim.getPlayer().sendMessage(ChatColor.RED + "You have died to " + e.getEntity().getKiller().getName() + "!");
+        victim.getPlayer().sendMessage(String.format("%sYou have died to %s!", ChatColor.RED, e.getEntity().getKiller().getName()));
         killer.getPlayer().sendMessage(String.format("%sYou have killed %s%s%s!", ChatColor.GREEN, ChatColor.RED, e.getEntity().getName(), ChatColor.GREEN));
         int respawnTime;
         if (victim.getPlayer().hasPermission("powermage.respawn.legend")) respawnTime = 0;
@@ -82,8 +82,8 @@ public class OnPlayerDeath implements Listener {
                         p.getPlayer().teleport(p.getPlayer().getWorld().getSpawnLocation());
                         this.cancel();
                     } else {
-                        p.getPlayer().sendTitle(ChatColor.RED + "You are dead!", ChatColor.GOLD + "You will respawn in " + time + " seconds", 10, 20, 10);
-                        p.getPlayer().sendMessage(ChatColor.GREEN + "You will respawn in " + time + " seconds");
+                        p.getPlayer().sendTitle(String.format("%sYou are dead!", ChatColor.RED), String.format("%sYou will respawn in %d seconds", ChatColor.GOLD, time), 10, 20, 10);
+                        p.getPlayer().sendMessage(String.format("%sYou will respawn in %d seconds", ChatColor.GREEN, time));
                         time--;
                     }
                 }

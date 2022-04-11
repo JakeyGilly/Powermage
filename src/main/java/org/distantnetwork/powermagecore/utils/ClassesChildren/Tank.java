@@ -6,7 +6,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-import org.distantnetwork.powermagecore.Items.Weapons.ClassWeapons.TankSword;
 import org.distantnetwork.powermagecore.PowermageCore;
 import org.distantnetwork.powermagecore.utils.Classes;
 import org.distantnetwork.powermagecore.utils.PowermagePlayer;

@@ -28,3 +28,43 @@ commands:
   upgrade:
     usage: /upgrade
     description: Opens the Upgrade Menu
+  givecoins:
+    usage: /givecoins <amount> <player>
+    description: Gives a player coins
+    permission: powermage.admin
+    aliases:
+      - addcoins
+      - addmoney
+      - givemoney
+      - addcoin
+      - givecoin
+  givesouls:
+    usage: /givesouls <amount> <player>
+    description: Gives a player souls
+    permission: powermage.admin
+    aliases:
+      - addsouls
+      - addsoul
+      - givesoul
+  giveweapon:
+    usage: /giveweapon <weapon> <amount> <player>
+    description: Gives a player a weapon
+    permission: powermage.admin
+  setclass:
+    usage: /setclass <class> <player>
+    description: Sets a players class
+    permission: powermage.admin
+  setupgrades:
+    usage: /setupgrades <upgrade> <level> <player>
+    description: Sets up a players upgrades
+    permission: powermage.admin
+    aliases:
+      - setupgrade
+  upgradeupgrades:
+    usage: /upgradeupgrades <upgrade> <amount> <player>
+    description: Upgrades a players upgrades
+    permission: powermage.admin
+    aliases:
+      - upgradeupgrade
+      - addupgrade
+      - addupgrades

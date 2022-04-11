@@ -22,9 +22,8 @@ public class OnPlayerJoin implements Listener {
             e.getPlayer().sendTitle(String.format("%s%sPowerMage", ChatColor.RED, ChatColor.BOLD), String.format("%sDo /start to get started!", ChatColor.GRAY), 10, 70, 20);
             player.setMoney(1000);
             e.getPlayer().performCommand("class");
-            e.getPlayer().getInventory().setItem(8, new ItemBuilder(Material.END_CRYSTAL).setName(ChatColor.LIGHT_PURPLE + "Menu " + ChatColor.GRAY + "(Right/Sneak Left Click)")
-                    .setLore(ChatColor.GRAY + "Click to open the menu!", "", ChatColor.GRAY + "Click while sneaking to", ChatColor.GRAY + "use your selected class ability!", "", ChatColor.RED + "" + ChatColor.BOLD + "CORE ITEM").build());
-            // todo make this not moveable
+            e.getPlayer().getInventory().setItem(8, new ItemBuilder(Material.END_CRYSTAL).setName(String.format("%sMenu %s(Right/Sneak Left Click)", ChatColor.LIGHT_PURPLE, ChatColor.GRAY))
+                    .setLore(String.format("%sClick to open the menu!", ChatColor.GRAY), "", String.format("%sClick while sneaking to", ChatColor.GRAY), String.format("%suse your selected class ability!", ChatColor.GRAY), "", String.format("%s%sCORE ITEM", ChatColor.RED, ChatColor.BOLD)).build());
         }
     }
 }

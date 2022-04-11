@@ -1,4 +1,5 @@
 package org.distantnetwork.powermagecore.utils;
+
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
@@ -52,56 +53,56 @@ public class PowermagePlayer {
         FileConfiguration config = getConfig(file);
         if (config == null) return;
         if (!config.contains(player.getUniqueId().toString())) return;
-        if (config.contains(player.getUniqueId() + ".class"))
+        if (config.contains(String.format("%s.class", player.getUniqueId())))
             Classes.getClasses().forEach(aClass -> {
-                if (aClass.getName().equalsIgnoreCase(config.getString(player.getUniqueId() + ".class"))) {
+                if (aClass.getName().equalsIgnoreCase(config.getString(String.format("%s.class", player.getUniqueId())))) {
                     this.classesType = aClass;
                 }
             });
-        if (config.contains(player.getUniqueId() + ".warriorLevel"))
-            this.warriorLevel = config.getInt(player.getUniqueId() + ".warriorLevel");
-        if (config.contains(player.getUniqueId() + ".archerLevel"))
-            this.archerLevel = config.getInt(player.getUniqueId() + ".archerLevel");
-        if (config.contains(player.getUniqueId() + ".wizardLevel"))
-            this.wizardLevel = config.getInt(player.getUniqueId() + ".wizardLevel");
-        if (config.contains(player.getUniqueId() + ".tankLevel"))
-            this.tankLevel = config.getInt(player.getUniqueId() + ".tankLevel");
-        if (config.contains(player.getUniqueId() + ".warriorExp"))
-            this.warriorExp = config.getInt(player.getUniqueId() + ".warriorExp");
-        if (config.contains(player.getUniqueId() + ".archerExp"))
-            this.archerExp = config.getInt(player.getUniqueId() + ".archerExp");
-        if (config.contains(player.getUniqueId() + ".wizardExp"))
-            this.wizardExp = config.getInt(player.getUniqueId() + ".wizardExp");
-        if (config.contains(player.getUniqueId() + ".tankExp"))
-            this.tankExp = config.getInt(player.getUniqueId() + ".tankExp");
-        if (config.contains(player.getUniqueId() + ".strengthUpgrade"))
-            this.strengthUpgrade = config.getInt(player.getUniqueId() + ".strengthUpgrade");
-        if (config.contains(player.getUniqueId() + ".speedUpgrade"))
-            this.speedUpgrade = config.getInt(player.getUniqueId() + ".speedUpgrade");
-        if (config.contains(player.getUniqueId() + ".manaUpgrade"))
-            this.manaUpgrade = config.getInt(player.getUniqueId() + ".manaUpgrade");
-        if (config.contains(player.getUniqueId() + ".healthUpgrade"))
-            this.healthUpgrade = config.getInt(player.getUniqueId() + ".healthUpgrade");
-        if (config.contains(player.getUniqueId() + ".money"))
-            this.money = config.getInt(player.getUniqueId() + ".money");
-        if (config.contains(player.getUniqueId() + ".souls"))
-            this.souls = config.getInt(player.getUniqueId() + ".souls");
-        if (config.contains(player.getUniqueId() + ".kills"))
-            this.kills = config.getInt(player.getUniqueId() + ".kills");
-        if (config.contains(player.getUniqueId() + ".deaths"))
-            this.deaths = config.getInt(player.getUniqueId() + ".deaths");
-        if (config.contains(player.getUniqueId() + ".assists"))
-            this.assists = config.getInt(player.getUniqueId() + ".assists");
-        if (config.contains(player.getUniqueId() + ".mana"))
-            this.mana = config.getInt(player.getUniqueId() + ".mana");
-        if (config.contains(player.getUniqueId() + ".cooldown"))
-            this.abilitycooldown = config.getInt(player.getUniqueId() + ".cooldown");
-        if (config.contains(player.getUniqueId() + ".infinitemana"))
-            this.infinitemana = config.getBoolean(player.getUniqueId() + ".infinitemana");
-        if (config.contains(player.getUniqueId() + ".combatlog"))
-            this.combatlog = config.getBoolean(player.getUniqueId() + ".combatlog");
-        if (config.contains(player.getUniqueId() + ".killstreak"))
-            this.killstreak = config.getInt(player.getUniqueId() + ".killstreak");
+        if (config.contains(String.format("%s.warriorLevel", player.getUniqueId())))
+            this.warriorLevel = config.getInt(String.format("%s.warriorLevel", player.getUniqueId()));
+        if (config.contains(String.format("%s.archerLevel", player.getUniqueId())))
+            this.archerLevel = config.getInt(String.format("%s.archerLevel", player.getUniqueId()));
+        if (config.contains(String.format("%s.wizardLevel", player.getUniqueId())))
+            this.wizardLevel = config.getInt(String.format("%s.wizardLevel", player.getUniqueId()));
+        if (config.contains(String.format("%s.tankLevel", player.getUniqueId())))
+            this.tankLevel = config.getInt(String.format("%s.tankLevel", player.getUniqueId()));
+        if (config.contains(String.format("%s.warriorExp", player.getUniqueId())))
+            this.warriorExp = config.getInt(String.format("%s.warriorExp", player.getUniqueId()));
+        if (config.contains(String.format("%s.archerExp", player.getUniqueId())))
+            this.archerExp = config.getInt(String.format("%s.archerExp", player.getUniqueId()));
+        if (config.contains(String.format("%s.wizardExp", player.getUniqueId())))
+            this.wizardExp = config.getInt(String.format("%s.wizardExp", player.getUniqueId()));
+        if (config.contains(String.format("%s.tankExp", player.getUniqueId())))
+            this.tankExp = config.getInt(String.format("%s.tankExp", player.getUniqueId()));
+        if (config.contains(String.format("%s.strengthUpgrade", player.getUniqueId())))
+            this.strengthUpgrade = config.getInt(String.format("%s.strengthUpgrade", player.getUniqueId()));
+        if (config.contains(String.format("%s.speedUpgrade", player.getUniqueId())))
+            this.speedUpgrade = config.getInt(String.format("%s.speedUpgrade", player.getUniqueId()));
+        if (config.contains(String.format("%s.manaUpgrade", player.getUniqueId())))
+            this.manaUpgrade = config.getInt(String.format("%s.manaUpgrade", player.getUniqueId()));
+        if (config.contains(String.format("%s.healthUpgrade", player.getUniqueId())))
+            this.healthUpgrade = config.getInt(String.format("%s.healthUpgrade", player.getUniqueId()));
+        if (config.contains(String.format("%s.money", player.getUniqueId())))
+            this.money = config.getInt(String.format("%s.money", player.getUniqueId()));
+        if (config.contains(String.format("%s.souls", player.getUniqueId())))
+            this.souls = config.getInt(String.format("%s.souls", player.getUniqueId()));
+        if (config.contains(String.format("%s.kills", player.getUniqueId())))
+            this.kills = config.getInt(String.format("%s.kills", player.getUniqueId()));
+        if (config.contains(String.format("%s.deaths", player.getUniqueId())))
+            this.deaths = config.getInt(String.format("%s.deaths", player.getUniqueId()));
+        if (config.contains(String.format("%s.assists", player.getUniqueId())))
+            this.assists = config.getInt(String.format("%s.assists", player.getUniqueId()));
+        if (config.contains(String.format("%s.mana", player.getUniqueId())))
+            this.mana = config.getInt(String.format("%s.mana", player.getUniqueId()));
+        if (config.contains(String.format("%s.cooldown", player.getUniqueId())))
+            this.abilitycooldown = config.getInt(String.format("%s.cooldown", player.getUniqueId()));
+        if (config.contains(String.format("%s.infinitemana", player.getUniqueId())))
+            this.infinitemana = config.getBoolean(String.format("%s.infinitemana", player.getUniqueId()));
+        if (config.contains(String.format("%s.combatlog", player.getUniqueId())))
+            this.combatlog = config.getBoolean(String.format("%s.combatlog", player.getUniqueId()));
+        if (config.contains(String.format("%s.killstreak", player.getUniqueId())))
+            this.killstreak = config.getInt(String.format("%s.killstreak", player.getUniqueId()));
     }
     public PowermagePlayer(UUID uuid) {
         this.player = getInstance().getServer().getPlayer(uuid);

@@ -63,177 +63,171 @@ public class ConfigurationManager {
     }
 
     public static @Nullable File getFileFolder(@NotNull String folderPath) {
-        File folder = new File(getInstance().getDataFolder(), folderPath); // get the folder
-        if (!folder.exists()) folder.mkdirs(); // if the folder doesn't exist, make it
-        if (!folder.isDirectory()) return null; // if it's not a folder, return null
-        return folder; // if it's a folder, return it
+        File folder = new File(getInstance().getDataFolder(), folderPath);
+        if (!folder.exists()) folder.mkdirs();
+        if (!folder.isDirectory()) return null;
+        return folder;
     }
 
     public static @Nullable File getFileFile(@NotNull String filePath) {
-        File file = new File(getInstance().getDataFolder(), filePath); // get the file
-        if (!file.getParentFile().exists()) file.mkdirs(); // if the parent folder doesn't exist, make it
-        if (!file.exists()) { // if the file doesn't exist, make it
+        File file = new File(getInstance().getDataFolder(), filePath);
+        if (!file.getParentFile().exists()) file.mkdirs();
+        if (!file.exists()) {
             try {
                 file.createNewFile();
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
-        if (!file.isFile()) return null; // if it's not a file, return null
-        return file; // if it's a file, return it
+        if (!file.isFile()) return null;
+        return file;
     }
 
     public static @NotNull File getFile(@NotNull String filePath) {
-        File file = new File(getInstance().getDataFolder(), filePath); // get the file
-        if (!file.getParentFile().exists()) file.mkdirs(); // if the parent folder doesn't exist, make it
-        if (!file.exists()) { // if the file doesn't exist, make it
+        File file = new File(getInstance().getDataFolder(), filePath);
+        if (!file.getParentFile().exists()) file.mkdirs();
+        if (!file.exists()) {
             try {
                 file.createNewFile();
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
-        return file; // return it
+        return file;
     }
 
     public static @Nullable File getFileFolder(@NotNull File file) {
-        if (!file.exists()) file.mkdirs(); // if the file doesn't exist, make it
-        if (!file.isDirectory()) return null; // if it's not a folder, return null
-        return file; // if it's a folder, return it
+        if (!file.exists()) file.mkdirs();
+        if (!file.isDirectory()) return null;
+        return file;
     }
 
     public static @Nullable File getFileFile(@NotNull File file) {
-        if (!file.getParentFile().exists()) file.mkdirs(); // if the parent folder doesn't exist, make it
-        if (!file.exists()) { // if the file doesn't exist, make it
+        if (!file.getParentFile().exists()) file.mkdirs();
+        if (!file.exists()) {
             try {
                 file.createNewFile();
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
-        if (!file.isFile()) return null; // if it's not a file, return null
-        return file; // if it's a file, return it
+        if (!file.isFile()) return null;
+        return file;
     }
 
     public static @NotNull File getFile(@NotNull File file) {
-        if (!file.getParentFile().exists()) file.mkdirs(); // if the parent folder doesn't exist, make it
-        if (!file.exists()) { // if the file doesn't exist, make it
+        if (!file.getParentFile().exists()) file.mkdirs();
+        if (!file.exists()) {
             try {
                 file.createNewFile();
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
-        return file; // return it
+        return file;
     }
 
 
     public static @Nullable FileConfiguration getConfig(@NotNull String filePath) {
-        File file = getFileFile(filePath); // get the file
-        if (file == null) return null; // if the file isn't a file, return null
-        return YamlConfiguration.loadConfiguration(file); // if it does exist, return it
+        File file = getFileFile(filePath);
+        if (file == null) return null;
+        return YamlConfiguration.loadConfiguration(file);
     }
 
     public static @Nullable FileConfiguration getConfig(@NotNull File file) {
-        file = getFileFile(file); // get the file
-        if (file == null) return null; // if the file isn't a file, return null
-        return YamlConfiguration.loadConfiguration(file); // return it
+        file = getFileFile(file);
+        if (file == null) return null;
+        return YamlConfiguration.loadConfiguration(file);
     }
 
     public static void saveConfig(@NotNull String filePath, @NotNull FileConfiguration config) {
-        File file = getFileFile(filePath); // get the file
-        if (file == null) return; // if the file isn't a file, return
+        File file = getFileFile(filePath);
+        if (file == null) return;
         try {
-            config.save(file); // save the config
+            config.save(file);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     public static void saveConfig(@NotNull File file, @NotNull FileConfiguration config) {
-        file = getFileFile(file); // get the file
-        if (file == null) return; // if the file isn't a file, return
+        file = getFileFile(file);
+        if (file == null) return;
         try {
-            config.save(file); // save the config
+            config.save(file);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     public static Integer getFilesAmountInFolder(@NotNull String folderPath) {
-        File folder = getFileFolder(folderPath); // get the folder
-        if (folder == null) return 0; // if the folder isn't a folder, return 0
-        File[] files = folder.listFiles(); // get the files in the folder
-        return files == null ? 0 : files.length; // if the files aren't null, return the amount of files
+        File folder = getFileFolder(folderPath);
+        if (folder == null) return 0;
+        File[] files = folder.listFiles();
+        return files == null ? 0 : files.length;
     }
 
     public static Integer getFilesAmountInFolder(@NotNull File folder) {
-        folder = getFileFolder(folder); // get the folder
-        if (folder == null) return 0; // if the folder isn't a folder, return 0
-        File[] files = folder.listFiles(); // get the files in the folder
-        return files == null ? 0 : files.length; // if the files aren't null, return the amount of files
+        folder = getFileFolder(folder);
+        if (folder == null) return 0;
+        File[] files = folder.listFiles();
+        return files == null ? 0 : files.length;
     }
 
     public static void deleteFile(@NotNull String filePath) {
-        File file = getFileFile(filePath); // get the file
-        if (file == null) return; // if the file isn't a file, return
-        file.delete(); // delete the file
+        File file = getFileFile(filePath);
+        if (file == null) return;
+        file.delete();
     }
 
     public static void deleteFile(@NotNull File file) {
-        file = getFileFile(file); // get the file
-        if (file == null) return; // if the file isn't a file, return
-        file.delete(); // delete the file
+        file = getFileFile(file);
+        if (file == null) return;
+        file.delete();
     }
 
     public static void deleteFolder(@NotNull String folderPath) {
-        File folder = getFileFolder(folderPath); // get the folder
-        if (folder == null) return; // if the folder isn't a folder, return
-        folder.delete(); // delete the folder
+        File folder = getFileFolder(folderPath);
+        if (folder == null) return;
+        folder.delete();
     }
 
     public static void deleteFolder(@NotNull File folder) {
-        folder = getFileFolder(folder); // get the folder
-        if (folder == null) return; // if the folder isn't a folder, return
-        folder.delete(); // delete the folder
+        folder = getFileFolder(folder);
+        if (folder == null) return;
+        folder.delete();
     }
 
     public static boolean folderExists(@NotNull String folderPath) {
-        File folder = getFileFolder(folderPath); // get the folder
-        if (folder == null) return false; // if the folder isn't a folder, return false
-        return folder.exists(); // return if the folder exists
+        File folder = getFileFolder(folderPath);
+        if (folder == null) return false;
+        return folder.exists();
     }
 
     public static boolean folderExists(@NotNull File folder) {
-        folder = getFileFolder(folder); // get the folder
-        if (folder == null) return false; // if the folder isn't a folder, return false
-        return folder.exists(); // return if the folder exists
+        folder = getFileFolder(folder);
+        if (folder == null) return false;
+        return folder.exists();
     }
 
     public static boolean fileExists(@NotNull String filePath) {
-        File file = getFileFile(filePath); // get the file
-        if (file == null) return false; // if the file isn't a file, return false
-        return file.exists(); // return if the file exists
+        File file = getFileFile(filePath);
+        if (file == null) return false;
+        return file.exists();
     }
 
     public static boolean fileExists(@NotNull File file) {
-        file = getFileFile(file); // get the file
-        if (file == null) return false; // if the file isn't a file, return false
-        return file.exists(); // return if the file exists
+        file = getFileFile(file);
+        if (file == null) return false;
+        return file.exists();
     }
-
-
-
     //? DEFAULT CONFIGURATION
-
     public static FileConfiguration getDefaultConfig() {
         return getInstance().getConfig();
     }
-
     public static void saveDefaultConfig() {
         getInstance().saveConfig();
     }
-
     public static File getDefaultFolder() {
         return getInstance().getDataFolder();
     }

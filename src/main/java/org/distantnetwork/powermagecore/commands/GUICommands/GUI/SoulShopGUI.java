@@ -15,21 +15,21 @@ public class SoulShopGUI extends InventoryBuilder {
         super((WeaponItem.getWeapons().size() % 9 == 0 ? WeaponItem.getWeapons().size() : WeaponItem.getWeapons().size() + (9 - (WeaponItem.getWeapons().size() % 9)))+9, String.format("%sPowermage Soul Shop", ChatColor.AQUA));
         for (int i = 0; i < getInventory().getSize(); i++) setItem(i, new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setName(" ").addItemFlags(ItemFlag.HIDE_ATTRIBUTES).toItem());
         int i = 0;
-        if (WeaponItem.getWeapons().size() < 1) setItem(i, new ItemBuilder(Material.BARRIER).setName(ChatColor.RED + "No weapons found!").toItem());
+        if (WeaponItem.getWeapons().size() < 1) setItem(i, new ItemBuilder(Material.BARRIER).setName(String.format("%sNo weapons found!", ChatColor.RED)).toItem());
         for (WeaponItem weaponItem : WeaponItem.getWeapons()) {
             setItem(i, weaponItem.getItem(), player -> {
                 PowermagePlayer pmplayer = new PowermagePlayer(player);
                 if (weaponItem.getPrice() > pmplayer.getSouls()) {
-                    player.sendMessage(ChatColor.RED + "You don't have enough souls!");
+                    player.sendMessage(String.format("%sYou don't have enough souls!", ChatColor.RED));
                     return;
                 }
                 if (player.getInventory().firstEmpty() == -1) {
-                    player.sendMessage(ChatColor.RED + "Your inventory is full!");
+                    player.sendMessage(String.format("%sYour inventory is full!", ChatColor.RED));
                     return;
                 }
                 weaponItem.give(player);
                 pmplayer.setSouls(pmplayer.getSouls() - weaponItem.getPrice());
-                player.sendMessage(ChatColor.GREEN + "You bought " + weaponItem.getName() + " for " + weaponItem.getPrice() + " souls!");
+                player.sendMessage(String.format("%sYou bought %s for %d souls!", ChatColor.GREEN, weaponItem.getName(), weaponItem.getPrice()));
                 pmplayer.save();
             });
             i++;

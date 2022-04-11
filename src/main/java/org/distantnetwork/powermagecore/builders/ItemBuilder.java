@@ -1,5 +1,6 @@
 package org.distantnetwork.powermagecore.builders;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
@@ -11,6 +12,7 @@ import org.bukkit.inventory.meta.SkullMeta;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 public class ItemBuilder {
     private final ItemStack item;
@@ -137,12 +139,11 @@ public class ItemBuilder {
         }
         return this;
     }
-    @Deprecated
-    public ItemBuilder setSkullOwner(String owner){
+    public ItemBuilder setSkullOwner(UUID owner){
         try {
             SkullMeta meta = (SkullMeta) item.getItemMeta();
             if (meta != null) {
-                meta.setOwner(owner);
+                meta.setOwningPlayer(Bukkit.getOfflinePlayer(owner));
                 item.setItemMeta(meta);
             }
         } catch(ClassCastException e) {

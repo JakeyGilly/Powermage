@@ -7,14 +7,9 @@ import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
-import org.distantnetwork.powermagecore.Items.Weapons.ClassWeapons.ArcherBow;
-import org.distantnetwork.powermagecore.Items.Weapons.ClassWeapons.TankSword;
-import org.distantnetwork.powermagecore.Items.Weapons.ClassWeapons.WarriorSword;
-import org.distantnetwork.powermagecore.Items.Weapons.ClassWeapons.WizardSword;
 import org.distantnetwork.powermagecore.builders.InventoryBuilder;
 import org.distantnetwork.powermagecore.builders.ItemBuilder;
 import org.distantnetwork.powermagecore.utils.Classes;
-import org.distantnetwork.powermagecore.utils.ClassesChildren.Warrior;
 import org.distantnetwork.powermagecore.utils.PowermagePlayer;
 
 import static org.distantnetwork.powermagecore.utils.Config.ConfigurationManager.getDefaultConfig;
@@ -45,12 +40,10 @@ public class ClassGUI extends InventoryBuilder {
                         ChatColor.RED));
                 try {
                     player.setHealthScale(c.getBaseHealth() + pmPlayer.getHealthUpgrade() * getDefaultConfig().getDouble("upgrades.health.healthPerLevel"));
-                } catch (Exception ignored) {
-                }
+                } catch (Exception ignored) {}
                 try {
                     player.setHealth(c.getBaseHealth() + pmPlayer.getHealthUpgrade() * getDefaultConfig().getDouble("upgrades.health.healthPerLevel"));
-                } catch (Exception ignored) {
-                }
+                } catch (Exception ignored) {}
                 player.setWalkSpeed((float) (c.getBaseSpeed() + pmPlayer.getSpeedUpgrade() * getDefaultConfig().getDouble("upgrades.speed.speedPerLevel")));
                 pmPlayer.setClassType(c);
                 pmPlayer = pmPlayer.save();

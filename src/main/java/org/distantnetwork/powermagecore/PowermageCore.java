@@ -15,7 +15,7 @@ import org.distantnetwork.powermagecore.Items.Weapons.ClassWeapons.WarriorSword;
 import org.distantnetwork.powermagecore.Items.Weapons.ClassWeapons.WizardSword;
 import org.distantnetwork.powermagecore.Items.Weapons.ExampleWeapon;
 import org.distantnetwork.powermagecore.builders.InventoryBuilderListeners;
-import org.distantnetwork.powermagecore.commands.*;
+import org.distantnetwork.powermagecore.commands.Admin.*;
 import org.distantnetwork.powermagecore.commands.GUICommands.ClassCommand;
 import org.distantnetwork.powermagecore.commands.GUICommands.MenuCommand;
 import org.distantnetwork.powermagecore.commands.GUICommands.SoulShopCommand;
@@ -35,8 +35,6 @@ public final class PowermageCore extends JavaPlugin implements Listener {
     public static WarriorSword warriorSword;
     public static WizardSword wizardSword;
 
-    // TODO UPGRADING TOOLS AND WEAPONS
-    // TODO CUSTOM ENCHANTMENTS
     @Override
     public void onEnable() {
         instance = this;
@@ -60,13 +58,13 @@ public final class PowermageCore extends JavaPlugin implements Listener {
                     PowermagePlayer pmPlayer = new PowermagePlayer(player);
                     if (pmPlayer.getClassType() != null) {
                         double maxMana = pmPlayer.getClassType() == null ? 0 : pmPlayer.getClassType().getBaseMana();
-                        String mana = ChatColor.AQUA + "Mana: " + pmPlayer.getMana() + "/" + Math.round(maxMana + pmPlayer.getManaUpgrade() * defaultConfig.getInt("upgrades.mana.manaPerLevel"));
-                        String health = ChatColor.RED + "Health: " + Math.round(player.getHealth() / 20 * player.getHealthScale()) + "/" + Math.round(player.getHealthScale());
-                        String speed = ChatColor.WHITE + "Speed: " + Math.round(player.getWalkSpeed() * 500);
-                        player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(mana + "    " + health + "    " + speed));
+                        String mana = String.format("%sMana: %d/%d", ChatColor.AQUA, pmPlayer.getMana(), Math.round(maxMana + pmPlayer.getManaUpgrade() * defaultConfig.getInt("upgrades.mana.manaPerLevel")));
+                        String health = String.format("%sHealth: %d/%d", ChatColor.RED, Math.round(player.getHealth() / 20 * player.getHealthScale()), Math.round(player.getHealthScale()));
+                        String speed = String.format("%sSpeed: %d", ChatColor.WHITE, Math.round(player.getWalkSpeed() * 500));
+                        player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(String.format("%s    %s    %s", mana, health, speed)));
                         return;
                     }
-                    player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatColor.RED + "Please select a class to continue."));
+                    player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(String.format("%sPlease select a class to continue.", ChatColor.RED)));
                 }
             }
         }.runTaskTimer(this, 0, 0);
@@ -93,10 +91,22 @@ public final class PowermageCore extends JavaPlugin implements Listener {
     }
 
     private void setCommands() {
+        // gui commands
         getCommand("menu").setExecutor(new MenuCommand());
         getCommand("class").setExecutor(new ClassCommand());
         getCommand("soulshop").setExecutor(new SoulShopCommand());
         getCommand("upgrade").setExecutor(new UpgradeCommand());
+        // admin commands
+        getCommand("setclass").setExecutor(new SetClass());
+        getCommand("setclass").setTabCompleter(new SetClassCompleter());
+        getCommand("givecoins").setExecutor(new GiveCoins());
+        getCommand("givesouls").setExecutor(new GiveSouls());
+        getCommand("giveweapon").setExecutor(new GiveWeapon());
+        getCommand("giveweapon").setTabCompleter(new GiveWeaponCompleter());
+        getCommand("setupgrades").setExecutor(new SetUpgrades());
+        getCommand("setupgrades").setTabCompleter(new SetUpgradesCompleter());
+        getCommand("upgradeupgrades").setExecutor(new UpgradeUpgrades());
+        getCommand("upgradeupgrades").setTabCompleter(new UpgradeUpgradesCompleter());
     }
 
     private void setListeners() {
