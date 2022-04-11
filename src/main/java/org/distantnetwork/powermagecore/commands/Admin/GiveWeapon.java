@@ -50,6 +50,12 @@ public class GiveWeapon implements CommandExecutor {
                 }
             }
             weaponItem.give(player);
+            if (player != (Player) sender) {
+                ((Player) sender).sendMessage(String.format("%sGiven %s%s%s to %s", ChatColor.GREEN, ChatColor.LIGHT_PURPLE, weaponItem.getName(), ChatColor.GREEN, player.getName()));
+                player.sendMessage(String.format("%sYou have been given %s%s", ChatColor.GREEN, ChatColor.LIGHT_PURPLE, weaponItem.getName()));
+            } else {
+                player.sendMessage(String.format("%sYou have been given %s%s", ChatColor.GREEN, ChatColor.LIGHT_PURPLE, weaponItem.getName()));
+            }
         }
         return true;
     }

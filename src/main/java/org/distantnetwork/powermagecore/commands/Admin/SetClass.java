@@ -46,7 +46,12 @@ public class SetClass implements CommandExecutor {
             PowermagePlayer pmplayer = new PowermagePlayer(player);
             pmplayer.setClassType(clazz);
             pmplayer.save();
-            sender.sendMessage(String.format("%s %s's class has been set to %s", ChatColor.GREEN, player.getDisplayName(), clazz.getName()));
+            if (player != (Player) sender) {
+                ((Player) sender).sendMessage(String.format("%s %s's class has been set to %s%s", ChatColor.GREEN, player.getDisplayName(), ChatColor.RED, clazz.getName()));
+                player.sendMessage(String.format("%sYour class has been set to %s%s", ChatColor.GREEN, ChatColor.RED, clazz.getName()));
+            } else {
+                sender.sendMessage(String.format("%sYour class has been set to %s%s", ChatColor.GREEN, ChatColor.RED, clazz.getName()));
+            }
             return true;
         } else sender.sendMessage(String.format("%sThis command is only for players!", ChatColor.RED));
         return true;

@@ -59,7 +59,12 @@ public class SetUpgrades implements CommandExecutor {
                     break;
             }
             pmplayer.save();
-            sender.sendMessage(String.format("%s%s's %s upgrade has been set to %d", ChatColor.GREEN, player.getName(), args[0], amount));
+            if (player != (Player) sender) {
+                ((Player) sender).sendMessage(String.format("%s%s's %s%s upgrade has been set to %d", ChatColor.GREEN, ChatColor.LIGHT_PURPLE, player.getName(), args[0], amount));
+                player.sendMessage(String.format("%sYour %s%s upgrade has been set to %d", ChatColor.GREEN, ChatColor.LIGHT_PURPLE, args[0], amount));
+            } else {
+                sender.sendMessage(String.format("%sYour %s%s upgrade has been set to %d", ChatColor.GREEN, ChatColor.LIGHT_PURPLE, args[0], amount));
+            }
             return true;
         } else sender.sendMessage(String.format("%sThis command is only for players!", ChatColor.RED));
         return true;
