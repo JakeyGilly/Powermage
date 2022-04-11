@@ -1,4 +1,4 @@
-package org.distantnetwork.powermagecore.utils.ClassesChildren;
+package org.distantnetwork.powermagecore.utils.Classes;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -6,9 +6,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.distantnetwork.powermagecore.PowermageCore;
-import org.distantnetwork.powermagecore.utils.Classes;
 import org.distantnetwork.powermagecore.utils.PowermagePlayer;
-import org.distantnetwork.powermagecore.utils.WeaponItem;
+import org.distantnetwork.powermagecore.utils.Items.WeaponItem;
 
 import java.util.Arrays;
 

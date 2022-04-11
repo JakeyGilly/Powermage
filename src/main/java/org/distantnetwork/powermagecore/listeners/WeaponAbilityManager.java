@@ -15,7 +15,7 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.distantnetwork.powermagecore.PowermageCore;
 import org.distantnetwork.powermagecore.utils.PowermagePlayer;
-import org.distantnetwork.powermagecore.utils.WeaponItem;
+import org.distantnetwork.powermagecore.utils.Items.WeaponItem;
 
 public class WeaponAbilityManager implements Listener {
     @EventHandler

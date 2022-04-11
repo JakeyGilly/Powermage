@@ -1,4 +1,4 @@
-package org.distantnetwork.powermagecore.Items.Weapons.ClassWeapons;
+package org.distantnetwork.powermagecore.utils.Classes.Weapons;
 
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -6,8 +6,8 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
-import org.distantnetwork.powermagecore.utils.Enums.Rarity;
-import org.distantnetwork.powermagecore.utils.WeaponItem;
+import org.distantnetwork.powermagecore.utils.Rarity;
+import org.distantnetwork.powermagecore.utils.Items.WeaponItem;
 
 import java.util.Arrays;
 import java.util.Collections;

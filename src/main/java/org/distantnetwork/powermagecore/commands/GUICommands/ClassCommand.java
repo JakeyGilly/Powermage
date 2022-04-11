@@ -5,7 +5,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.distantnetwork.powermagecore.commands.GUICommands.GUI.ClassGUI;
+import org.distantnetwork.powermagecore.GUI.ClassGUI;
 import org.jetbrains.annotations.NotNull;
 
 public class ClassCommand implements CommandExecutor {

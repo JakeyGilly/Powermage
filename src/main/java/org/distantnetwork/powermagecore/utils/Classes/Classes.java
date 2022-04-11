@@ -1,7 +1,8 @@
-package org.distantnetwork.powermagecore.utils;
+package org.distantnetwork.powermagecore.utils.Classes;
 
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.distantnetwork.powermagecore.utils.Items.WeaponItem;
 
 import java.util.ArrayList;
 import java.util.List;

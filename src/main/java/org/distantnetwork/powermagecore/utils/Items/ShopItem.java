@@ -1,4 +1,4 @@
-package org.distantnetwork.powermagecore.utils;
+package org.distantnetwork.powermagecore.utils.Items;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -7,7 +7,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.distantnetwork.powermagecore.builders.ItemBuilder;
-import org.distantnetwork.powermagecore.utils.Enums.Rarity;
+import org.distantnetwork.powermagecore.utils.Rarity;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package org.distantnetwork.powermagecore.utils;
+package org.distantnetwork.powermagecore.utils.Items;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -13,7 +13,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.distantnetwork.powermagecore.builders.ItemBuilder;
-import org.distantnetwork.powermagecore.utils.Enums.Rarity;
+import org.distantnetwork.powermagecore.utils.Rarity;
 
 import java.util.*;
 

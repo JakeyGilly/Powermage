@@ -6,7 +6,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.distantnetwork.powermagecore.utils.Classes;
+import org.distantnetwork.powermagecore.utils.Classes.Classes;
 import org.distantnetwork.powermagecore.utils.PowermagePlayer;
 import org.jetbrains.annotations.NotNull;
 

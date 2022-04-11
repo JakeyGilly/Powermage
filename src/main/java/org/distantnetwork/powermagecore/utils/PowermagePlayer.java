@@ -2,13 +2,14 @@ package org.distantnetwork.powermagecore.utils;
 
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
+import org.distantnetwork.powermagecore.utils.Classes.Classes;
 
 import java.io.File;
 import java.util.HashMap;
 import java.util.UUID;
 
 import static org.distantnetwork.powermagecore.PowermageCore.getInstance;
-import static org.distantnetwork.powermagecore.utils.Config.ConfigurationManager.*;
+import static org.distantnetwork.powermagecore.utils.ConfigurationManager.*;
 
 public class PowermagePlayer {
     private Player player;

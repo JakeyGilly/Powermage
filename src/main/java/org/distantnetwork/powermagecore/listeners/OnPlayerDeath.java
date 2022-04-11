@@ -6,7 +6,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.distantnetwork.powermagecore.utils.Config.ConfigurationManager;
+import org.distantnetwork.powermagecore.utils.ConfigurationManager;
 import org.distantnetwork.powermagecore.utils.PowermagePlayer;
 import org.jetbrains.annotations.NotNull;
 

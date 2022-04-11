@@ -1,4 +1,4 @@
-package org.distantnetwork.powermagecore.utils;
+package org.distantnetwork.powermagecore.utils.Items;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -10,10 +10,12 @@ import org.distantnetwork.powermagecore.builders.ItemBuilder;
 
 import java.util.*;
 
+import static org.distantnetwork.powermagecore.PowermageCore.getInstance;
+
 public class Item {
     private Material material;
     private int amount;
-    private List<ItemFlag>itemFlags;
+    private List<ItemFlag> itemFlags;
     private Map<Enchantment, Integer> enchantmentLevels;
     private List<String> lore;
     private String name;
@@ -115,10 +117,12 @@ public class Item {
         ItemBuilder itemBuilder = new ItemBuilder(this.material, this.amount);
         if (this.name != null) itemBuilder.setName(ChatColor.translateAlternateColorCodes('&', this.name));
         if (this.lore != null) {
-            for (int i = 0; i < this.lore.size(); i++) {
-                this.lore.set(i, ChatColor.translateAlternateColorCodes('&', this.lore.get(i)));
+            List<String> formattedLore = new ArrayList<>();
+            for (String s : this.lore) {
+                formattedLore.add(ChatColor.translateAlternateColorCodes('&', s));
             }
-            itemBuilder.setLore(this.lore);
+            itemBuilder.setLore(formattedLore);
+            this.setLore(formattedLore);
         }
         if (this.durability > 0) itemBuilder.setDurability((short) this.durability);
         if (this.unbreakable) itemBuilder.setUnbreakable(true);

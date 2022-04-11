@@ -5,7 +5,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.distantnetwork.powermagecore.commands.GUICommands.GUI.UpgradeGUI;
+import org.distantnetwork.powermagecore.GUI.UpgradeGUI;
 import org.jetbrains.annotations.NotNull;
 
 public class UpgradeCommand implements CommandExecutor {

@@ -5,7 +5,7 @@ import org.bukkit.Material;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.distantnetwork.powermagecore.builders.ItemBuilder;
-import org.distantnetwork.powermagecore.utils.Config.ConfigurationManager;
+import org.distantnetwork.powermagecore.utils.ConfigurationManager;
 import org.distantnetwork.powermagecore.utils.PowermagePlayer;
 
 public class OnPlayerJoin implements Listener {

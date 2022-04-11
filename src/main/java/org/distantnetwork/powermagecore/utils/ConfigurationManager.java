@@ -1,4 +1,4 @@
-package org.distantnetwork.powermagecore.utils.Config;
+package org.distantnetwork.powermagecore.utils;
 
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;

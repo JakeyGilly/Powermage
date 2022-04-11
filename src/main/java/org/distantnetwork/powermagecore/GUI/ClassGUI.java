@@ -1,4 +1,4 @@
-package org.distantnetwork.powermagecore.commands.GUICommands.GUI;
+package org.distantnetwork.powermagecore.GUI;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -9,10 +9,10 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.distantnetwork.powermagecore.builders.InventoryBuilder;
 import org.distantnetwork.powermagecore.builders.ItemBuilder;
-import org.distantnetwork.powermagecore.utils.Classes;
+import org.distantnetwork.powermagecore.utils.Classes.Classes;
 import org.distantnetwork.powermagecore.utils.PowermagePlayer;
 
-import static org.distantnetwork.powermagecore.utils.Config.ConfigurationManager.getDefaultConfig;
+import static org.distantnetwork.powermagecore.utils.ConfigurationManager.getDefaultConfig;
 
 public class ClassGUI extends InventoryBuilder {
     public ClassGUI(Player p) {

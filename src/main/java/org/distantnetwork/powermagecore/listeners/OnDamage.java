@@ -4,9 +4,9 @@ import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.distantnetwork.powermagecore.utils.Config.ConfigurationManager;
+import org.distantnetwork.powermagecore.utils.ConfigurationManager;
 import org.distantnetwork.powermagecore.utils.PowermagePlayer;
-import org.distantnetwork.powermagecore.utils.WeaponItem;
+import org.distantnetwork.powermagecore.utils.Items.WeaponItem;
 import org.jetbrains.annotations.NotNull;
 
 public class OnDamage implements Listener {

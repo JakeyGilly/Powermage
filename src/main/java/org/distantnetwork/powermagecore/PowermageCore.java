@@ -8,12 +8,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.distantnetwork.powermagecore.Items.ExampleItem;
-import org.distantnetwork.powermagecore.Items.Weapons.ClassWeapons.ArcherBow;
-import org.distantnetwork.powermagecore.Items.Weapons.ClassWeapons.TankSword;
-import org.distantnetwork.powermagecore.Items.Weapons.ClassWeapons.WarriorSword;
-import org.distantnetwork.powermagecore.Items.Weapons.ClassWeapons.WizardSword;
-import org.distantnetwork.powermagecore.Items.Weapons.ExampleWeapon;
+import org.distantnetwork.powermagecore.utils.Classes.Weapons.ArcherBow;
+import org.distantnetwork.powermagecore.utils.Classes.Weapons.TankSword;
+import org.distantnetwork.powermagecore.utils.Classes.Weapons.WarriorSword;
+import org.distantnetwork.powermagecore.utils.Classes.Weapons.WizardSword;
 import org.distantnetwork.powermagecore.builders.InventoryBuilderListeners;
 import org.distantnetwork.powermagecore.commands.Admin.*;
 import org.distantnetwork.powermagecore.commands.GUICommands.ClassCommand;
@@ -21,10 +19,10 @@ import org.distantnetwork.powermagecore.commands.GUICommands.MenuCommand;
 import org.distantnetwork.powermagecore.commands.GUICommands.SoulShopCommand;
 import org.distantnetwork.powermagecore.commands.GUICommands.UpgradeCommand;
 import org.distantnetwork.powermagecore.listeners.*;
-import org.distantnetwork.powermagecore.utils.ClassesChildren.Archer;
-import org.distantnetwork.powermagecore.utils.ClassesChildren.Tank;
-import org.distantnetwork.powermagecore.utils.ClassesChildren.Warrior;
-import org.distantnetwork.powermagecore.utils.ClassesChildren.Wizard;
+import Archer;
+import Tank;
+import Warrior;
+import Wizard;
 import org.distantnetwork.powermagecore.utils.PowermagePlayer;
 
 public final class PowermageCore extends JavaPlugin implements Listener {
@@ -44,12 +42,10 @@ public final class PowermageCore extends JavaPlugin implements Listener {
         new Archer();
         new Tank();
         new Wizard();
-        new ExampleWeapon();
         archerBow = new ArcherBow();
         tankSword = new TankSword();
         warriorSword = new WarriorSword();
         wizardSword = new WizardSword();
-        new ExampleItem();
         new BukkitRunnable() {
             @Override
             public void run() {
