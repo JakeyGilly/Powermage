@@ -58,13 +58,11 @@ public class OnPlayerDeath implements Listener {
         killer.getPlayer().sendMessage(String.format("%sYou have killed %s%s%s!", ChatColor.GREEN, ChatColor.RED, e.getEntity().getName(), ChatColor.GREEN));
         int respawnTime;
         if (victim.getPlayer().hasPermission("powermage.respawn.legend")) respawnTime = 0;
-        else if (victim.getPlayer().hasPermission("powermage.respawn.elite")) respawnTime = 1;
-        else if (victim.getPlayer().hasPermission("powermage.respawn.super")) respawnTime = 2;
-        else respawnTime = 5;
+        else if (victim.getPlayer().hasPermission("powermage.respawn.elite")) respawnTime = 3;
+        else if (victim.getPlayer().hasPermission("powermage.respawn.super")) respawnTime = 5;
+        else respawnTime = 10;
         if (respawnTime > 0) {
             victim.getPlayer().setGameMode(GameMode.SPECTATOR);
-            victim.getPlayer().sendTitle(ChatColor.RED + "You are dead!", ChatColor.GOLD + "You will respawn in " + respawnTime + " seconds", 10, 20, 10);
-            victim.getPlayer().sendMessage(ChatColor.GREEN + "You will respawn in " + respawnTime + " seconds");
             PowermagePlayer finalVictim = victim;
             new BukkitRunnable() {
                 int time = respawnTime;
