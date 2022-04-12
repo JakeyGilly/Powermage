@@ -79,6 +79,8 @@ public abstract class WeaponItem extends Item {
     public abstract void onBlockPlace(Player player, Block block, boolean shifting);
     public abstract void onDrop(Player player);
     public abstract void onPickup(Player player);
+    public abstract void onCaughtFish(Player player, Entity caught);
+    public abstract void onShootBow(Player player, Entity projectile);
 
     @Override
     public void give(Player player) {

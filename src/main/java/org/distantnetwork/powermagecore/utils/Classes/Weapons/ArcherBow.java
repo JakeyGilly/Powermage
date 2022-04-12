@@ -91,4 +91,14 @@ public class ArcherBow extends WeaponItem {
     public void onPickup(Player player) {
 
     }
+
+    @Override
+    public void onCaughtFish(Player player, Entity caught) {
+
+    }
+
+    @Override
+    public void onShootBow(Player player, Entity projectile) {
+
+    }
 }

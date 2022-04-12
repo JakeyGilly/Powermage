@@ -3,6 +3,7 @@ package org.distantnetwork.powermagecore.utils.Items;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
@@ -129,6 +130,4 @@ public class Item {
         itemBuilder.setAmount(1);
         return itemBuilder.build();
     }
-
-
 }

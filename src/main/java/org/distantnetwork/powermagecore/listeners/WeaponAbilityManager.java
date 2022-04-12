@@ -162,9 +162,27 @@ public class WeaponAbilityManager implements Listener {
     private void bowUse(EntityShootBowEvent event) {
         if (event.getEntity() instanceof Player) {
             Player player = (Player) event.getEntity();
-            if (!new PowermagePlayer(player).getClassType().getName().equalsIgnoreCase("archer")) {
-                event.setCancelled(true);
-                player.sendMessage(String.format("%sYou must be an archer to use this bow!", ChatColor.RED));
+            if (WeaponItem.isWeaponItem(player.getInventory().getItemInMainHand())) {
+                WeaponItem weaponItem = WeaponItem.getWeaponItem(player.getInventory().getItemInMainHand());
+                if (weaponItem != null) {
+                    if (!new PowermagePlayer(player).getClassType().getName().equalsIgnoreCase("archer")) {
+                        event.setCancelled(true);
+                        player.sendMessage(String.format("%sYou must be an archer to use this bow!", ChatColor.RED));
+                    }
+                    weaponItem.onShootBow(player, event.getProjectile());
+                }
+            }
+        }
+    }
+
+    @EventHandler
+    private void fishingRodReelIn(PlayerFishEvent event) {
+        if (event.getState() == PlayerFishEvent.State.REEL_IN) {
+            if (WeaponItem.isWeaponItem(event.getPlayer().getInventory().getItemInMainHand())) {
+                WeaponItem weaponItem = WeaponItem.getWeaponItem(event.getPlayer().getInventory().getItemInMainHand());
+                if (weaponItem != null) {
+                    weaponItem.onCaughtFish(event.getPlayer(), event.getCaught());
+                }
             }
         }
     }
