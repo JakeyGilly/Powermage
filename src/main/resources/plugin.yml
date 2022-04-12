@@ -4,8 +4,6 @@ main: org.distantnetwork.powermagecore.PowermageCore
 api-version: 1.18
 authors: [ JakeyGilly, Explorer017, CaptainATW, InvernessBlock ]
 description: The Core Plugin For Powermage
-depend:
-  - PowermageItems
 commands:
   menu:
     usage: /menu
