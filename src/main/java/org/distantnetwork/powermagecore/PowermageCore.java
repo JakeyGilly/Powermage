@@ -25,6 +25,8 @@ import org.distantnetwork.powermagecore.listeners.*;
 
 import org.distantnetwork.powermagecore.utils.Classes.Wizard;
 import org.distantnetwork.powermagecore.utils.PowermagePlayer;
+import org.distantnetwork.powermageitems.Items.Repulsion;
+import org.distantnetwork.powermageitems.Items.SuperRepulsion;
 import org.distantnetwork.powermageitems.Items.ZeusBolt;
 
 public final class PowermageCore extends JavaPlugin implements Listener {
@@ -51,6 +53,8 @@ public final class PowermageCore extends JavaPlugin implements Listener {
         warriorSword = new WarriorSword();
         wizardSword = new WizardSword();
         new ZeusBolt();
+        new Repulsion();
+        new SuperRepulsion();
         new BukkitRunnable() {
             @Override
             public void run() {
