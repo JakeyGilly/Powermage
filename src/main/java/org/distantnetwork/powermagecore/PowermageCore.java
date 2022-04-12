@@ -31,9 +31,6 @@ public final class PowermageCore extends JavaPlugin implements Listener {
     public static JavaPlugin getPlugin() {
         return plugin;
     }
-    public static void setPlugin(final JavaPlugin plugin) {
-        PowermageCore.plugin = plugin;
-    }
     public static TankSword tankSword;
     public static ArcherBow archerBow;
     public static WarriorSword warriorSword;
@@ -41,6 +38,7 @@ public final class PowermageCore extends JavaPlugin implements Listener {
 
     @Override
     public void onEnable() {
+        plugin = this;
         this.saveDefaultConfig();
         // Setup Classes
         new Warrior();
