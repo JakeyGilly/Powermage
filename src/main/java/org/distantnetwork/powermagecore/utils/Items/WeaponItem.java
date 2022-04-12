@@ -35,7 +35,6 @@ public abstract class WeaponItem extends Item {
         this.description = description;
         this.storeItem = storeItem;
         weapons.add(this);
-        getInstance().getLogger().info(String.format("Registered weapon: %s", name));
     }
 
     public int getDamage() {
