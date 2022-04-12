@@ -27,8 +27,13 @@ import org.distantnetwork.powermagecore.utils.Classes.Wizard;
 import org.distantnetwork.powermagecore.utils.PowermagePlayer;
 
 public final class PowermageCore extends JavaPlugin implements Listener {
-    private static PowermageCore instance;
-    public static PowermageCore getInstance() {return instance;}
+    private static JavaPlugin plugin;
+    public static JavaPlugin getPlugin() {
+        return plugin;
+    }
+    public static void setPlugin(final JavaPlugin plugin) {
+        PowermageCore.plugin = plugin;
+    }
     public static TankSword tankSword;
     public static ArcherBow archerBow;
     public static WarriorSword warriorSword;
@@ -36,7 +41,6 @@ public final class PowermageCore extends JavaPlugin implements Listener {
 
     @Override
     public void onEnable() {
-        instance = this;
         this.saveDefaultConfig();
         // Setup Classes
         new Warrior();
@@ -50,8 +54,8 @@ public final class PowermageCore extends JavaPlugin implements Listener {
         new BukkitRunnable() {
             @Override
             public void run() {
-                FileConfiguration defaultConfig = getInstance().getConfig();
-                for (Player player : PowermageCore.getInstance().getServer().getOnlinePlayers()) {
+                FileConfiguration defaultConfig = getConfig();
+                for (Player player : getServer().getOnlinePlayers()) {
                     PowermagePlayer pmPlayer = new PowermagePlayer(player);
                     if (pmPlayer.getClassType() != null) {
                         double maxMana = pmPlayer.getClassType() == null ? 0 : pmPlayer.getClassType().getBaseMana();
@@ -68,8 +72,8 @@ public final class PowermageCore extends JavaPlugin implements Listener {
         new BukkitRunnable() {
             @Override
             public void run() {
-                FileConfiguration defaultConfig = getInstance().getConfig();
-                for (Player player : PowermageCore.getInstance().getServer().getOnlinePlayers()) {
+                FileConfiguration defaultConfig = getConfig();
+                for (Player player : getServer().getOnlinePlayers()) {
                     PowermagePlayer pmPlayer = new PowermagePlayer(player);
                     if (pmPlayer.getCooldown() > 0) {
                         pmPlayer.setCooldown(pmPlayer.getCooldown() - 1);

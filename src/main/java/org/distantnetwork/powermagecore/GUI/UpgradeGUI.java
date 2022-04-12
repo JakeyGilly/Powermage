@@ -12,6 +12,7 @@ import org.distantnetwork.powermagecore.builders.ItemBuilder;
 import org.distantnetwork.powermagecore.utils.ConfigurationManager;
 import org.distantnetwork.powermagecore.utils.PowermagePlayer;
 
+import static org.distantnetwork.powermagecore.PowermageCore.getPlugin;
 import static org.distantnetwork.powermagecore.utils.ConfigurationManager.getDefaultConfig;
 
 public class UpgradeGUI extends InventoryBuilder {
@@ -28,7 +29,7 @@ public class UpgradeGUI extends InventoryBuilder {
                     .setLore(String.format("%sLevel %d", ChatColor.DARK_GREEN, pmPlayer.getStrengthUpgrade()), String.format("%sSouls for next upgrade: %s", ChatColor.GOLD, getDefaultConfig().getIntegerList("upgrades.strength.cost").get(pmPlayer.getStrengthUpgrade()))).toItem(), player -> {
                 if (!(getDefaultConfig().get("upgrades.strength.cost") != null && getDefaultConfig().getIntegerList("upgrades.strength.cost").size() == getDefaultConfig().getInt("upgrades.strength.maxLevel"))) {
                     p.sendMessage("The config is not set up correctly!");
-                    PowermageCore.getInstance().getLogger().warning("The Strength upgrade costs length are not equal to the max level!");
+                    getPlugin().getLogger().warning("The Strength upgrade costs length are not equal to the max level!");
                     return;
                 }
                 if (pmPlayer.getStrengthUpgrade() == getDefaultConfig().getInt("upgrades.strength.maxLevel")) {
@@ -57,7 +58,7 @@ public class UpgradeGUI extends InventoryBuilder {
                     .setLore(String.format("%sLevel %d", ChatColor.DARK_GREEN, pmPlayer.getHealthUpgrade()), String.format("%sSouls for next upgrade: %s", ChatColor.GOLD, getDefaultConfig().getIntegerList("upgrades.health.cost").get(pmPlayer.getHealthUpgrade()))).toItem(), player -> {
                 if (!(getDefaultConfig().get("upgrades.health.cost") != null && getDefaultConfig().getIntegerList("upgrades.health.cost").size() == getDefaultConfig().getInt("upgrades.health.maxLevel"))) {
                     p.sendMessage("The config is not set up correctly!");
-                    PowermageCore.getInstance().getLogger().warning("The Health upgrade costs length are not equal to the max level!");
+                    getPlugin().getLogger().warning("The Health upgrade costs length are not equal to the max level!");
                     return;
                 }
                 if (pmPlayer.getHealthUpgrade() == getDefaultConfig().getInt("upgrades.health.maxLevel")) {
@@ -92,7 +93,7 @@ public class UpgradeGUI extends InventoryBuilder {
                     .setLore(String.format("%sLevel %d", ChatColor.DARK_GREEN, pmPlayer.getManaUpgrade()), String.format("%sSouls for next upgrade: %s", ChatColor.GOLD, getDefaultConfig().getIntegerList("upgrades.mana.cost").get(pmPlayer.getManaUpgrade()))).toItem(), player -> {
                 if (!(getDefaultConfig().get("upgrades.mana.cost") != null && getDefaultConfig().getIntegerList("upgrades.mana.cost").size() == getDefaultConfig().getInt("upgrades.mana.maxLevel"))) {
                     p.sendMessage("The config is not set up correctly!");
-                    PowermageCore.getInstance().getLogger().warning("The Mana upgrade costs length are not equal to the max level!");
+                    getPlugin().getLogger().warning("The Mana upgrade costs length are not equal to the max level!");
                     return;
                 }
                 if (pmPlayer.getManaUpgrade() == getDefaultConfig().getInt("upgrades.mana.maxLevel")) {
@@ -121,7 +122,7 @@ public class UpgradeGUI extends InventoryBuilder {
                     .setLore(String.format("%sLevel %d", ChatColor.DARK_GREEN, pmPlayer.getSpeedUpgrade()), String.format("%sSouls for next upgrade: %s", ChatColor.GOLD, getDefaultConfig().getIntegerList("upgrades.speed.cost").get(pmPlayer.getSpeedUpgrade()))).toItem(), player -> {
                 if (!(getDefaultConfig().get("upgrades.speed.cost") != null && getDefaultConfig().getIntegerList("upgrades.speed.cost").size() == getDefaultConfig().getInt("upgrades.speed.maxLevel"))) {
                     p.sendMessage("The config is not set up correctly!");
-                    PowermageCore.getInstance().getLogger().warning("The Speed upgrade costs length are not equal to the max level!");
+                    getPlugin().getLogger().warning("The Speed upgrade costs length are not equal to the max level!");
                     return;
                 }
                 if (pmPlayer.getSpeedUpgrade() == getDefaultConfig().getInt("upgrades.speed.maxLevel")) {

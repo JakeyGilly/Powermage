@@ -17,7 +17,7 @@ import org.distantnetwork.powermagecore.utils.Rarity;
 
 import java.util.*;
 
-import static org.distantnetwork.powermagecore.PowermageCore.getInstance;
+import static org.distantnetwork.powermagecore.PowermageCore.getPlugin;
 
 public abstract class WeaponItem extends Item {
     int damage;
@@ -106,7 +106,7 @@ public abstract class WeaponItem extends Item {
             itemBuilder.addItemFlags(this.getItemFlags());
         if (this.getEnchantmentLevels() != null && this.getEnchantmentLevels().size() > 0) this.getEnchantmentLevels().forEach(itemBuilder::setEnchantment);
         ItemStack item = itemBuilder.build();
-        NamespacedKey key = new NamespacedKey(getInstance(), "weaponItem");
+        NamespacedKey key = new NamespacedKey(getPlugin(), "weaponItem");
         ItemMeta itemMeta = item.getItemMeta();
         if (itemMeta == null) return;
         PersistentDataContainer container = itemMeta.getPersistentDataContainer();
@@ -138,7 +138,7 @@ public abstract class WeaponItem extends Item {
         if (this.getEnchantmentLevels().size() > 0)
             this.getEnchantmentLevels().forEach(itemBuilder::setEnchantment);
         ItemStack item = itemBuilder.build();
-        NamespacedKey key = new NamespacedKey(getInstance(), "weaponItem");
+        NamespacedKey key = new NamespacedKey(getPlugin(), "weaponItem");
         ItemMeta itemMeta = item.getItemMeta();
         if (itemMeta == null) return null;
         PersistentDataContainer container = itemMeta.getPersistentDataContainer();
@@ -148,7 +148,7 @@ public abstract class WeaponItem extends Item {
     }
 
     public static WeaponItem getWeaponItem(ItemStack item) {
-        NamespacedKey key = new NamespacedKey(getInstance(), "weaponItem");
+        NamespacedKey key = new NamespacedKey(getPlugin(), "weaponItem");
         ItemMeta itemMeta = item.getItemMeta();
         if (itemMeta == null) return null;
         PersistentDataContainer container = itemMeta.getPersistentDataContainer();
@@ -161,7 +161,7 @@ public abstract class WeaponItem extends Item {
     }
 
     public static boolean isWeaponItem(ItemStack item) {
-        NamespacedKey k = new NamespacedKey(getInstance(), "weaponItem");
+        NamespacedKey k = new NamespacedKey(getPlugin(), "weaponItem");
         if (item == null) return false;
         if (!item.hasItemMeta()) return false;
         ItemMeta itemMeta = item.getItemMeta();

@@ -8,7 +8,7 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.UUID;
 
-import static org.distantnetwork.powermagecore.PowermageCore.getInstance;
+import static org.distantnetwork.powermagecore.PowermageCore.getPlugin;
 import static org.distantnetwork.powermagecore.utils.ConfigurationManager.*;
 
 public class PowermagePlayer {
@@ -106,7 +106,7 @@ public class PowermagePlayer {
             this.killstreak = config.getInt(String.format("%s.killstreak", player.getUniqueId()));
     }
     public PowermagePlayer(UUID uuid) {
-        this.player = getInstance().getServer().getPlayer(uuid);
+        this.player = getPlugin().getServer().getPlayer(uuid);
     }
 
     //* Getters, Setters, Adders, Subtracters, Increasers, Decreasers

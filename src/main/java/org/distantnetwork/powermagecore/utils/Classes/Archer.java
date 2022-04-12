@@ -13,7 +13,7 @@ import org.distantnetwork.powermagecore.utils.Items.WeaponItem;
 
 import java.util.Arrays;
 
-import static org.distantnetwork.powermagecore.PowermageCore.getInstance;
+import static org.distantnetwork.powermagecore.PowermageCore.getPlugin;
 
 public class Archer extends Classes {
     public Archer() {
@@ -45,7 +45,7 @@ public class Archer extends Classes {
                     arrow.setBounce(false);
                     arrow.setPickupStatus(AbstractArrow.PickupStatus.DISALLOWED);
                 }
-            }.runTaskLater(getInstance(), i * 3);
+            }.runTaskLater(getPlugin(), i * 3);
         }
     }
 

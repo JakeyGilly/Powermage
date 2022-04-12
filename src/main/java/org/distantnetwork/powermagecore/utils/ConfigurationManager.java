@@ -8,7 +8,7 @@ import org.jetbrains.annotations.Nullable;
 import java.io.File;
 import java.io.IOException;
 
-import static org.distantnetwork.powermagecore.PowermageCore.getInstance;
+import static org.distantnetwork.powermagecore.PowermageCore.getPlugin;
 
 @SuppressWarnings("ResultOfMethodCallIgnored")
 public class ConfigurationManager {
@@ -71,14 +71,14 @@ public class ConfigurationManager {
         }
 
         public static @Nullable File getFileFolder (@NotNull String folderPath){
-            File folder = new File(getInstance().getDataFolder(), folderPath);
+            File folder = new File(getPlugin().getDataFolder(), folderPath);
             if (!folder.exists()) folder.mkdirs();
             if (!folder.isDirectory()) return null;
             return folder;
         }
 
         public static @Nullable File getFileFile (@NotNull String filePath){
-            File file = new File(getInstance().getDataFolder(), filePath);
+            File file = new File(getPlugin().getDataFolder(), filePath);
             if (!file.getParentFile().exists()) file.mkdirs();
             if (!file.exists()) {
                 try {
@@ -92,7 +92,7 @@ public class ConfigurationManager {
         }
 
         public static @NotNull File getFile (@NotNull String filePath){
-            File file = new File(getInstance().getDataFolder(), filePath);
+            File file = new File(getPlugin().getDataFolder(), filePath);
             if (!file.getParentFile().exists()) file.mkdirs();
             if (!file.exists()) {
                 try {
@@ -231,12 +231,12 @@ public class ConfigurationManager {
         }
         //? DEFAULT CONFIGURATION
         public static FileConfiguration getDefaultConfig () {
-            return getInstance().getConfig();
+            return getPlugin().getConfig();
         }
         public static void saveDefaultConfig () {
-            getInstance().saveConfig();
+            getPlugin().saveConfig();
         }
         public static File getDefaultFolder () {
-            return getInstance().getDataFolder();
+            return getPlugin().getDataFolder();
         }
     }

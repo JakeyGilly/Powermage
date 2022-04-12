@@ -12,7 +12,7 @@ import org.distantnetwork.powermagecore.utils.Items.WeaponItem;
 
 import java.util.Arrays;
 
-import static org.distantnetwork.powermagecore.PowermageCore.getInstance;
+import static org.distantnetwork.powermagecore.PowermageCore.getPlugin;
 
 public class Warrior extends Classes {
     public Warrior() {
@@ -40,7 +40,7 @@ public class Warrior extends Classes {
             public void run() {
                 player.setWalkSpeed((float) (pmPlayer.getClassType().getBaseSpeed() + pmPlayer.getSpeedUpgrade() * ConfigurationManager.getDefaultConfig().getDouble("upgrades.speed.speedPerLevel")));
             }
-        }.runTaskLater(getInstance(), 200);
+        }.runTaskLater(getPlugin(), 200);
     }
 
     @Override

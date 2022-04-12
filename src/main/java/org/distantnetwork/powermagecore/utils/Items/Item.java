@@ -10,8 +10,6 @@ import org.distantnetwork.powermagecore.builders.ItemBuilder;
 
 import java.util.*;
 
-import static org.distantnetwork.powermagecore.PowermageCore.getInstance;
-
 public class Item {
     private Material material;
     private int amount;

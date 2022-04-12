@@ -11,7 +11,7 @@ import org.distantnetwork.powermagecore.utils.Items.WeaponItem;
 
 import java.util.Arrays;
 
-import static org.distantnetwork.powermagecore.PowermageCore.getInstance;
+import static org.distantnetwork.powermagecore.PowermageCore.getPlugin;
 
 public class Wizard extends Classes {
     public Wizard() {
@@ -40,7 +40,7 @@ public class Wizard extends Classes {
                 pmPlayer.setInfiniteMana(false);
                 pmPlayer.save();
             }
-        }.runTaskLater(getInstance(), 100);
+        }.runTaskLater(getPlugin(), 100);
     }
 
     @Override

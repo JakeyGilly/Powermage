@@ -8,10 +8,11 @@ import org.distantnetwork.powermagecore.utils.Items.WeaponItem;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class GiveWeaponCompleter implements TabCompleter {
-    List<String> list = null;
+    List<String> list = new ArrayList<>();
     @Override
     public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String alias, @NotNull String[] args) {
         if (args.length == 1) {

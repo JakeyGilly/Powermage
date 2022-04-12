@@ -10,7 +10,7 @@ import org.distantnetwork.powermagecore.utils.ConfigurationManager;
 import org.distantnetwork.powermagecore.utils.PowermagePlayer;
 import org.jetbrains.annotations.NotNull;
 
-import static org.distantnetwork.powermagecore.PowermageCore.getInstance;
+import static org.distantnetwork.powermagecore.PowermageCore.getPlugin;
 
 public class OnPlayerDeath implements Listener {
     @EventHandler
@@ -87,7 +87,7 @@ public class OnPlayerDeath implements Listener {
                         time--;
                     }
                 }
-            }.runTaskTimer(getInstance(), 0, 20);
+            }.runTaskTimer(getPlugin(), 0, 20);
         }
     }
 }
