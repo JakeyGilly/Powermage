@@ -8,6 +8,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.distantnetwork.powermagecore.utils.Classes.Archer;
+import org.distantnetwork.powermagecore.utils.Classes.Tank;
+import org.distantnetwork.powermagecore.utils.Classes.Warrior;
 import org.distantnetwork.powermagecore.utils.Classes.Weapons.ArcherBow;
 import org.distantnetwork.powermagecore.utils.Classes.Weapons.TankSword;
 import org.distantnetwork.powermagecore.utils.Classes.Weapons.WarriorSword;
@@ -19,10 +22,8 @@ import org.distantnetwork.powermagecore.commands.GUICommands.MenuCommand;
 import org.distantnetwork.powermagecore.commands.GUICommands.SoulShopCommand;
 import org.distantnetwork.powermagecore.commands.GUICommands.UpgradeCommand;
 import org.distantnetwork.powermagecore.listeners.*;
-import Archer;
-import Tank;
-import Warrior;
-import Wizard;
+
+import org.distantnetwork.powermagecore.utils.Classes.Wizard;
 import org.distantnetwork.powermagecore.utils.PowermagePlayer;
 
 public final class PowermageCore extends JavaPlugin implements Listener {
