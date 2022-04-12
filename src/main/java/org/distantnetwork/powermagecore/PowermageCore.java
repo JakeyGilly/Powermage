@@ -25,9 +25,7 @@ import org.distantnetwork.powermagecore.listeners.*;
 
 import org.distantnetwork.powermagecore.utils.Classes.Wizard;
 import org.distantnetwork.powermagecore.utils.PowermagePlayer;
-import org.distantnetwork.powermageitems.Items.Repulsion;
-import org.distantnetwork.powermageitems.Items.SuperRepulsion;
-import org.distantnetwork.powermageitems.Items.ZeusBolt;
+import org.distantnetwork.powermageitems.Items.*;
 
 public final class PowermageCore extends JavaPlugin implements Listener {
     private static JavaPlugin plugin;
@@ -55,6 +53,17 @@ public final class PowermageCore extends JavaPlugin implements Listener {
         new ZeusBolt();
         new Repulsion();
         new SuperRepulsion();
+        new Dasher();
+        new SuperDasher();
+        new HyperDasher();
+        new ForkOfForce();
+        new GrapplingHook();
+        new NightSword();
+        new DaySword();
+        new WandOfMending();
+        new SuperWandOfMending();
+        new HyperWandOfMending();
+        new SlappyTheFish();
         new BukkitRunnable() {
             @Override
             public void run() {
