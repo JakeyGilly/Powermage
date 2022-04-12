@@ -17,6 +17,8 @@ import org.distantnetwork.powermagecore.PowermageCore;
 import org.distantnetwork.powermagecore.utils.PowermagePlayer;
 import org.distantnetwork.powermagecore.utils.Items.WeaponItem;
 
+import static org.distantnetwork.powermagecore.PowermageCore.getPlugin;
+
 public class WeaponAbilityManager implements Listener {
     @EventHandler
     private void onChangeWeapon(PlayerItemHeldEvent event) {
@@ -46,24 +48,28 @@ public class WeaponAbilityManager implements Listener {
                         if (!new PowermagePlayer(player).getClassType().getName().equalsIgnoreCase("archer")) {
                             event.setCancelled(true);
                             player.sendMessage(String.format("%sYou must be an archer to use this bow!", ChatColor.RED));
+                            return;
                         }
                     }
                     if (weaponItem.equals(PowermageCore.tankSword)) {
                         if (!new PowermagePlayer(player).getClassType().getName().equalsIgnoreCase("tank")) {
                             event.setCancelled(true);
                             player.sendMessage(String.format("%sYou must be a tank to use this weapon!", ChatColor.RED));
+                            return;
                         }
                     }
                     if (weaponItem.equals(PowermageCore.warriorSword)) {
                         if (!new PowermagePlayer(player).getClassType().getName().equalsIgnoreCase("warrior")) {
                             event.setCancelled(true);
                             player.sendMessage(String.format("%sYou must be a warrior to use this weapon!", ChatColor.RED));
+                            return;
                         }
                     }
                     if (weaponItem.equals(PowermageCore.wizardSword)) {
                         if (!new PowermagePlayer(player).getClassType().getName().equalsIgnoreCase("wizard")) {
                             event.setCancelled(true);
                             player.sendMessage(String.format("%sYou must be a wizard to use this weapon!", ChatColor.RED));
+                            return;
                         }
                     }
                     weaponItem.punchEntity(player, event.getEntity(), event.getDamage(), player.isSneaking());

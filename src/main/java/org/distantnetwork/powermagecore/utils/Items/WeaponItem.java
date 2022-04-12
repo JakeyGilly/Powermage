@@ -23,16 +23,14 @@ public abstract class WeaponItem extends Item {
     int damage;
     Rarity rarity;
     int price;
-    List<String> description;
     boolean storeItem;
     static List<WeaponItem> weapons = new ArrayList<>();
 
-    public WeaponItem(Material material, int amount, String name, List<String> lore, List<ItemFlag> itemFlags, Map<Enchantment, Integer> enchantmentLevels, int durability, boolean unbreakable, Rarity rarity, int damage, int price, List<String> description, boolean storeItem) {
+    public WeaponItem(Material material, int amount, String name, List<String> lore, List<ItemFlag> itemFlags, Map<Enchantment, Integer> enchantmentLevels, int durability, boolean unbreakable, Rarity rarity, int damage, int price, boolean storeItem) {
         super(material, amount, name, lore, itemFlags, enchantmentLevels, durability, unbreakable);
         this.rarity = rarity;
         this.damage = damage;
         this.price = price;
-        this.description = description;
         this.storeItem = storeItem;
         weapons.add(this);
     }
@@ -59,14 +57,6 @@ public abstract class WeaponItem extends Item {
 
     public void setPrice(int price) {
         this.price = price;
-    }
-
-    public List<String> getDescription() {
-        return description;
-    }
-
-    public void setDescription(List<String> description) {
-        this.description = description;
     }
 
     public boolean isStoreItem() {
@@ -125,10 +115,6 @@ public abstract class WeaponItem extends Item {
             StringBuilder s = new StringBuilder();
             for (ChatColor colour : this.getRarity().getColor()) s.append(colour);
             itemBuilder.addLoreLine(String.format("%s%s WEAPON", s, this.getRarity().name()));
-        }
-        if (this.description != null) {
-            itemBuilder.addLoreLine("");
-            for (String s : this.description) itemBuilder.addLoreLine(ChatColor.translateAlternateColorCodes('&', s));
         }
         if (this.storeItem) itemBuilder.addLoreLine(String.format("%sPrice: %d souls", ChatColor.AQUA, this.getPrice()));
         if (this.getDurability() > 0) itemBuilder.setDurability((short) this.getDurability());

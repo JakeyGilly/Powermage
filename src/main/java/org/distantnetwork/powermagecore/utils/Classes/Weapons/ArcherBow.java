@@ -1,5 +1,6 @@
 package org.distantnetwork.powermagecore.utils.Classes.Weapons;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.enchantments.Enchantment;
@@ -15,9 +16,20 @@ import java.util.HashMap;
 
 public class ArcherBow extends WeaponItem {
     public ArcherBow() {
-        super(Material.BOW, 1, "&7Archer Bow", Collections.singletonList("The starter bow for the Archer Class"), Arrays.asList(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_ENCHANTS, ItemFlag.HIDE_UNBREAKABLE), new HashMap<Enchantment, Integer>() {{
-            put(Enchantment.ARROW_INFINITE, 1);
-        }}, 0, true, Rarity.COMMON, 2, 0, Collections.singletonList("A bit of wood with some string"), true);
+        super(
+                Material.BOW,
+                1,
+                String.format("%sArcher Bow", ChatColor.GRAY),
+                Collections.singletonList("The starter bow for the Archer Class"),
+                Arrays.asList(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_ENCHANTS, ItemFlag.HIDE_UNBREAKABLE),
+                new HashMap<Enchantment, Integer>() {{put(Enchantment.ARROW_INFINITE, 1);}},
+                0,
+                true,
+                Rarity.COMMON,
+                2,
+                0,
+                true
+        );
     }
 
     @Override

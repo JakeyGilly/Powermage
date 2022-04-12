@@ -1,5 +1,6 @@
 package org.distantnetwork.powermagecore.utils.Classes.Weapons;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.enchantments.Enchantment;
@@ -18,7 +19,7 @@ public class WarriorSword extends WeaponItem {
         super(
                 Material.STONE_SWORD,
                 1,
-                "&7Warrior Sword",
+                String.format("%sWarrior Sword", ChatColor.GRAY),
                 Collections.singletonList("The starter sword for the Warrior Class"),
                 Arrays.asList(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_ENCHANTS, ItemFlag.HIDE_UNBREAKABLE),
                 new HashMap<Enchantment, Integer>() {{put(Enchantment.MENDING, 1);}},
@@ -27,7 +28,6 @@ public class WarriorSword extends WeaponItem {
                 Rarity.COMMON,
                 2,
                 0,
-                Collections.singletonList("A sharp pointy object"),
                 true
         );
     }
