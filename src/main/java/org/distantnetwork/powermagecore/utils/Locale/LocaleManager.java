@@ -47,9 +47,7 @@ public class LocaleManager {
         }
         try {
             Object handle = ep.invoke(p, (Object[]) null);
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
+        } catch (IllegalAccessException | InvocationTargetException e) {
             e.printStackTrace();
         }
         Field f = null;
@@ -64,5 +62,6 @@ public class LocaleManager {
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
+        return null;
     }
 }
