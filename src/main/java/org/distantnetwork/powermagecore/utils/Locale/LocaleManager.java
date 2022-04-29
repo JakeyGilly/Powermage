@@ -15,7 +15,7 @@ public class LocaleManager {
     public static final String LANG = "lang";
     private String locale;
     private ResourceBundle localeBundle;
-    private final ResourceBundle defaultBundle = ResourceBundle.getBundle(LANG);
+    private final ResourceBundle defaultBundle = ResourceBundle.getBundle(LANG, Locale.ENGLISH);
 
     public String getCurrentLocale() {
         return locale;
@@ -24,15 +24,15 @@ public class LocaleManager {
     public String getString(String key) {
         try {
             return localeBundle.getString(key);
-        } catch (final MissingResourceException ex) {
+        } catch (MissingResourceException | NullPointerException ex) {
             return defaultBundle.getString(key);
         }
     }
 
     public void updateLocale(String loc) {
         try {
-            localeBundle = ResourceBundle.getBundle(LANG, new Locale(loc));// dunno if this works
-        } catch (final MissingResourceException ex) {
+            localeBundle = ResourceBundle.getBundle(LANG, Locale.forLanguageTag(new Locale(loc).getLanguage()));// dunno if this works
+        } catch (MissingResourceException | NullPointerException ex) {
             getPlugin().getLogger().warning("Could not find locale: " + locale.toString());
         }
         if (localeBundle == null) {
@@ -41,6 +41,7 @@ public class LocaleManager {
     }
 
     public static String getLanguage(Player p) {
+        p.spigot()
         Method ep = null;
         for (Method declaredMethod : p.getClass().getDeclaredMethods()) {
             if (declaredMethod.getName().equals("getHandle")) ep = declaredMethod;
