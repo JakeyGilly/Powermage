@@ -131,5 +131,6 @@ public final class PowermageCore extends JavaPlugin implements Listener {
         getServer().getPluginManager().registerEvents(new OnDamage(), this);
         getServer().getPluginManager().registerEvents(new OnPlayerJoin(), this);
         getServer().getPluginManager().registerEvents(new WeaponAbilityManager(), this);
+        getServer().getPluginManager().registerEvents(new OnPlayerJoin(), this);
     }
 }
